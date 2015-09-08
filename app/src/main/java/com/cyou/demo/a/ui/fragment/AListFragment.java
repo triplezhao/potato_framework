@@ -24,13 +24,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cyou.model.library.view.refresh.RefreshListView;
-import com.cyou.sticker.R;
-import com.cyou.frame.base.BaseFragment;
-import com.cyou.frame.base.BaseListAdapter;
+import com.cyou.demo.R;
 import com.cyou.demo.a.data.bean.ABean;
 import com.cyou.demo.a.ui.viewbinder.AViewBinder;
-import com.cyou.sticker.databinding.FragmentAListBinding;
+import com.cyou.demo.databinding.FragmentAListBinding;
+import com.cyou.frame.base.BaseFragment;
+import com.cyou.frame.base.BaseListAdapter;
+import com.cyou.model.library.view.refresh.RefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +51,6 @@ public class AListFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getExtras();
-        findViews();
-        bindEvent();
-        bindData();
 
         binding = DataBindingUtil.inflate(
                 LayoutInflater.from(container.getContext()),
@@ -125,25 +121,6 @@ public class AListFragment extends BaseFragment {
         return list;
     }
 
-    @Override
-    public void getExtras() {
-
-    }
-
-    @Override
-    public void findViews() {
-
-    }
-
-    @Override
-    public void bindData() {
-
-    }
-
-    @Override
-    public void bindEvent() {
-
-    }
 
     @Override
     public void onClick(View view) {

@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.cyou.sticker.R;
+import com.cyou.demo.R;
 import com.cyou.frame.app.MainApplication;
 
 import org.apache.http.client.HttpResponseException;

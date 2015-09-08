@@ -64,15 +64,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--demo-->
         <activity android:name="com.cyou.demo.a.ui.act.AActivity"></activity>
         <activity android:name="com.cyou.demo.a.ui.act.BActivity"></activity>
         <activity android:name="com.cyou.demo.a.ui.act.ADetailActivity"></activity>
+
+        <!--jiongtu-->
         <activity android:name="com.cyou.demo.jiongtu.ui.act.JiongtuActivity"></activity>
         <activity android:name="com.cyou.demo.jiongtu.ui.act.JiongTuDetailActivity" android:hardwareAccelerated="true" ></activity>
 
+        <!--youku-->
+        <activity android:name="com.cyou.demo.youku.ui.act.YKActivity"  ></activity>
+
         <provider
             android:name="com.cyou.model.library.net.RequestCacheProvider"
-            android:authorities="com.cyou.sticker.RequestCacheProvider" />
+            android:authorities="com.cyou.demo.RequestCacheProvider" />
     </application>
 
 </manifest>

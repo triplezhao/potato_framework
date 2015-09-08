@@ -1,10 +1,8 @@
 package com.cyou.demo.jiongtu.data.parser;
 
-import com.cyou.frame.base.BaseParser;
-
 import org.json.JSONObject;
 
-public class JiongtuCommonParser extends BaseParser {
+public class JiongtuCommonParser extends JiongtuBaseParser {
 
 
     public JiongtuCommonParser(String jsonStr) {
@@ -23,4 +21,5 @@ public class JiongtuCommonParser extends BaseParser {
             e.printStackTrace();
         }
     }
+
 }

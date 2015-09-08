@@ -18,7 +18,7 @@ package com.cyou.demo.a.ui.act;
 
 import android.os.Bundle;
 
-import com.cyou.sticker.R;
+import com.cyou.demo.R;
 import com.cyou.frame.base.BaseActivity;
 
 public class ADetailActivity extends BaseActivity {
@@ -32,24 +32,5 @@ public class ADetailActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void getExtras() {
-
-    }
-
-    @Override
-    public void findViews() {
-
-    }
-
-    @Override
-    public void bindData() {
-
-    }
-
-    @Override
-    public void bindEvent() {
-
-    }
 
 }

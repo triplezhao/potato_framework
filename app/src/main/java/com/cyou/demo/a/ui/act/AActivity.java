@@ -8,10 +8,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.cyou.frame.base.BaseActivity;
+import com.cyou.demo.R;
 import com.cyou.demo.a.ui.fragment.AListFragment;
-import com.cyou.sticker.R;
-import com.cyou.sticker.databinding.ActivityABinding;
+import com.cyou.demo.databinding.ActivityABinding;
+import com.cyou.frame.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,25 +40,6 @@ public class AActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void getExtras() {
-
-    }
-
-    @Override
-    public void findViews() {
-
-    }
-
-    @Override
-    public void bindData() {
-
-    }
-
-    @Override
-    public void bindEvent() {
-
-    }
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());

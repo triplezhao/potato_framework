@@ -22,17 +22,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 
-import com.cyou.frame.base.BaseActivity;
+import com.cyou.demo.R;
+import com.cyou.demo.databinding.ActivityJiongtuDetailBinding;
 import com.cyou.demo.jiongtu.data.bean.JiongtuAlbum;
+import com.cyou.demo.jiongtu.data.bean.JiongtuPhoto;
 import com.cyou.demo.jiongtu.data.parser.JiongtuPhotoListParser;
 import com.cyou.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.cyou.demo.jiongtu.ui.viewbinder.JiongTuDetailViewBinder;
+import com.cyou.frame.base.BaseActivity;
+import com.cyou.frame.base.BaseListAdapter;
 import com.cyou.model.library.net.Request;
 import com.cyou.model.library.net.RequestManager;
-import com.cyou.sticker.R;
-import com.cyou.frame.base.BaseListAdapter;
-import com.cyou.demo.jiongtu.data.bean.JiongtuPhoto;
-import com.cyou.sticker.databinding.ActivityJiongtuDetailBinding;
 
 import java.util.ArrayList;
 
@@ -51,7 +51,7 @@ public class JiongTuDetailActivity extends BaseActivity {
     private ArrayList<JiongtuPhoto> mPhotos;
     private JiongtuAlbum mCurrentAlbum;
     private String mAlbumId;
-    private ActivityJiongtuDetailBinding binding;
+    private ActivityJiongtuDetailBinding mBingding;
     /**
      * logic
      */
@@ -59,37 +59,28 @@ public class JiongTuDetailActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         binding = DataBindingUtil.setContentView(
+         mBingding = DataBindingUtil.setContentView(
                 this, R.layout.activity_jiongtu_detail);
-        lv_list = binding.lvList;
+
+        mCurrentAlbum = (JiongtuAlbum) getIntent().getSerializableExtra(EXTRA_ALBUM);
+        if (mCurrentAlbum != null) {// 来自囧图图册列表
+            mAlbumId = String.valueOf(mCurrentAlbum.getId());
+            mBingding.setBean(mCurrentAlbum);
+        }
+
+
+        lv_list = mBingding.lvList;
 
         mAdapter = new BaseListAdapter(mContext,new JiongTuDetailViewBinder());
         mPhotos = new ArrayList<>();
         mAdapter.setDataList(mPhotos);
         lv_list.setAdapter(mAdapter);
 
-        getExtras();
-        findViews();
-        bindEvent();
         bindData();
 
     }
 
-    @Override
-    public void getExtras() {
-        mCurrentAlbum = (JiongtuAlbum) getIntent().getSerializableExtra(EXTRA_ALBUM);
-        if (mCurrentAlbum != null) {// 来自囧图图册列表
-            mAlbumId = String.valueOf(mCurrentAlbum.getId());
-            binding.setBean(mCurrentAlbum);
-        }
-    }
 
-    @Override
-    public void findViews() {
-
-    }
-
-    @Override
     public void bindData() {
         if (!TextUtils.isEmpty(mAlbumId)) {// 来自囧图图册列表
             Request request = JiongtuRequestBuilder.getPhotoListRequest(mAlbumId);
@@ -112,10 +103,6 @@ public class JiongTuDetailActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void bindEvent() {
-
-    }
 
     private void onRefreshSucc(String content) {
         mPhotos = JiongtuPhotoListParser.parseToPhotoList(content);

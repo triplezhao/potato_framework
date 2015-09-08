@@ -4,8 +4,8 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.cyou.demo.R;
 import com.cyou.frame.app.MainApplication;
-import com.cyou.sticker.R;
 import com.nostra13.universalimageloader.cache.disc.impl.ext.LruDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
