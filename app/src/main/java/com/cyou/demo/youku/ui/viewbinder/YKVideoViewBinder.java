@@ -14,7 +14,7 @@ import com.cyou.frame.base.BaseViewHolder;
 import com.cyou.frame.util.ImageLoaderUtil;
 
 /**
- * Created by ztw on 2015/7/22.
+ * Created by ztw on 2015/9/8.
  */
 public class YKVideoViewBinder extends BaseViewBinder<YKVideoViewBinder.ViewHolder> {
 
