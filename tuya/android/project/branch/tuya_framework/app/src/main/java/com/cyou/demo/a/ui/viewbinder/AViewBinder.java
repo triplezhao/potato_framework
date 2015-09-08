@@ -8,13 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cyou.frame.base.BaseViewBinder;
-import com.cyou.demo.a.ui.act.ADetailActivity;
-import com.cyou.model.library.util.L;
-import com.cyou.sticker.R;
-import com.cyou.frame.base.BaseViewHolder;
+import com.cyou.demo.R;
 import com.cyou.demo.a.data.bean.ABean;
-import com.cyou.sticker.databinding.ItemABinding;
+import com.cyou.demo.a.ui.act.ADetailActivity;
+import com.cyou.demo.databinding.ItemABinding;
+import com.cyou.frame.base.BaseViewBinder;
+import com.cyou.frame.base.BaseViewHolder;
+import com.cyou.model.library.util.L;
 import com.squareup.picasso.Picasso;
 
 /**

@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cyou.frame.base.BaseViewBinder;
-import com.cyou.sticker.R;
-import com.cyou.frame.base.BaseViewHolder;
+import com.cyou.demo.R;
+import com.cyou.demo.databinding.ItemJiongtuDetailBinding;
 import com.cyou.demo.jiongtu.data.bean.JiongtuPhoto;
-import com.cyou.sticker.databinding.ItemJiongtuDetailBinding;
+import com.cyou.frame.base.BaseViewBinder;
+import com.cyou.frame.base.BaseViewHolder;
 import com.cyou.frame.util.ImageLoaderUtil;
 import com.cyou.frame.util.ShareUtil;
 

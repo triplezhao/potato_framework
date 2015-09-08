@@ -8,15 +8,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 
+import com.cyou.demo.R;
+import com.cyou.demo.jiongtu.data.bean.JiongtuSection;
 import com.cyou.demo.jiongtu.data.parser.JiongtuSectionListParser;
 import com.cyou.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.cyou.demo.jiongtu.ui.fragment.JiongTuListFragment;
+import com.cyou.frame.base.BaseActivity;
 import com.cyou.model.library.net.Request;
 import com.cyou.model.library.net.RequestManager;
 import com.cyou.model.library.util.L;
-import com.cyou.sticker.R;
-import com.cyou.frame.base.BaseActivity;
-import com.cyou.demo.jiongtu.data.bean.JiongtuSection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,28 +47,11 @@ public class JiongtuActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jiongtu);
-        getExtras();
-        findViews();
-        bindEvent();
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         bindData();
     }
 
-    /**
-     * logic
-     */
-
-    @Override
-    public void getExtras() {
-
-    }
-
-    @Override
-    public void findViews() {
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-    }
-
-    @Override
     public void bindData() {
         adapter = new HeaderPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
@@ -93,11 +76,6 @@ public class JiongtuActivity extends BaseActivity {
 
     }
 
-
-    @Override
-    public void bindEvent() {
-
-    }
 
     private void updateUI(String content) {
         L.i(TAG,content+"");

@@ -1,6 +1,5 @@
-package com.cyou.demo.jiongtu.ui.viewbinder;
+package com.cyou.demo.youku.ui.viewbinder;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
@@ -8,27 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cyou.demo.R;
-import com.cyou.demo.databinding.ItemJiongtuListBinding;
-import com.cyou.demo.jiongtu.data.bean.JiongtuAlbum;
+import com.cyou.demo.databinding.ItemYkVideoBinding;
+import com.cyou.demo.youku.data.bean.YKVideo;
 import com.cyou.frame.base.BaseViewBinder;
 import com.cyou.frame.base.BaseViewHolder;
-import com.cyou.frame.common.PageCtrl;
 import com.cyou.frame.util.ImageLoaderUtil;
 
 /**
  * Created by ztw on 2015/7/22.
  */
-public class JiongTuViewBinder extends BaseViewBinder<JiongTuViewBinder.ViewHolder> {
+public class YKVideoViewBinder extends BaseViewBinder<YKVideoViewBinder.ViewHolder> {
 
-    public JiongTuViewBinder() {
+    public YKVideoViewBinder() {
     }
 
     @Override
     public ViewHolder onCreateViewHolder(int position, int type, ViewGroup parent) {
 
-        ItemJiongtuListBinding binding = DataBindingUtil.inflate(
+        ItemYkVideoBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
-                R.layout.item_jiongtu_list,
+                R.layout.item_yk_video,
                 parent,
                 false);
         ViewHolder holder = new ViewHolder(binding.getRoot());
@@ -39,22 +37,10 @@ public class JiongTuViewBinder extends BaseViewBinder<JiongTuViewBinder.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, Object object, int position, int type) {
-        ItemJiongtuListBinding binding = (ItemJiongtuListBinding) holder.getBinding();
-        final JiongtuAlbum bean = (JiongtuAlbum)object;
+        ItemYkVideoBinding binding = (ItemYkVideoBinding) holder.getBinding();
+        final YKVideo bean = (YKVideo)object;
         binding.setBean(bean);
-        binding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Context context = v.getContext();
-                PageCtrl.startJiongTuDetailActivity(context, bean);
-            }
-        });
-//        Picasso.with(binding.getRoot().getContext())
-//                .load(bean.getBigCover())
-//                .placeholder(R.drawable.def_gray_big)
-////                .resize(100,100)
-//                .into(binding.ivPic);
-        ImageLoaderUtil.displayImage(bean.getBigCover(), binding.ivPic, R.drawable.def_gray_big);
+        ImageLoaderUtil.displayImage(bean.getThumbnail(), binding.ivPic, R.drawable.def_gray_big);
     }
 
     public static class ViewHolder extends BaseViewHolder {

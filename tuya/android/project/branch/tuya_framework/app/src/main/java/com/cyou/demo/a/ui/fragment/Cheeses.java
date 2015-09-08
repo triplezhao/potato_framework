@@ -16,7 +16,8 @@
 
 package com.cyou.demo.a.ui.fragment;
 
-import com.cyou.sticker.R;
+
+import com.cyou.demo.R;
 
 import java.util.Random;
 

@@ -24,18 +24,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cyou.demo.R;
+import com.cyou.demo.databinding.FragmentJiongtuListBinding;
 import com.cyou.demo.jiongtu.data.bean.JiongtuAlbum;
 import com.cyou.demo.jiongtu.data.parser.JiongtuAlbumListParser;
+import com.cyou.demo.jiongtu.data.request.JiongtuRequestBuilder;
+import com.cyou.demo.jiongtu.ui.viewbinder.JiongTuViewBinder;
+import com.cyou.frame.base.BaseFragment;
+import com.cyou.frame.base.BaseListAdapter;
 import com.cyou.model.library.net.Request;
 import com.cyou.model.library.net.RequestManager;
 import com.cyou.model.library.util.L;
 import com.cyou.model.library.view.refresh.RefreshListView;
-import com.cyou.sticker.R;
-import com.cyou.frame.base.BaseFragment;
-import com.cyou.frame.base.BaseListAdapter;
-import com.cyou.demo.jiongtu.data.request.JiongtuRequestBuilder;
-import com.cyou.demo.jiongtu.ui.viewbinder.JiongTuViewBinder;
-import com.cyou.sticker.databinding.FragmentJiongtuListBinding;
 
 import java.util.ArrayList;
 
@@ -46,93 +46,65 @@ public class JiongTuListFragment extends BaseFragment {
      */
     public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
-    /** views */
-    /** adapters */
-    /**
-     * data
-     */
     private long mSectionId;
     private String mTitle;
-    /**
-     * logic
-     */
-    private ArrayList<JiongtuAlbum> albumList = new ArrayList<JiongtuAlbum>();
+    private ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
     private BaseListAdapter mAdapter;
-    private JiongtuAlbumListParser albumParser;
-    private FragmentJiongtuListBinding binding;
+    private JiongtuAlbumListParser mParser;
+    private FragmentJiongtuListBinding mBinding;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getExtras();
-        findViews();
-        bindEvent();
-        bindData();
 
-        binding = DataBindingUtil.inflate(
+        mSectionId = getArguments() == null ? 0 : getArguments().getLong(EXTRARS_SECTION_ID);
+        mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
+
+
+        mBinding = DataBindingUtil.inflate(
                 LayoutInflater.from(container.getContext()),
                 R.layout.fragment_jiongtu_list,
                 container,
                 false);
 
-        albumParser = new JiongtuAlbumListParser();
-        binding.swipeContainer1.setFooterView(getActivity(), binding.list1, R.layout.listview_footer);
+        mParser = new JiongtuAlbumListParser();
+        mBinding.swipeContainer.setFooterView(getActivity(), mBinding.list, R.layout.listview_footer);
 
         mAdapter = new BaseListAdapter(getActivity(), new JiongTuViewBinder());
-        binding.list1.setAdapter(mAdapter);
+        mBinding.list.setAdapter(mAdapter);
 
-        binding.swipeContainer1.setColorSchemeResources(R.color.google_blue,
+        mBinding.swipeContainer.setColorSchemeResources(R.color.google_blue,
                 R.color.google_green,
                 R.color.google_red,
                 R.color.google_yellow);
 
-        binding.swipeContainer1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mBinding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 sendRequest2RefreshList();
             }
         });
-        binding.swipeContainer1.setOnLoadListener(new RefreshListView.OnLoadListener() {
+        mBinding.swipeContainer.setOnLoadListener(new RefreshListView.OnLoadListener() {
             @Override
             public void onLoad() {
                 sendRequest2LoadMoreList();
             }
         });
 
-        binding.swipeContainer1.setEmptyView(binding.emptyView);
-        binding.emptyView.setOnClickListener(this);
-        binding.swipeContainer1.showProgress();
+        mBinding.swipeContainer.setEmptyView(mBinding.emptyView);
+        mBinding.emptyView.setOnClickListener(this);
+        mBinding.swipeContainer.showProgress();
         sendRequest2RefreshList();
 
-        return binding.getRoot();
+        return mBinding.getRoot();
     }
 
-    @Override
-    public void getExtras() {
-        mSectionId = getArguments() == null ? 0 : getArguments().getLong(EXTRARS_SECTION_ID);
-        mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
-    }
-
-    @Override
-    public void findViews() {
-
-    }
-
-    @Override
-    public void bindData() {
-
-    }
-
-    @Override
-    public void bindEvent() {
-
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.empty_view:
-                binding.swipeContainer1.showProgress();
+                mBinding.swipeContainer.showProgress();
                 sendRequest2RefreshList();
                 break;
         }
@@ -156,10 +128,10 @@ public class JiongTuListFragment extends BaseFragment {
             @Override
             public void onFailure(Throwable error, String errMsg) {
                 L.e("拉取图册数据失败!!!,EMPTY_TYPE_ERROR" + this);
-                binding.swipeContainer1.postDelayed(new Runnable() {
+                mBinding.swipeContainer.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        binding.swipeContainer1.showEmptyViewFail();
+                        mBinding.swipeContainer.showEmptyViewFail();
                     }
                 }, 2000);
 
@@ -184,7 +156,7 @@ public class JiongTuListFragment extends BaseFragment {
     private void sendRequest2LoadMoreList() {
         L.e(TAG, "请求图册列表:sectionId=" + mSectionId);
 
-        Request request = JiongtuRequestBuilder.getAlbumListRequest(mSectionId, albumParser.maxPublicDate);
+        Request request = JiongtuRequestBuilder.getAlbumListRequest(mSectionId, mParser.maxPublicDate);
         RequestManager.DataLoadListener dataLoadListener = new RequestManager.DataLoadListener() {
 
             @Override
@@ -197,7 +169,7 @@ public class JiongTuListFragment extends BaseFragment {
             @Override
             public void onFailure(Throwable error, String errMsg) {
                 L.e("拉取图册数据失败!!!,EMPTY_TYPE_ERROR" + this);
-                binding.swipeContainer1.setLoading(false);
+                mBinding.swipeContainer.setLoading(false);
             }
 
             @Override
@@ -213,26 +185,26 @@ public class JiongTuListFragment extends BaseFragment {
     }
 
     private void onRefreshSucc(String content) {
-        binding.swipeContainer1.showSucc();
-        albumList = albumParser.parseToAlbumList(content);
-        mAdapter.setDataList(albumList);
+        mBinding.swipeContainer.showSucc();
+        mList = mParser.parseToAlbumList(content);
+        mAdapter.setDataList(mList);
         mAdapter.notifyDataSetChanged();
-        binding.swipeContainer1.setRefreshing(false);
-        if (albumList != null || albumList.size() != 0) {
-            binding.swipeContainer1.setLoadEnable(true);
+        mBinding.swipeContainer.setRefreshing(false);
+        if (mList != null && mList.size() != 0) {
+            mBinding.swipeContainer.setLoadEnable(true);
         }
 
     }
 
     private void onLoadSucc(String content) {
-        binding.swipeContainer1.setLoading(false);
-        ArrayList<JiongtuAlbum> moreData = albumParser.parseToAlbumList(content);
+        mBinding.swipeContainer.setLoading(false);
+        ArrayList<JiongtuAlbum> moreData = mParser.parseToAlbumList(content);
         if (moreData == null || moreData.size() == 0) {
-            binding.swipeContainer1.setLoadEnable(false);
+            mBinding.swipeContainer.setLoadEnable(false);
             return;
         }
-        albumList.addAll(moreData);
-        mAdapter.setDataList(albumList);
+        mList.addAll(moreData);
+        mAdapter.setDataList(mList);
         mAdapter.notifyDataSetChanged();
     }
 

@@ -26,10 +26,6 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
 //		VMRuntime.getRuntime().setTargetHeapUtilization(TARGET_HEAP_UTILIZATION);
         mContext = this;
         mHandler = new Handler(this);
-//        getExtras();
-//        findViews();
-//        bindEvent();
-//        bindData();
     }
 
     @Override
@@ -60,25 +56,5 @@ public abstract class BaseActivity extends FragmentActivity implements View.OnCl
             mHandler.removeCallbacksAndMessages(null);
         }
     }
-
-    /**
-     * 获取页面参数
-     */
-    public abstract void getExtras();
-
-    /**
-     * 初始化界面
-     */
-    public abstract void findViews();
-
-    /**
-     * 绑定事件.
-     */
-    public abstract void bindData();
-
-    /**
-     * 绑定数据. UI上的操作事件,更新数据。
-     */
-    public abstract void bindEvent();
 
 }

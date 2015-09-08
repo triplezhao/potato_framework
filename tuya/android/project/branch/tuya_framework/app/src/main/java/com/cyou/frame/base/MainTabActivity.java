@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cyou.demo.a.ui.act.BActivity;
-import com.cyou.sticker.R;
+import com.cyou.demo.R;
 import com.cyou.demo.a.ui.act.AActivity;
+import com.cyou.demo.a.ui.act.BActivity;
 import com.cyou.demo.jiongtu.ui.act.JiongtuActivity;
+import com.cyou.demo.youku.ui.act.YKActivity;
 
 public class MainTabActivity extends BaseTabHostActivity {
 
@@ -37,7 +38,7 @@ public class MainTabActivity extends BaseTabHostActivity {
                 iv_icon.setImageResource(R.drawable.selector_nav_explore);
                 tabItem.setTitle("" + position);
                 tabItem.setView(tabItemView);
-                tabItem.setIntent(new Intent(getApplication(), AActivity.class));
+                tabItem.setIntent(new Intent(getApplication(), YKActivity.class));
                 break;
             case 2:
 
