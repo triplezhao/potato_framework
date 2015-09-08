@@ -22,7 +22,7 @@ import com.cyou.model.library.view.refresh.RefreshListView;
 import java.util.ArrayList;
 
 /**
- * Created by ztw on 2015/7/3.
+ * Created by ztw on 2015/9/8.
  */
 public class YKActivity extends BaseActivity {
 
@@ -68,6 +68,7 @@ public class YKActivity extends BaseActivity {
         mBinding.swipeContainer.setEmptyView(mBinding.emptyView);
         mBinding.emptyView.setOnClickListener(this);
         mBinding.swipeContainer.showProgress();
+
         sendRequest2RefreshList();
     }
 
