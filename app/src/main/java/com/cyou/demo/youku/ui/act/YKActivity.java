@@ -179,7 +179,7 @@ public class YKActivity extends BaseActivity {
             }
             mAdapter.setDataList(mList);
             mAdapter.notifyDataSetChanged();
-            if (mList != null || mList.size() == 0 || mList.size() >= mTotal) {
+            if (mList == null || mList.size() == 0 || mList.size() >= mTotal) {
                 mBinding.swipeContainer.setLoadEnable(false);
             }
             mBinding.swipeContainer.showSucc();
