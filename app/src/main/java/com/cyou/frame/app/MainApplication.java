@@ -5,10 +5,10 @@ import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.cyou.model.library.net.RequestHttpClient;
-import com.cyou.model.library.net.RequestManager;
 import com.cyou.frame.util.ImageLoaderUtil;
 import com.cyou.frame.util.PhoneUtils;
+import com.cyou.model.library.net.RequestHttpClient;
+import com.cyou.model.library.net.RequestManager;
 import com.loopj.android.http.AsyncHttpClient;
 import com.squareup.picasso.Downloader;
 import com.squareup.picasso.OkHttpDownloader;
@@ -60,7 +60,9 @@ public class MainApplication extends Application {
 //        instence.setUserAgent(PhoneUtils.getDeviceUA(context));
         initPicasso();
         initUIL();
+
     }
+
 
     private void initPicasso() {
 //            final String imageCacheDir = /* 自定义目录 */ +"image";

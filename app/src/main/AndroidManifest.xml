@@ -76,6 +76,7 @@
 
         <!--youku-->
         <activity android:name="com.cyou.demo.youku.ui.act.YKActivity"  ></activity>
+        <activity android:name="com.cyou.frame.common.WebViewActivity"  ></activity>
 
         <provider
             android:name="com.cyou.model.library.net.RequestCacheProvider"
