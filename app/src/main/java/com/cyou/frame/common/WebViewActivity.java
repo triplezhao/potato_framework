@@ -81,7 +81,7 @@ public class WebViewActivity extends Activity implements OnClickListener {
         if (TextUtils.isEmpty(url_Address)) url_Address = defaultURL;
         // "http://10.6.212.211/app3.0/app3.0_activity/downTest.html";
         // 启动默认活动页面的时候后面加上apptoken
-        setContentView(R.layout.webview_layout);
+        setContentView(R.layout.activity_webview);
         initViews();
         initData();
     }

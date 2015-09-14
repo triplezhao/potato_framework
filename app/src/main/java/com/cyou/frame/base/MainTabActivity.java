@@ -7,9 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cyou.demo.R;
-import com.cyou.demo.a.ui.act.BActivity;
 import com.cyou.demo.jiongtu.ui.act.JiongtuActivity;
 import com.cyou.demo.youku.ui.act.YKActivity;
+import com.cyou.frame.common.MyActivity;
 import com.cyou.frame.common.WebViewActivity;
 import com.youku.player.YoukuPlayerBaseConfiguration;
 
@@ -47,7 +47,7 @@ public class MainTabActivity extends BaseTabHostActivity {
 
                 iv_icon.setImageResource(R.drawable.selector_nav_contact);
 
-                tabItem.setTitle("商店");
+                tabItem.setTitle("野店");
                 tabItem.setView(tabItemView);
                 tabItem.setIntent(new Intent(getApplication(), WebViewActivity.class));
                 break;
@@ -56,7 +56,7 @@ public class MainTabActivity extends BaseTabHostActivity {
                 iv_icon.setImageResource(R.drawable.selector_nav_profile);
                 tabItem.setTitle("我");
                 tabItem.setView(tabItemView);
-                tabItem.setIntent(new Intent(getApplication(), BActivity.class));
+                tabItem.setIntent(new Intent(getApplication(), MyActivity.class));
                 break;
         }
         tv_title.setText(tabItem.getTitle());

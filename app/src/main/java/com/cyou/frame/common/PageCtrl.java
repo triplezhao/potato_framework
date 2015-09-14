@@ -9,9 +9,9 @@ import android.text.TextUtils;
 
 import com.cyou.demo.jiongtu.data.bean.JiongtuAlbum;
 import com.cyou.demo.jiongtu.ui.act.JiongTuDetailActivity;
-import com.cyou.demo.youku.ui.act.CachedActivity;
-import com.cyou.demo.youku.ui.act.CachingActivity;
-import com.cyou.demo.youku.ui.act.PlayerActivity;
+import com.cyou.demo.youku.ui.act.YKCachedActivity;
+import com.cyou.demo.youku.ui.act.YKCachingActivity;
+import com.cyou.demo.youku.ui.act.YKPlayerActivity;
 import com.cyou.model.library.util.L;
 
 
@@ -118,24 +118,25 @@ public class PageCtrl {
     }
 
 
-    public static void startYKPlayerActivity(Context context, String vid){
+    public static void startYKPlayerActivity(Context context, String vid, String video_title){
         Bundle bundle = new Bundle();
         bundle.putString("vid", vid);
-        start(context, PlayerActivity.class, false, "", bundle);
+        bundle.putString("video_title", video_title);
+        start(context, YKPlayerActivity.class, false, "", bundle);
     }
     /**
      * 跳转到已经下载的界面
      */
-    private void go2YKDownloadedPage(Context context){
-        start(context, CachedActivity.class, false, "", null);
+    public static void start2YKDownloadedPage(Context context){
+        start(context, YKCachedActivity.class, false, "", null);
 
     }
 
     /**
      * 跳转到正在下载的界面
      */
-    private void go2YKDownloadingPage(Context context){
-        start(context, CachingActivity.class, false, "", null);
+    public static void start2YKDownloadingPage(Context context){
+        start(context, YKCachingActivity.class, false, "", null);
 
     }
 }

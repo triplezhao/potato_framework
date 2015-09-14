@@ -25,7 +25,7 @@ import com.youku.service.download.OnCreateDownloadListener;
  * 播放器播放界面，
  * 
  */
-public class PlayerActivity extends Activity {
+public class YKPlayerActivity extends Activity {
 
 	private YoukuBasePlayerManager basePlayerManager;
 	// 播放器控件
@@ -50,13 +50,14 @@ public class PlayerActivity extends Activity {
 
 	// YoukuPlayer实例，进行视频播放控制
 	private YoukuPlayer youkuPlayer;
+	private String video_title;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.second);
+		setContentView(R.layout.activity_yk_player);
 		iniView();
 		basePlayerManager = new YoukuBasePlayerManager(this) {
 
@@ -210,6 +211,7 @@ public class PlayerActivity extends Activity {
 				local_vid = intent.getStringExtra("video_id");
 			} else { // 在线播放
 				id = intent.getStringExtra("vid");
+				video_title = intent.getStringExtra("video_title");
 			}
 		}
 
@@ -290,9 +292,9 @@ public class PlayerActivity extends Activity {
 			int result = ApiManager.getInstance().changeVideoQuality(quality,
 					basePlayerManager);
 			if (result == 0)
-				Toast.makeText(PlayerActivity.this, "不支持此清晰度", Toast.LENGTH_SHORT).show();
+				Toast.makeText(YKPlayerActivity.this, "不支持此清晰度", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
-			Toast.makeText(PlayerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(YKPlayerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -305,7 +307,7 @@ public class PlayerActivity extends Activity {
 		/**
 		 * 第一个参数为需要下载的视频id 第二个参数为该视频的标题title 第三个对下载视频结束的监听，可以为空null
 		 */
-		d.createDownload("XNzgyODExNDY4", "魔女范冰冰扑倒黄晓明",
+		d.createDownload(vid, ""+video_title,
 				new OnCreateDownloadListener() {
 
 					@Override

@@ -29,7 +29,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/toolbar"
+            android:id="@+id/rl_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -65,7 +65,7 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
+            android:layout_below="@id/rl_header">
 
             <ListView
                 android:id="@+id/lv_list"
@@ -81,7 +81,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_below="@id/toolbar"
+            android:layout_below="@id/rl_header"
             android:background="@drawable/bottom_shadow_bg" />
 
     </RelativeLayout>

@@ -33,7 +33,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:textColor="@color/tab_text_color"
+            android:textColor="@drawable/selector_nav_text_color"
             android:textSize="@dimen/txt_min_l"/>
     </LinearLayout>
 </layout>

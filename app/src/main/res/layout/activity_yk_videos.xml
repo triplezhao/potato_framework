@@ -44,9 +44,10 @@
                 android:layout_marginLeft="20dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="FitTime"
+                android:text="@string/str_video"
                 android:textColor="@color/potato_white"
-                android:textSize="@dimen/txt_max" />
+                android:textSize="@dimen/txt_max"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/iv_back"

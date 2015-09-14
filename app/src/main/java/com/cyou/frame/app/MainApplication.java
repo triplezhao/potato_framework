@@ -6,8 +6,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.cyou.demo.youku.ui.act.CachedActivity;
-import com.cyou.demo.youku.ui.act.CachingActivity;
+import com.cyou.demo.youku.ui.act.YKCachedActivity;
+import com.cyou.demo.youku.ui.act.YKCachingActivity;
 import com.cyou.frame.util.ImageLoaderUtil;
 import com.cyou.frame.util.PhoneUtils;
 import com.cyou.model.library.net.RequestHttpClient;
@@ -122,7 +122,7 @@ public class MainApplication extends Application {
             @Override
             public Class<? extends Activity> getCachingActivityClass() {
                 // TODO Auto-generated method stub
-                return CachingActivity.class;
+                return YKCachingActivity.class;
             }
 
             /**
@@ -134,7 +134,7 @@ public class MainApplication extends Application {
             @Override
             public Class<? extends Activity> getCachedActivityClass() {
                 // TODO Auto-generated method stub
-                return CachedActivity.class;
+                return YKCachedActivity.class;
             }
 
             /**

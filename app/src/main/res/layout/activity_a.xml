@@ -5,10 +5,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/rl_header"
@@ -40,13 +36,12 @@
                     android:padding="10dip"
                     android:src="@drawable/ic_add_white_24dp" />
             </RelativeLayout>
-        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
+            android:layout_below="@id/rl_header">
 
 
             <android.support.design.widget.TabLayout
@@ -66,7 +61,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_below="@id/toolbar"
+            android:layout_below="@id/rl_header"
             android:background="@drawable/bottom_shadow" />
     </RelativeLayout>
 </layout>

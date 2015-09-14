@@ -61,7 +61,7 @@ public class YKVideoViewBinder extends BaseViewBinder<YKVideoViewBinder.ViewHold
                  * 跳转到播放界面进行播放
                  */
 
-                PageCtrl.startYKPlayerActivity(binding.getRoot().getContext(),bean.getId());
+                PageCtrl.startYKPlayerActivity(binding.getRoot().getContext(),bean.getId(),bean.getTitle());
 
             }
         });

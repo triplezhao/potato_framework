@@ -65,6 +65,11 @@
             </intent-filter>
         </activity>
 
+
+        <!--通用-->
+        <activity android:name="com.cyou.frame.common.WebViewActivity"  ></activity>
+        <activity android:name="com.cyou.frame.common.MyActivity"  ></activity>
+
         <!--demo-->
         <activity android:name="com.cyou.demo.a.ui.act.AActivity"></activity>
         <activity android:name="com.cyou.demo.a.ui.act.BActivity"></activity>
@@ -78,7 +83,7 @@
         <activity android:name="com.cyou.demo.youku.ui.act.YKActivity"  ></activity>
         <!-- 播放界面demo -->
         <activity
-            android:name="com.cyou.demo.youku.ui.act.PlayerActivity"
+            android:name=".youku.ui.act.YKPlayerActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
@@ -86,12 +91,12 @@
         </activity>
         <!-- 已经缓存的视频界面demo -->
         <activity
-            android:name="com.cyou.demo.youku.ui.act.CachedActivity"
+            android:name=".youku.ui.act.YKCachedActivity"
             android:launchMode="singleTask"
             />
         <!-- 正在缓存的视频展示界面demo -->
         <activity
-            android:name="com.cyou.demo.youku.ui.act.CachingActivity"
+            android:name=".youku.ui.act.YKCachingActivity"
             android:launchMode="singleTask"
             />
         <!-- 以下两个为下载时需要的添加的Service -->
@@ -143,10 +148,6 @@
         <meta-data android:name="client_id" android:value="85umcobwswozr4r6"/>
         <meta-data android:name="client_secret" android:value="794849f847e468dd503f8f3f7d84c01d"/>
 
-
-
-        <!--通用-->
-        <activity android:name="com.cyou.frame.common.WebViewActivity"  ></activity>
 
         <provider
             android:name="com.cyou.model.library.net.RequestCacheProvider"
