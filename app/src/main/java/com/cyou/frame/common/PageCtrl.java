@@ -9,6 +9,9 @@ import android.text.TextUtils;
 
 import com.cyou.demo.jiongtu.data.bean.JiongtuAlbum;
 import com.cyou.demo.jiongtu.ui.act.JiongTuDetailActivity;
+import com.cyou.demo.youku.ui.act.CachedActivity;
+import com.cyou.demo.youku.ui.act.CachingActivity;
+import com.cyou.demo.youku.ui.act.PlayerActivity;
 import com.cyou.model.library.util.L;
 
 
@@ -111,8 +114,29 @@ public class PageCtrl {
     public static void startJiongTuDetailActivity(Context context, JiongtuAlbum album){
         Bundle bundle = new Bundle();
         bundle.putSerializable(JiongTuDetailActivity.EXTRA_ALBUM, album);
-        start(context,JiongTuDetailActivity.class,false,"",bundle);
+        start(context, JiongTuDetailActivity.class, false, "", bundle);
     }
 
+
+    public static void startYKPlayerActivity(Context context, String vid){
+        Bundle bundle = new Bundle();
+        bundle.putString("vid", vid);
+        start(context, PlayerActivity.class, false, "", bundle);
+    }
+    /**
+     * 跳转到已经下载的界面
+     */
+    private void go2YKDownloadedPage(Context context){
+        start(context, CachedActivity.class, false, "", null);
+
+    }
+
+    /**
+     * 跳转到正在下载的界面
+     */
+    private void go2YKDownloadingPage(Context context){
+        start(context, CachingActivity.class, false, "", null);
+
+    }
 }
 

@@ -38,7 +38,7 @@ public class BaseRefreshView extends SwipeRefreshLayout {
     }
 
 
-    private NormalEmptyView mEmptyview;
+    protected NormalEmptyView mEmptyview;
 
 
 

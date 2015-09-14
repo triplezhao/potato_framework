@@ -54,9 +54,15 @@ public class YKVideoViewBinder extends BaseViewBinder<YKVideoViewBinder.ViewHold
                 intent.setData(content_url);
 //                binding.getRoot().getContext().startActivity(intent);
 
-                PageCtrl.start2WebViewActivity(binding.getRoot().getContext(),"https://shop108703695.taobao.com");
+//                PageCtrl.start2WebViewActivity(binding.getRoot().getContext(),"https://shop108703695.taobao.com");
 //                PageCtrl.start2SchemaPage(content_url);
 //                https://shop108703695.taobao.com
+                /**
+                 * 跳转到播放界面进行播放
+                 */
+
+                PageCtrl.startYKPlayerActivity(binding.getRoot().getContext(),bean.getId());
+
             }
         });
 

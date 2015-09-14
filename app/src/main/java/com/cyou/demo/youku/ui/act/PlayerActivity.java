@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.baseproject.utils.Logger;
+import com.cyou.demo.R;
 import com.youku.player.ApiManager;
 import com.youku.player.VideoQuality;
 import com.youku.player.base.YoukuBasePlayerManager;
@@ -289,9 +290,9 @@ public class PlayerActivity extends Activity {
 			int result = ApiManager.getInstance().changeVideoQuality(quality,
 					basePlayerManager);
 			if (result == 0)
-				Toast.makeText(PlayerActivity.this, "不支持此清晰度", 2000).show();
+				Toast.makeText(PlayerActivity.this, "不支持此清晰度", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
-			Toast.makeText(PlayerActivity.this, e.getMessage(), 2000).show();
+			Toast.makeText(PlayerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 		}
 	}
 

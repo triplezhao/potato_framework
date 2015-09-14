@@ -76,6 +76,76 @@
 
         <!--youku-->
         <activity android:name="com.cyou.demo.youku.ui.act.YKActivity"  ></activity>
+        <!-- 播放界面demo -->
+        <activity
+            android:name="com.cyou.demo.youku.ui.act.PlayerActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:exported="true">
+        </activity>
+        <!-- 已经缓存的视频界面demo -->
+        <activity
+            android:name="com.cyou.demo.youku.ui.act.CachedActivity"
+            android:launchMode="singleTask"
+            />
+        <!-- 正在缓存的视频展示界面demo -->
+        <activity
+            android:name="com.cyou.demo.youku.ui.act.CachingActivity"
+            android:launchMode="singleTask"
+            />
+        <!-- 以下两个为下载时需要的添加的Service -->
+        <service
+            android:name="com.youku.service.download.DownloadService"
+            android:label="Youku Download Service"
+            android:process=":download" >
+        </service>
+        <!--<service
+            android:name="com.youku.service.acc.AcceleraterService"
+            android:process=":accelerater" >
+            <intent-filter android:priority="1000" >
+            </intent-filter>
+        </service>-->
+
+        <!-- 以下为增加登陆功能需要添加的信息 -->
+        <activity
+            android:name="com.youku.login.activity.LoginRegistCardViewDialogActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Dialog"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="com.youku.login.sns.AuthorizationLoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop" >
+        </activity>
+        <activity
+            android:name="com.youku.login.Zxing.CaptureActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="com.youku.action.QRCODE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.youku.login.activity.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="com.youku.action.YoukuWebview" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- client_id及client_secret配置 -->
+        <meta-data android:name="client_id" android:value="85umcobwswozr4r6"/>
+        <meta-data android:name="client_secret" android:value="794849f847e468dd503f8f3f7d84c01d"/>
+
+
+
+        <!--通用-->
         <activity android:name="com.cyou.frame.common.WebViewActivity"  ></activity>
 
         <provider

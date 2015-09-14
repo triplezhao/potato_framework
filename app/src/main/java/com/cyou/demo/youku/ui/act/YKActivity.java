@@ -182,8 +182,10 @@ public class YKActivity extends BaseActivity {
             mAdapter.notifyDataSetChanged();
             if (mList == null || mList.size() == 0 || mList.size() >= mTotal) {
                 mBinding.swipeContainer.setLoadEnable(false);
+            }else{
+                mBinding.swipeContainer.setLoadEnable(true);
             }
-            mBinding.swipeContainer.showSucc();
+            mBinding.swipeContainer.setLoading(false);
         } else {
             mBinding.swipeContainer.showEmptyViewFail();
         }

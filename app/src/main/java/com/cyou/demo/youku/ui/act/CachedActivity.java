@@ -1,9 +1,5 @@
 package com.cyou.demo.youku.ui.act;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -18,8 +14,13 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cyou.demo.R;
 import com.youku.service.download.DownloadInfo;
 import com.youku.service.download.DownloadManager;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * 简单展示已经缓存的视频，用户可定制自己的界面

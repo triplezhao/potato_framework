@@ -9,6 +9,8 @@ import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.cyou.model.library.view.NormalEmptyView;
+
 public class RefreshListView extends BaseRefreshView implements AbsListView.OnScrollListener {
 
     private int mTouchSlop;
@@ -72,6 +74,16 @@ public class RefreshListView extends BaseRefreshView implements AbsListView.OnSc
 
         return super.dispatchTouchEvent(event);
     }
+
+
+    public void showSucc(){
+        if(mEmptyview!=null){
+            mEmptyview.setEmptyType(NormalEmptyView.EMPTY_TYPE_GONE);
+        }
+        setRefreshing(false);
+        setLoading(false);
+    }
+
 
     public void setLoadEnable(boolean enableLoad){
         mEnableLoad = enableLoad;

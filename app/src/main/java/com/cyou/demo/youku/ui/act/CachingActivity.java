@@ -1,9 +1,5 @@
 package com.cyou.demo.youku.ui.act;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -20,8 +16,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cyou.demo.R;
 import com.youku.service.download.DownloadInfo;
 import com.youku.service.download.DownloadManager;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 
 /**
