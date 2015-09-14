@@ -24,7 +24,7 @@
             android:singleLine="true"
             android:text="FitTime"
             android:textColor="@color/potato_white"
-            android:textSize="@dimen/mshow_txt_max" />
+            android:textSize="@dimen/txt_max" />
 
         <ImageView
             android:id="@+id/iv_back"
@@ -53,7 +53,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/rl_header"
         android:background="@drawable/bottom_shadow" />
 </RelativeLayout>
 

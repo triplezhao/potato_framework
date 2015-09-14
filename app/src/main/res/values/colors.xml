@@ -6,6 +6,7 @@
 
     <color name="app_bg">#ECECEC</color>
     <color name="sticker_blue">#1D6EC4</color>
+    <color name="tab_text_color">#7F8897</color>
 
 
 </resources>

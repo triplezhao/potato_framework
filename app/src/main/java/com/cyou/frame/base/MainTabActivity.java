@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cyou.demo.R;
 import com.cyou.demo.a.ui.act.BActivity;
@@ -26,10 +27,11 @@ public class MainTabActivity extends BaseTabHostActivity {
         TabItem tabItem = new TabItem();
         View tabItemView = mLayoutflater.inflate(R.layout.item_main_tab, null);
         ImageView iv_icon = (ImageView) tabItemView.findViewById(R.id.iv_icon);
+        TextView tv_title = (TextView) tabItemView.findViewById(R.id.tv_tab);
         switch (position) {
             case 0:
                 iv_icon.setImageResource(R.drawable.selector_nav_home);
-                tabItem.setTitle("兵线" );
+                tabItem.setTitle("视频");
                 tabItem.setView(tabItemView);
                 tabItem.setIntent(new Intent(getApplication(), YKActivity.class));
                 break;
@@ -37,27 +39,27 @@ public class MainTabActivity extends BaseTabHostActivity {
             case 1:
 
                 iv_icon.setImageResource(R.drawable.selector_nav_explore);
-                tabItem.setTitle("酒馆");
+                tabItem.setTitle("发现");
                 tabItem.setView(tabItemView);
                 tabItem.setIntent(new Intent(getApplication(), JiongtuActivity.class));
                 break;
             case 2:
 
-                iv_icon.setImageResource(R.drawable.selector_nav_workout);
+                iv_icon.setImageResource(R.drawable.selector_nav_contact);
 
-                tabItem.setTitle("野店");
+                tabItem.setTitle("商店");
                 tabItem.setView(tabItemView);
                 tabItem.setIntent(new Intent(getApplication(), WebViewActivity.class));
                 break;
             case 3:
 
-                iv_icon.setImageResource(R.drawable.selector_nav_contact);
-                tabItem.setTitle("英雄");
+                iv_icon.setImageResource(R.drawable.selector_nav_profile);
+                tabItem.setTitle("我");
                 tabItem.setView(tabItemView);
                 tabItem.setIntent(new Intent(getApplication(), BActivity.class));
                 break;
         }
-
+        tv_title.setText(tabItem.getTitle());
         return tabItem;
     }
 
@@ -78,7 +80,7 @@ public class MainTabActivity extends BaseTabHostActivity {
     @Override
     public void onBackPressed() {
         // TODO Auto-generated method stub
-        YoukuPlayerBaseConfiguration.exit();		//退出应用时请调用此方法
+        YoukuPlayerBaseConfiguration.exit();        //退出应用时请调用此方法
 
         super.onBackPressed();
 

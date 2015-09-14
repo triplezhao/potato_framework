@@ -23,7 +23,7 @@
                 android:singleLine="true"
                 android:text="FitTime"
                 android:textColor="@color/potato_white"
-                android:textSize="@dimen/mshow_txt_max" />
+                android:textSize="@dimen/txt_max" />
 
             <ImageView
                 android:id="@+id/iv_back"
