@@ -1,12 +1,13 @@
 package com.cyou.demo.youku.ui.act;
 
-import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.View;
 
 import com.cyou.demo.R;
 import com.cyou.demo.databinding.ActivityYkCachedBinding;
 import com.cyou.demo.youku.ui.viewbinder.YKVideoCachedViewBinder;
+import com.cyou.frame.base.BaseActivity;
 import com.cyou.frame.base.BaseListAdapter;
 import com.youku.service.download.DownloadInfo;
 import com.youku.service.download.DownloadManager;
@@ -19,7 +20,7 @@ import java.util.Map.Entry;
  * 简单展示已经缓存的视频，用户可定制自己的界面
  *
  */
-public class YKCachedActivity extends Activity {
+public class YKCachedActivity extends BaseActivity {
 	//展示视频信息的ListView
 
 	//通过DownloadManager获取下载视频列表
@@ -33,7 +34,7 @@ public class YKCachedActivity extends Activity {
 	private ActivityYkCachedBinding mBinding;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
@@ -46,9 +47,19 @@ public class YKCachedActivity extends Activity {
 		mBinding.list.setAdapter(adapter);
 
 	}
-	
+
 	@Override
-	protected void onResume() {
+	public void onClick(View view) {
+		switch (view.getId()){
+			case R.id.iv_back:
+				finish();
+				break;
+		}
+	}
+
+
+	@Override
+	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 		//获取已经下载的视频数据		
@@ -77,7 +88,7 @@ public class YKCachedActivity extends Activity {
 	}
 	
 	@Override
-	protected void onDestroy() {
+	public void onDestroy() {
 		// TODO Auto-generated method stub
 		downloadedList_show.clear();
 		finish();

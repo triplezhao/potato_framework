@@ -13,7 +13,6 @@ import com.cyou.frame.base.BaseViewHolder;
 import com.cyou.frame.common.PageCtrl;
 import com.cyou.frame.util.ImageLoaderUtil;
 import com.youku.service.download.DownloadInfo;
-import com.youku.service.download.IDownload;
 
 /**
  * Created by ztw on 2015/9/8.
@@ -44,7 +43,7 @@ public class YKVideoCachedViewBinder extends BaseViewBinder<YKVideoCachedViewBin
         //展示视频标题
         binding.videoTitle.setText(bean.title);
 
-        ImageLoaderUtil.displayImage(bean.savePath+ IDownload.THUMBNAIL_NAME, binding.ivPic, R.drawable.def_gray_small);
+        ImageLoaderUtil.displayImage("file://" + bean.savePath + "1.png", binding.ivPic, R.drawable.def_gray_small);
 
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

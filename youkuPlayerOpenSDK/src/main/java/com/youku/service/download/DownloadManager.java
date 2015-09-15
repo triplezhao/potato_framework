@@ -8,13 +8,6 @@
 
 package com.youku.service.download;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -28,6 +21,13 @@ import android.os.RemoteException;
 import com.baseproject.utils.Logger;
 import com.youku.player.YoukuPlayerConfiguration;
 import com.youku.player.util.PlayerUtil;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * DownloadManager.缓存管理
@@ -280,7 +280,7 @@ public class DownloadManager extends BaseDownload {
 	/**
 	 * TODO Comment：获得本地下一集视频的相关信息
 	 * 
-	 * @param vid
+	 * @param videoId
 	 * @return DownloadInfo下一个视频信息,若无下一集则返回null
 	 */
 	@SuppressWarnings("rawtypes")
