@@ -14,6 +14,7 @@ import com.cyou.demo.youku.ui.viewbinder.YKVideoViewBinder;
 import com.cyou.frame.app.GlobleConstant;
 import com.cyou.frame.base.BaseActivity;
 import com.cyou.frame.base.BaseListAdapter;
+import com.cyou.frame.common.PageCtrl;
 import com.cyou.model.library.net.Request;
 import com.cyou.model.library.net.RequestManager;
 import com.cyou.model.library.util.L;
@@ -75,10 +76,13 @@ public class YKActivity extends BaseActivity {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.empty_view:
                 mBinding.swipeContainer.showProgress();
                 sendRequest2RefreshList();
+                break;
+            case R.id.iv_more:
+                PageCtrl.start2YKMoreActivity(this);
                 break;
         }
     }
@@ -120,7 +124,7 @@ public class YKActivity extends BaseActivity {
      */
     private void sendRequest2LoadMoreList() {
 
-        Request request = YKRequestBuilder.videosByUser(GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", mPage+1+"", "", "");
+        Request request = YKRequestBuilder.videosByUser(GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", mPage + 1 + "", "", "");
 
         RequestManager.DataLoadListener dataLoadListener = new RequestManager.DataLoadListener() {
 
@@ -182,7 +186,7 @@ public class YKActivity extends BaseActivity {
             mAdapter.notifyDataSetChanged();
             if (mList == null || mList.size() == 0 || mList.size() >= mTotal) {
                 mBinding.swipeContainer.setLoadEnable(false);
-            }else{
+            } else {
                 mBinding.swipeContainer.setLoadEnable(true);
             }
             mBinding.swipeContainer.setLoading(false);

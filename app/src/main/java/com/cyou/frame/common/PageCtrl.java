@@ -11,6 +11,7 @@ import com.cyou.demo.jiongtu.data.bean.JiongtuAlbum;
 import com.cyou.demo.jiongtu.ui.act.JiongTuDetailActivity;
 import com.cyou.demo.youku.ui.act.YKCachedActivity;
 import com.cyou.demo.youku.ui.act.YKCachingActivity;
+import com.cyou.demo.youku.ui.act.YKMoreActivity;
 import com.cyou.demo.youku.ui.act.YKPlayerActivity;
 import com.cyou.model.library.util.L;
 
@@ -137,6 +138,12 @@ public class PageCtrl {
      */
     public static void start2YKDownloadingPage(Context context){
         start(context, YKCachingActivity.class, false, "", null);
+
+    }
+
+
+    public static void start2YKMoreActivity(Context context){
+        start(context,YKMoreActivity.class, false, "", null);
 
     }
 }

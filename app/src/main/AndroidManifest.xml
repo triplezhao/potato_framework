@@ -81,6 +81,7 @@
 
         <!--youku-->
         <activity android:name="com.cyou.demo.youku.ui.act.YKActivity"  ></activity>
+        <activity android:name="com.cyou.demo.youku.ui.act.YKMoreActivity"  ></activity>
         <!-- 播放界面demo -->
         <activity
             android:name=".youku.ui.act.YKPlayerActivity"
@@ -89,12 +90,10 @@
             android:launchMode="singleTask"
             android:exported="true">
         </activity>
-        <!-- 已经缓存的视频界面demo -->
         <activity
             android:name=".youku.ui.act.YKCachedActivity"
             android:launchMode="singleTask"
             />
-        <!-- 正在缓存的视频展示界面demo -->
         <activity
             android:name=".youku.ui.act.YKCachingActivity"
             android:launchMode="singleTask"
