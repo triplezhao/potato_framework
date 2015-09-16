@@ -56,12 +56,12 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.cyou.model.library.view.NormalEmptyView
+            <com.potato.library.view.NormalEmptyView
                 android:id="@+id/empty_view"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-            </com.cyou.model.library.view.NormalEmptyView>
+            </com.potato.library.view.NormalEmptyView>
 
             <WebView
                 android:id="@+id/webView"
@@ -77,7 +77,7 @@ xmlns:tools="http://schemas.android.com/tools">
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/rl_header"
         android:background="@drawable/bottom_shadow" />
 </RelativeLayout>
 </layout>
