@@ -1,6 +1,6 @@
 package com.potato.demo.youku.data.request;
 
-import com.potato.frame.base.BaseRequestUrls;
+import com.potato.chips.base.BaseRequestUrls;
 
 /**
  * 这里通常放置一些常量

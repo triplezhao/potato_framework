@@ -10,7 +10,7 @@ import android.view.View;
 import com.potato.demo.R;
 import com.potato.demo.youku.ui.fragment.YKCachedFragment;
 import com.potato.demo.youku.ui.fragment.YKCachingFragment;
-import com.potato.frame.base.BaseActivity;
+import com.potato.chips.base.BaseActivity;
 import com.potato.library.util.L;
 import com.potato.library.view.slidingtab.SlidingTabLayout;
 

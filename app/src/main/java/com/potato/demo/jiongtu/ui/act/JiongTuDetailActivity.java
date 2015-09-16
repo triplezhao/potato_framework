@@ -29,8 +29,8 @@ import com.potato.demo.jiongtu.data.bean.JiongtuPhoto;
 import com.potato.demo.jiongtu.data.parser.JiongtuPhotoListParser;
 import com.potato.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.potato.demo.jiongtu.ui.viewbinder.JiongTuDetailViewBinder;
-import com.potato.frame.base.BaseActivity;
-import com.potato.frame.base.BaseListAdapter;
+import com.potato.chips.base.BaseActivity;
+import com.potato.chips.base.BaseListAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 

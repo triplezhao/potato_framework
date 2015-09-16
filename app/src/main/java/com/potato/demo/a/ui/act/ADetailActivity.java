@@ -19,7 +19,7 @@ package com.potato.demo.a.ui.act;
 import android.os.Bundle;
 
 import com.potato.demo.R;
-import com.potato.frame.base.BaseActivity;
+import com.potato.chips.base.BaseActivity;
 
 public class ADetailActivity extends BaseActivity {
 

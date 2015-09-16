@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ItemJiongtuDetailBinding;
 import com.potato.demo.jiongtu.data.bean.JiongtuPhoto;
-import com.potato.frame.base.BaseViewBinder;
-import com.potato.frame.base.BaseViewHolder;
-import com.potato.frame.util.ImageLoaderUtil;
-import com.potato.frame.util.ShareUtil;
+import com.potato.chips.base.BaseViewBinder;
+import com.potato.chips.base.BaseViewHolder;
+import com.potato.chips.util.ImageLoaderUtil;
+import com.potato.chips.util.ShareUtil;
 
 /**
  * Created by ztw on 2015/7/22.

@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 
 import com.potato.demo.R;
 import com.potato.demo.databinding.ItemYkVideoCachedBinding;
-import com.potato.frame.base.BaseViewBinder;
-import com.potato.frame.base.BaseViewHolder;
-import com.potato.frame.common.PageCtrl;
-import com.potato.frame.util.ImageLoaderUtil;
+import com.potato.chips.base.BaseViewBinder;
+import com.potato.chips.base.BaseViewHolder;
+import com.potato.chips.common.PageCtrl;
+import com.potato.chips.util.ImageLoaderUtil;
 import com.youku.service.download.DownloadInfo;
 
 /**

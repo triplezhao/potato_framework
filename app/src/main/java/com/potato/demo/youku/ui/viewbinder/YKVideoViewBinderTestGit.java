@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ItemYkVideoBinding;
 import com.potato.demo.youku.data.bean.YKVideo;
-import com.potato.frame.base.BaseViewBinder;
-import com.potato.frame.base.BaseViewHolder;
-import com.potato.frame.common.PageCtrl;
-import com.potato.frame.util.ImageLoaderUtil;
+import com.potato.chips.base.BaseViewBinder;
+import com.potato.chips.base.BaseViewHolder;
+import com.potato.chips.common.PageCtrl;
+import com.potato.chips.util.ImageLoaderUtil;
 
 /**
  * Created by ztw on 2015/9/8.

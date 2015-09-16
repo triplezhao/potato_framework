@@ -1,6 +1,6 @@
 package com.potato.demo.youku.data.parser;
 
-import com.potato.frame.base.BaseParser;
+import com.potato.chips.base.BaseParser;
 
 import org.json.JSONException;
 

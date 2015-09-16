@@ -6,7 +6,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.potato.demo.youku.data.db.YKVideoProvider;
-import com.potato.frame.base.BaseBean;
+import com.potato.chips.base.BaseBean;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,6 +1,6 @@
 package com.potato.demo.jiongtu.data.request;
 
-import com.potato.frame.base.BaseRequestBuilder;
+import com.potato.chips.base.BaseRequestBuilder;
 import com.potato.library.net.DefaultRequest;
 import com.potato.library.net.Request;
 

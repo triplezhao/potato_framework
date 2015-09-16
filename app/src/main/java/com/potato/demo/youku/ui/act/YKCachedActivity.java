@@ -7,8 +7,8 @@ import android.view.View;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ActivityYkCachedBinding;
 import com.potato.demo.youku.ui.viewbinder.YKVideoCachedViewBinder;
-import com.potato.frame.base.BaseActivity;
-import com.potato.frame.base.BaseListAdapter;
+import com.potato.chips.base.BaseActivity;
+import com.potato.chips.base.BaseListAdapter;
 import com.youku.service.download.DownloadInfo;
 import com.youku.service.download.DownloadManager;
 

@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import com.potato.frame.base.BaseProvider;
+import com.potato.chips.base.BaseProvider;
 
 /**
  * create by freemaker

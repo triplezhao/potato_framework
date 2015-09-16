@@ -2,7 +2,7 @@ package com.potato.demo.youku.data.request;
 
 import android.text.TextUtils;
 
-import com.potato.frame.base.BaseRequestBuilder;
+import com.potato.chips.base.BaseRequestBuilder;
 import com.potato.library.net.DefaultRequest;
 import com.potato.library.net.Request;
 

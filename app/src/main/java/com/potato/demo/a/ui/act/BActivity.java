@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.potato.demo.R;
 import com.potato.demo.databinding.ActivityBBinding;
-import com.potato.frame.base.BaseActivity;
+import com.potato.chips.base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 public class BActivity extends BaseActivity {
