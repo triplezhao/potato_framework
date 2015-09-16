@@ -62,6 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_below="@id/rl_header"
-            android:background="@drawable/bottom_shadow" />
+            android:background="@drawable/bottom_shadow_bg" />
     </RelativeLayout>
 </layout>
