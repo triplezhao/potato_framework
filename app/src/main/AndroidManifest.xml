@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cyou.demo">
+    package="com.potato.demo">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -49,13 +49,13 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <application
-        android:name="com.cyou.frame.app.MainApplication"
+        android:name="com.potato.frame.app.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppTheme">
         <activity
-            android:name="com.cyou.frame.base.MainTabActivity"
+            android:name="com.potato.frame.base.MainTabActivity"
             android:label="@string/app_name"
             >
             <intent-filter>
@@ -67,35 +67,35 @@
 
 
         <!--通用-->
-        <activity android:name="com.cyou.frame.common.WebViewActivity"  ></activity>
-        <activity android:name="com.cyou.frame.common.MyActivity"  ></activity>
+        <activity android:name="com.potato.frame.common.WebViewActivity"  ></activity>
+        <activity android:name="com.potato.frame.common.MyActivity"  ></activity>
 
         <!--demo-->
-        <activity android:name="com.cyou.demo.a.ui.act.AActivity"></activity>
-        <activity android:name="com.cyou.demo.a.ui.act.BActivity"></activity>
-        <activity android:name="com.cyou.demo.a.ui.act.ADetailActivity"></activity>
+        <activity android:name="com.potato.demo.a.ui.act.AActivity"></activity>
+        <activity android:name="com.potato.demo.a.ui.act.BActivity"></activity>
+        <activity android:name="com.potato.demo.a.ui.act.ADetailActivity"></activity>
 
         <!--jiongtu-->
-        <activity android:name="com.cyou.demo.jiongtu.ui.act.JiongtuActivity"></activity>
-        <activity android:name="com.cyou.demo.jiongtu.ui.act.JiongTuDetailActivity" android:hardwareAccelerated="true" ></activity>
+        <activity android:name="com.potato.demo.jiongtu.ui.act.JiongtuActivity"></activity>
+        <activity android:name="com.potato.demo.jiongtu.ui.act.JiongTuDetailActivity" android:hardwareAccelerated="true" ></activity>
 
         <!--youku-->
-        <activity android:name="com.cyou.demo.youku.ui.act.YKActivity"  ></activity>
-        <activity android:name="com.cyou.demo.youku.ui.act.YKMoreActivity"  ></activity>
+        <activity android:name="com.potato.demo.youku.ui.act.YKActivity"  ></activity>
+        <activity android:name="com.potato.demo.youku.ui.act.YKMoreActivity"  ></activity>
         <!-- 播放界面demo -->
         <activity
-            android:name=".youku.ui.act.YKPlayerActivity"
+            android:name="com.potato.demo.youku.ui.act.YKPlayerActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:exported="true">
         </activity>
         <activity
-            android:name=".youku.ui.act.YKCachedActivity"
+            android:name="com.potato.demo.youku.ui.act.YKCachedActivity"
             android:launchMode="singleTask"
             />
         <activity
-            android:name=".youku.ui.act.YKCachingActivity"
+            android:name="com.potato.demo.youku.ui.act.YKCachingActivity"
             android:launchMode="singleTask"
             />
         <!-- 以下两个为下载时需要的添加的Service -->
@@ -149,7 +149,7 @@
 
 
         <provider
-            android:name="com.cyou.model.library.net.RequestCacheProvider"
+            android:name="com.potato.library.net.RequestCacheProvider"
             android:authorities="com.cyou.demo.RequestCacheProvider" />
     </application>
 

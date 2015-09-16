@@ -56,12 +56,12 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.cyou.model.library.view.NormalEmptyView
+            <com.potato.library.view.NormalEmptyView
                 android:id="@+id/empty_view"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-            </com.cyou.model.library.view.NormalEmptyView>
+            </com.potato.library.view.NormalEmptyView>
 
             <WebView
                 android:id="@+id/webView"

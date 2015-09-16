@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.cyou.model.library.view.slidingtab.SlidingTabLayout
+        <com.potato.library.view.slidingtab.SlidingTabLayout
             android:id="@+id/sliding_tabs_dyou"
             android:layout_width="match_parent"
             android:layout_height="50dp"
