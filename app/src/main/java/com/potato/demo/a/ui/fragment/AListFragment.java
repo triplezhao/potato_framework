@@ -24,12 +24,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseFragment;
-import com.potato.chips.base.BaseListAdapter;
+import com.potato.demo.databinding.FragmentAListBinding;
 import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.viewbinder.AViewBinder;
-import com.potato.demo.databinding.FragmentAListBinding;
+import com.potato.chips.base.BaseFragment;
+import com.potato.chips.base.BaseListAdapter;
 import com.potato.library.view.refresh.RefreshListView;
 
 import java.util.ArrayList;

@@ -3,9 +3,9 @@ package com.potato.demo.a.ui.act;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
-import com.potato.chips.base.BaseActivity;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ActivityBBinding;
+import com.potato.chips.base.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 public class BActivity extends BaseActivity {

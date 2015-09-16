@@ -8,12 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseViewBinder;
-import com.potato.chips.base.BaseViewHolder;
+import com.potato.demo.databinding.ItemABinding;
 import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.act.ADetailActivity;
-import com.potato.demo.databinding.ItemABinding;
+import com.potato.chips.base.BaseViewBinder;
+import com.potato.chips.base.BaseViewHolder;
 import com.potato.library.util.L;
 import com.squareup.picasso.Picasso;
 

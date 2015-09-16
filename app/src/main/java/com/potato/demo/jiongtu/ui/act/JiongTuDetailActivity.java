@@ -22,8 +22,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 
-import com.potato.chips.base.BaseActivity;
-import com.potato.chips.base.BaseListAdapter;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ActivityJiongtuDetailBinding;
 import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
@@ -31,6 +29,8 @@ import com.potato.demo.jiongtu.data.bean.JiongtuPhoto;
 import com.potato.demo.jiongtu.data.parser.JiongtuPhotoListParser;
 import com.potato.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.potato.demo.jiongtu.ui.viewbinder.JiongTuDetailViewBinder;
+import com.potato.chips.base.BaseActivity;
+import com.potato.chips.base.BaseListAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 

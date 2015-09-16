@@ -8,12 +8,12 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 
-import com.potato.chips.base.BaseActivity;
 import com.potato.demo.R;
 import com.potato.demo.jiongtu.data.bean.JiongtuSection;
 import com.potato.demo.jiongtu.data.parser.JiongtuSectionListParser;
 import com.potato.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.potato.demo.jiongtu.ui.fragment.JiongTuListFragment;
+import com.potato.chips.base.BaseActivity;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;

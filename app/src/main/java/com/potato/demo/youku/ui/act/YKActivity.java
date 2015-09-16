@@ -119,7 +119,7 @@ public class YKActivity extends BaseActivity {
      */
     private void sendRequest2LoadMoreList() {
 
-        Request request = YKRequestBuilder.videosByUser(GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", mPage+1+"", "", "");
+        Request request = YKRequestBuilder.videosByUser(GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", mPage + 1 + "", "", "");
 
         RequestManager.DataLoadListener dataLoadListener = new RequestManager.DataLoadListener() {
 
@@ -181,8 +181,9 @@ public class YKActivity extends BaseActivity {
             mAdapter.notifyDataSetChanged();
             if (mList == null || mList.size() == 0 || mList.size() >= mTotal) {
                 mBinding.swipeContainer.setLoadEnable(false);
+            } else {
+                mBinding.swipeContainer.setLoadEnable(true);
             }
-            mBinding.swipeContainer.showSucc();
         } else {
             mBinding.swipeContainer.showEmptyViewFail();
         }

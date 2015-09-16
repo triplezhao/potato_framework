@@ -24,14 +24,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseFragment;
-import com.potato.chips.base.BaseListAdapter;
-import com.potato.demo.R;
 import com.potato.demo.databinding.FragmentJiongtuListBinding;
+import com.potato.demo.R;
 import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
 import com.potato.demo.jiongtu.data.parser.JiongtuAlbumListParser;
 import com.potato.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.potato.demo.jiongtu.ui.viewbinder.JiongTuViewBinder;
+import com.potato.chips.base.BaseFragment;
+import com.potato.chips.base.BaseListAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;

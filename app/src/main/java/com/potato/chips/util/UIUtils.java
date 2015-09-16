@@ -13,8 +13,8 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.potato.chips.app.MainApplication;
 import com.potato.demo.R;
+import com.potato.chips.app.MainApplication;
 
 import org.apache.http.client.HttpResponseException;
 

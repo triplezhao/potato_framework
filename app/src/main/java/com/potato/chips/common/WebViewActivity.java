@@ -19,9 +19,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
+import com.potato.demo.R;
 import com.potato.chips.util.PhoneUtils;
 import com.potato.chips.util.UIUtils;
-import com.potato.demo.R;
 import com.potato.library.util.L;
 import com.potato.library.util.NetUtil;
 import com.potato.library.view.NormalEmptyView;
@@ -77,11 +77,11 @@ public class WebViewActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         // VMRuntime.getRuntime().setTargetHeapUtilization(TARGET_HEAP_UTILIZATION);
         mContext = this;
-        url_Address = getIntent().getStringExtra(URL_ADDRESS);
-        // url_Address =
+        String url = getIntent().getStringExtra(URL_ADDRESS);
+        if (TextUtils.isEmpty(url_Address)) url_Address = defaultURL;
         // "http://10.6.212.211/app3.0/app3.0_activity/downTest.html";
         // 启动默认活动页面的时候后面加上apptoken
-        setContentView(R.layout.webview_layout);
+        setContentView(R.layout.activity_webview);
         initViews();
         initData();
     }

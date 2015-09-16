@@ -6,7 +6,7 @@ import com.potato.chips.base.BaseRequestUrls;
  * 这里通常放置一些常量
  * 
  */
-public class JiongtuRequestUrls extends BaseRequestUrls {
+public class JiongtuRequestUrls extends BaseRequestUrls{
 
 	//测试地址
 	public static final String URL_TEST = BaseURL

@@ -7,13 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.potato.demo.databinding.ItemJiongtuListBinding;
+import com.potato.demo.R;
+import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
 import com.potato.chips.base.BaseViewBinder;
 import com.potato.chips.base.BaseViewHolder;
 import com.potato.chips.common.PageCtrl;
 import com.potato.chips.util.ImageLoaderUtil;
-import com.potato.demo.R;
-import com.potato.demo.databinding.ItemJiongtuListBinding;
-import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
 
 /**
  * Created by ztw on 2015/7/22.

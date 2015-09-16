@@ -8,10 +8,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.potato.chips.base.BaseActivity;
+import com.potato.demo.databinding.ActivityABinding;
 import com.potato.demo.R;
 import com.potato.demo.a.ui.fragment.AListFragment;
-import com.potato.demo.databinding.ActivityABinding;
+import com.potato.chips.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
