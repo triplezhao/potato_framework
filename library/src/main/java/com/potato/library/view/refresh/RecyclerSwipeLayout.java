@@ -1,20 +1,38 @@
+/*
 package com.potato.library.view.refresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.widget.AbsListView;
-import android.widget.ListView;
+import android.widget.AbsRecyclerView;
+import android.widget.RecyclerView;
 
-public class RefreshListView extends BaseRefreshView implements AbsListView.OnScrollListener {
+public class RecyclerSwipeLayout extends BaseSwipeLayout {
+
+
+    public RecyclerSwipeLayout(Context context) {
+        this(context, null);
+        init(context);
+    }
+
+    public RecyclerSwipeLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+
+    public void init(Context context) {
+        final DisplayMetrics metrics = getResources().getDisplayMetrics();
+    }
 
     private int mTouchSlop;
-    private ListView mListView;
+    private RecyclerView  mRecyclerView;
     private OnLoadListener mOnLoadListener;
-    private View mListViewFooter;
+    private View mRecyclerViewFooter;
 
     private int mYDown;
     private int mLastY;
@@ -23,28 +41,16 @@ public class RefreshListView extends BaseRefreshView implements AbsListView.OnSc
     private int mEnd;
     private boolean mEnableLoad;
 
-    public RefreshListView(Context context) {
-        this(context, null);
-    }
-
-    public RefreshListView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public void init(Context context) {
-        super.init(context);
-
-    }
-    //set the footer of the ListView with a ProgressBar in it
-    public void setFooterView(Context context, ListView mListView, int layoutId) {
+    //set the footer of the RecyclerView with a ProgressBar in it
+    public void setFooterView(Context context, RecyclerView mRecyclerView, int layoutId) {
         setLoadEnable(true);
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        mListViewFooter = LayoutInflater.from(context).inflate(layoutId, null,
+        mRecyclerViewFooter = LayoutInflater.from(context).inflate(layoutId, null,
                 false);
-        mListView.addFooterView(mListViewFooter);
-        mListView.setFooterDividersEnabled(false);
-        this.mListView = mListView;
-        mListView.setOnScrollListener(this);
+        mRecyclerView.addFooterView(mRecyclerViewFooter);
+        mRecyclerView.setFooterDividersEnabled(false);
+        this.mRecyclerView = mRecyclerView;
+        mRecyclerView.setOnScrollListener(this);
     }
 
     @Override
@@ -58,7 +64,7 @@ public class RefreshListView extends BaseRefreshView implements AbsListView.OnSc
             case MotionEvent.ACTION_MOVE:
                 mLastY = (int) event.getRawY();
                 if (isPullingUp())
-                    //you can add view or hint here when pulling up the ListView
+                    //you can add view or hint here when pulling up the RecyclerView
                     break;
 
             case MotionEvent.ACTION_UP:
@@ -76,25 +82,25 @@ public class RefreshListView extends BaseRefreshView implements AbsListView.OnSc
     public void setLoadEnable(boolean enableLoad){
         mEnableLoad = enableLoad;
         if(!mEnableLoad){
-            mListView.removeFooterView(mListViewFooter);
+            mRecyclerView.removeFooterView(mRecyclerViewFooter);
         }
     }
 
     private boolean canLoad() {
-        if(mListView.getAdapter()==null||mListView.getAdapter().getCount()<1)
+        if(mRecyclerView.getAdapter()==null||mRecyclerView.getAdapter().getCount()<1)
             return false;
         return isBottom() && !isLoading && isPullingUp();
     }
 
     private boolean isBottom() {
-        if (mListView.getCount() > 0) {
-            if (mListView.getLastVisiblePosition() == mListView.getAdapter().getCount() - 1 ){
-                if(mListView.getFooterViewsCount() == 0){
-                    if(mListView.getChildAt(mListView.getChildCount() - 1).getBottom() <= mListView.getHeight()) {
+        if (mRecyclerView.getCount() > 0) {
+            if (mRecyclerView.getLastVisiblePosition() == mRecyclerView.getAdapter().getCount() - 1 ){
+                if(mRecyclerView.getFooterViewsCount() == 0){
+                    if(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1).getBottom() <= mRecyclerView.getHeight()) {
                         return true;
                     }
                 }else{
-                    if(mListView.getChildAt(mListView.getChildCount() - 2).getBottom() <= mListView.getHeight()) {
+                    if(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 2).getBottom() <= mRecyclerView.getHeight()) {
                         return true;
                     }
                 }
@@ -120,18 +126,18 @@ public class RefreshListView extends BaseRefreshView implements AbsListView.OnSc
         isLoading = loading;
         if (isLoading) {
             if (isRefreshing()) setRefreshing(false);
-            if (mListView.getFooterViewsCount() == 0) {
-                mListView.addFooterView(mListViewFooter);
-//                mListView.setSelection(mListView.getAdapter().getCount() - 1);
+            if (mRecyclerView.getFooterViewsCount() == 0) {
+                mRecyclerView.addFooterView(mRecyclerViewFooter);
+//                mRecyclerView.setSelection(mRecyclerView.getAdapter().getCount() - 1);
             } else {
-                mListViewFooter.setVisibility(VISIBLE);
-                //mListView.addFooterView(mListViewFooter);
+                mRecyclerViewFooter.setVisibility(VISIBLE);
+                //mRecyclerView.addFooterView(mRecyclerViewFooter);
             }
         } else {
-//            if (mListView.getAdapter() instanceof HeaderViewListAdapter) {
-//                mListView.removeFooterView(mListViewFooter);
+//            if (mRecyclerView.getAdapter() instanceof HeaderViewListAdapter) {
+//                mRecyclerView.removeFooterView(mRecyclerViewFooter);
 //            } else {
-                mListViewFooter.setVisibility(View.GONE);
+            mRecyclerViewFooter.setVisibility(View.GONE);
 //            }
             mYDown = 0;
             mLastY = 0;
@@ -143,18 +149,18 @@ public class RefreshListView extends BaseRefreshView implements AbsListView.OnSc
     }
 
     @Override
-    public void onScrollStateChanged(AbsListView absListView, int i) {
+    public void onScrollStateChanged(AbsRecyclerView absRecyclerView, int i) {
         if(canLoad()){
             loadData();
         }
     }
 
     @Override
-    public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+    public void onScroll(AbsRecyclerView absRecyclerView, int i, int i1, int i2) {
 
     }
 
     public static interface OnLoadListener {
         public void onLoad();
     }
-}
+}*/

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.demo.databinding.ItemABinding;
 import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
@@ -15,7 +16,6 @@ import com.potato.demo.a.ui.act.ADetailActivity;
 import com.potato.chips.base.BaseViewBinder;
 import com.potato.chips.base.BaseViewHolder;
 import com.potato.library.util.L;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by ztw on 2015/7/22.
@@ -61,11 +61,13 @@ public class AViewBinder extends BaseViewBinder<AViewBinder.AViewHolder> {
 //                        binding.avatar.setImageDrawable(resource);
 //                    }
 //                });
-        Picasso.with(binding.getRoot().getContext())
+        /*Picasso.with(binding.getRoot().getContext())
                 .load(bean.getIcon())
                 .placeholder(R.drawable.icon_tab_home)
-                .resize(100,100)
-                .into(binding.avatar);
+                .resize(100, 100)
+                .into(binding.avatar);*/
+
+        ImageLoaderUtil.displayImage(bean.getIcon(), binding.avatar, R.drawable.def_gray_small);
     }
 
     public static class AViewHolder extends BaseViewHolder {

@@ -17,7 +17,7 @@ import com.potato.demo.youku.ui.viewbinder.YKVideoViewBinder;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;
-import com.potato.library.view.refresh.RefreshListView;
+import com.potato.library.view.refresh.ListSwipeLayout;
 
 import java.util.ArrayList;
 
@@ -58,7 +58,7 @@ public class YKActivity extends BaseActivity {
                 sendRequest2RefreshList();
             }
         });
-        mBinding.swipeContainer.setOnLoadListener(new RefreshListView.OnLoadListener() {
+        mBinding.swipeContainer.setOnLoadListener(new ListSwipeLayout.OnLoadListener() {
             @Override
             public void onLoad() {
                 sendRequest2LoadMoreList();

@@ -1,20 +1,14 @@
 package com.potato.chips.app;
 
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.chips.util.PhoneUtils;
 import com.potato.library.net.RequestHttpClient;
 import com.potato.library.net.RequestManager;
-import com.loopj.android.http.AsyncHttpClient;
-import com.squareup.picasso.Downloader;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
-
-import java.io.File;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -70,24 +64,6 @@ public class MainApplication extends Application {
 //                new LruCache(1024*1024*20)).downloader();
 //            Picasso picasso = new Picasso.Builder(this).downloader(new OkHttpDownloader(new File(imageCacheDir))).build();
 //            Picasso.setSingletonInstance(picasso);
-        File cacheDir;
-        if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
-            cacheDir = context.getExternalCacheDir();
-        } else {
-            cacheDir = context.getCacheDir();
-        }
-        Downloader downloader = new OkHttpDownloader(cacheDir, Integer.MAX_VALUE);
-        Picasso.Builder builder = new Picasso.Builder(context);
-        builder.downloader(downloader);
-
-        int memClass = ((ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE))
-                .getLargeMemoryClass();
-        int cacheSize = 1024 * 1024 * memClass / 8;
-        builder.memoryCache(new com.squareup.picasso.LruCache(cacheSize));
-
-        Picasso picasso = builder.build();
-        Picasso.setSingletonInstance(picasso);
     }
 
     public void initUIL(){

@@ -7,16 +7,16 @@ import android.util.DisplayMetrics;
 
 import com.potato.library.view.NormalEmptyView;
 
-public class BaseRefreshView extends SwipeRefreshLayout {
+public class BaseSwipeLayout extends SwipeRefreshLayout {
 
     private int mEnd;
 
-    public BaseRefreshView(Context context) {
+    public BaseSwipeLayout(Context context) {
         this(context, null);
         init(context);
     }
 
-    public BaseRefreshView(Context context, AttributeSet attrs) {
+    public BaseSwipeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }

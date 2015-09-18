@@ -35,7 +35,7 @@ import com.potato.chips.base.BaseListAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;
-import com.potato.library.view.refresh.RefreshListView;
+import com.potato.library.view.refresh.ListSwipeLayout;
 
 import java.util.ArrayList;
 
@@ -84,7 +84,7 @@ public class JiongTuListFragment extends BaseFragment {
                 sendRequest2RefreshList();
             }
         });
-        mBinding.swipeContainer.setOnLoadListener(new RefreshListView.OnLoadListener() {
+        mBinding.swipeContainer.setOnLoadListener(new ListSwipeLayout.OnLoadListener() {
             @Override
             public void onLoad() {
                 sendRequest2LoadMoreList();
