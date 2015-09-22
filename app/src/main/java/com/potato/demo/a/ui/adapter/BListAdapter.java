@@ -1,44 +1,50 @@
-package com.potato.demo.a.ui.viewbinder;
+package com.potato.demo.a.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.potato.chips.base.BaseRecyclerViewAdapter;
 import com.potato.chips.util.ImageLoaderUtil;
-import com.potato.demo.databinding.ItemABinding;
 import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.act.ADetailActivity;
-import com.potato.chips.base.BaseViewBinder;
-import com.potato.chips.base.BaseViewHolder;
+import com.potato.demo.databinding.ItemABinding;
 import com.potato.library.util.L;
 
 /**
- * Created by ztw on 2015/7/22.
+ * Created by ztw on 2015/9/21.
  */
-public class AViewBinder extends BaseViewBinder<AViewBinder.AViewHolder> {
+public class BListAdapter extends BaseRecyclerViewAdapter {
+
+    public BListAdapter(Context context) {
+        super(context);
+    }
+
     @Override
-    public AViewHolder onCreateViewHolder(int position, int type, ViewGroup parent) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         ItemABinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.item_a,
                 parent,
                 false);
-        AViewHolder holder = new AViewHolder(binding.getRoot());
+        VH holder = new VH(binding.getRoot());
         holder.setBinding(binding);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(AViewHolder holder, Object object, int position, int type) {
-        final ItemABinding binding = (ItemABinding) holder.getBinding();
-        final ABean bean = (ABean) object;
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final ItemABinding binding = (ItemABinding) ((VH)holder).getBinding();
+        final ABean bean = (ABean) mData.get(position);
         binding.setBean(bean);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,31 +56,16 @@ public class AViewBinder extends BaseViewBinder<AViewBinder.AViewHolder> {
             }
         });
         L.i("with", bean.getIcon());
-//        Glide.with(binding.getRoot().getContext())
-//                .load(bean.getIcon())
-//                .fitCenter()
-//                .placeholder(R.drawable.ic_launcher)
-////                .into(binding.avatar);
-//                .into(new SimpleTarget<GlideDrawable>() {
-//                    @Override
-//                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-//                        binding.avatar.setImageDrawable(resource);
-//                    }
-//                });
-        /*Picasso.with(binding.getRoot().getContext())
-                .load(bean.getIcon())
-                .placeholder(R.drawable.icon_tab_home)
-                .resize(100, 100)
-                .into(binding.avatar);*/
 
         ImageLoaderUtil.displayImage(bean.getIcon(), binding.avatar, R.drawable.def_gray_small);
     }
 
-    public static class AViewHolder extends BaseViewHolder {
+
+    public static class VH extends RecyclerView.ViewHolder {
 
         private ViewDataBinding binding;
 
-        public AViewHolder(View itemView) {
+        public VH(View itemView) {
             super(itemView);
         }
 
@@ -86,5 +77,4 @@ public class AViewBinder extends BaseViewBinder<AViewBinder.AViewHolder> {
             this.binding = binding;
         }
     }
-
 }

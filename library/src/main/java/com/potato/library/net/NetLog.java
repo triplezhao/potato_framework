@@ -5,7 +5,7 @@ import android.text.TextUtils;
 /**
  * 日志工具�?
  */
-public class L {
+public class NetLog {
 	/** 日志默认TAG,可在输出日志时手动指�? */
 	public static final String TAG = "17173";
 	/** 日志类型-Debug */

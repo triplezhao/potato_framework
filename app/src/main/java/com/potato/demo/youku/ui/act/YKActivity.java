@@ -13,7 +13,7 @@ import com.potato.demo.databinding.ActivityYkVideosBinding;
 import com.potato.demo.youku.data.bean.YKVideo;
 import com.potato.demo.youku.data.parser.YKVideosByUserParser;
 import com.potato.demo.youku.data.request.YKRequestBuilder;
-import com.potato.demo.youku.ui.viewbinder.YKVideoViewBinder;
+import com.potato.demo.youku.ui.adapter.YKVideoAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;
@@ -44,7 +44,7 @@ public class YKActivity extends BaseActivity {
 
         mBinding.swipeContainer.setFooterView(mContext, mBinding.list, R.layout.listview_footer);
 
-        mAdapter = new BaseListAdapter(mContext, new YKVideoViewBinder());
+        mAdapter = new YKVideoAdapter(mContext);
         mBinding.list.setAdapter(mAdapter);
 
         mBinding.swipeContainer.setColorSchemeResources(R.color.google_blue,

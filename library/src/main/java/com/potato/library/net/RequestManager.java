@@ -81,7 +81,7 @@ public class RequestManager {
 
         String paramedUrl = RequestUtil.getParamedUrl(request, null);
 
-        L.d(TAG, "RequestData, url: " + paramedUrl + ", bodyContent: "
+        NetLog.d(TAG, "RequestData, url: " + paramedUrl + ", bodyContent: "
                 + bodyContent + ", loadCache: " + cacheType + ", selection: "
                 + selection);
 
@@ -114,7 +114,7 @@ public class RequestManager {
 
         if (hasCache) {
             if (cacheType == CACHE_TYPE_NORMAL) {
-                L.d(TAG, "Return result from cache, url: " + url
+                NetLog.d(TAG, "Return result from cache, url: " + url
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
@@ -123,23 +123,23 @@ public class RequestManager {
                     return;
 
             } else if (cacheType == CACHE_TYPE_IGNORE_TIME) {
-                L.d(TAG, "Return result from cache, url: " + url
+                NetLog.d(TAG, "Return result from cache, url: " + url
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
             } else if (cacheType == CACHE_TYPE_FIRST_REQUEST) {
-                L.d(TAG, "Return result from cache, url: " + url
+                NetLog.d(TAG, "Return result from cache, url: " + url
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
                 if (mCacheTimes.get(cacheKey) != null
                         && mCacheTimes.get(cacheKey) > 0) {
-                    L.d(TAG,
+                    NetLog.d(TAG,
                             "This request has been responded from server, do not send the request again");
                     return;
                 }
             } else if (cacheType == CACHE_TYPE_CACHEONLY) {
-                L.d(TAG, "Return result from cache, url: " + url
+                NetLog.d(TAG, "Return result from cache, url: " + url
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
@@ -168,13 +168,13 @@ public class RequestManager {
                 dataListener.onSuccess(statusCode, content);
 
                 if (!dataListener.isShouldSaveCache()) {
-                    L.d(TAG,
+                    NetLog.d(TAG,
                             "Return result from server without saving in cache, url: "
                                     + url + ", cacheType: " + cacheType
                                     + ", result: " + content);
                     return;
                 }
-                L.d(TAG, "Return result from server and save in cache, url: "
+                NetLog.d(TAG, "Return result from server and save in cache, url: "
                         + url + ", cacheType: " + cacheType + ", result: "
                         + content);
 
@@ -200,7 +200,7 @@ public class RequestManager {
 
             @Override
             public void onFailure(Throwable error, String content) {
-                L.d(TAG, "Request failed, url: " + url + ", error: " + error);
+                NetLog.d(TAG, "Request failed, url: " + url + ", error: " + error);
                 dataListener.onFailure(error, content);
                 if (isInCache && cacheType == CACHE_TYPE_NETWORK_FIRST) {
                     dataListener.onCacheLoaded(cacheContent);

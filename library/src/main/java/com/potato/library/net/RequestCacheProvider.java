@@ -92,7 +92,7 @@ public class RequestCacheProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = RequestCacheDBHelper.getInstance(getContext());
-        L.d(TAG, "In onCreate method, create the provider: " + this
+        NetLog.d(TAG, "In onCreate method, create the provider: " + this
                 + ", and DatabaseHelper: " + mOpenHelper);
         return true;
     }
@@ -116,7 +116,7 @@ public class RequestCacheProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
             String[] selectionArgs, String sortOrder) {
-        L.d(TAG, "In query method, uri: " + uri + ", selection: " + selection);
+        NetLog.d(TAG, "In query method, uri: " + uri + ", selection: " + selection);
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         UriMatcher uriMatcher = getUriMatcher();
         String tablePath = getTablePath();
@@ -139,7 +139,7 @@ public class RequestCacheProvider extends ContentProvider {
                 null, null, sortOrder);
 
         if (result == null) {
-            L.d("Query failed with uri: " + uri);
+            NetLog.d("Query failed with uri: " + uri);
         } else {
             result.setNotificationUri(getContext().getContentResolver(), uri);
         }
@@ -149,7 +149,7 @@ public class RequestCacheProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
             String[] selectionArgs) {
-        L.d(TAG, "In update method, uri: " + uri + ", selection: " + selection);
+        NetLog.d(TAG, "In update method, uri: " + uri + ", selection: " + selection);
         int count = 0;
         UriMatcher uriMatcher = getUriMatcher();
         String tablePath = getTablePath();
@@ -176,7 +176,7 @@ public class RequestCacheProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        L.d(TAG, "In delete method, uri: " + uri + ", selection: " + selection);
+        NetLog.d(TAG, "In delete method, uri: " + uri + ", selection: " + selection);
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count;
         UriMatcher uriMatcher = getUriMatcher();

@@ -24,12 +24,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.demo.databinding.FragmentAListBinding;
-import com.potato.demo.R;
-import com.potato.demo.a.data.bean.ABean;
-import com.potato.demo.a.ui.viewbinder.AViewBinder;
 import com.potato.chips.base.BaseFragment;
 import com.potato.chips.base.BaseListAdapter;
+import com.potato.demo.R;
+import com.potato.demo.a.data.bean.ABean;
+import com.potato.demo.a.ui.adapter.AListAdapter;
+import com.potato.demo.databinding.FragmentAListBinding;
 import com.potato.library.view.refresh.ListSwipeLayout;
 
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class AListFragment extends BaseFragment {
 
         binding.swipeContainer.setFooterView(getActivity(), binding.list, R.layout.listview_footer);
 
-        mAdapter = new BaseListAdapter(getActivity(), new AViewBinder());
+        mAdapter = new AListAdapter(getActivity());
         binding.list.setAdapter(mAdapter);
 
         binding.swipeContainer.setColorSchemeResources(R.color.google_blue,

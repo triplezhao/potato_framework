@@ -95,7 +95,7 @@ public class RequestHttpClient {
             httpClient.setTimeout(TIMEOUT * 3);
             httpClient.get(url, responseHandler);
         } else {
-            L.d("Network not available, send fail message to response the request: "
+            NetLog.d("Network not available, send fail message to response the request: "
                     + url);
             responseHandler.onFailure(new HttpResponseException(9999,
                     "Network is Forbid 2G/3G,Wifi"),

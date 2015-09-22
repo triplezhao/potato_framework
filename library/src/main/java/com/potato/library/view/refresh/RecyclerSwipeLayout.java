@@ -1,18 +1,33 @@
-/*
 package com.potato.library.view.refresh;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
-import android.widget.AbsRecyclerView;
-import android.widget.RecyclerView;
+
+import com.potato.library.util.L;
+
 
 public class RecyclerSwipeLayout extends BaseSwipeLayout {
 
+    public final String TAG = RecyclerSwipeLayout.class.getSimpleName();
+    private RecyclerView mRecyclerView;
+    private OnLoadListener mOnLoadListener;
+    private View mRecyclerViewFooter;
+
+    private int mYDown;
+    private int mLastY;
+
+    private boolean isLoading = false;
+    private int mEnd;
+    private boolean mEnableLoad;
+    private static final int CIRCLE_DIAMETER_LARGE = 56;
+    private int mFooter_height;
 
     public RecyclerSwipeLayout(Context context) {
         this(context, null);
@@ -26,31 +41,28 @@ public class RecyclerSwipeLayout extends BaseSwipeLayout {
 
 
     public void init(Context context) {
+        super.init(context);
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
+        mFooter_height= (int) (CIRCLE_DIAMETER_LARGE * metrics.density);
     }
-
-    private int mTouchSlop;
-    private RecyclerView  mRecyclerView;
-    private OnLoadListener mOnLoadListener;
-    private View mRecyclerViewFooter;
-
-    private int mYDown;
-    private int mLastY;
-
-    private boolean isLoading = false;
-    private int mEnd;
-    private boolean mEnableLoad;
 
     //set the footer of the RecyclerView with a ProgressBar in it
     public void setFooterView(Context context, RecyclerView mRecyclerView, int layoutId) {
         setLoadEnable(true);
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+
         mRecyclerViewFooter = LayoutInflater.from(context).inflate(layoutId, null,
                 false);
-        mRecyclerView.addFooterView(mRecyclerViewFooter);
-        mRecyclerView.setFooterDividersEnabled(false);
         this.mRecyclerView = mRecyclerView;
-        mRecyclerView.setOnScrollListener(this);
+        this.addView(mRecyclerViewFooter);
+        mRecyclerView.setOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (canLoad()) {
+                    loadData();
+                }
+            }
+        });
     }
 
     @Override
@@ -79,34 +91,31 @@ public class RecyclerSwipeLayout extends BaseSwipeLayout {
         return super.dispatchTouchEvent(event);
     }
 
-    public void setLoadEnable(boolean enableLoad){
+    public void setLoadEnable(boolean enableLoad) {
         mEnableLoad = enableLoad;
-        if(!mEnableLoad){
-            mRecyclerView.removeFooterView(mRecyclerViewFooter);
+        if (!mEnableLoad) {
+            if (mRecyclerViewFooter != null)
+                this.removeView(mRecyclerViewFooter);
+            mRecyclerViewFooter = null;
         }
     }
 
     private boolean canLoad() {
-        if(mRecyclerView.getAdapter()==null||mRecyclerView.getAdapter().getCount()<1)
+        if (mRecyclerView.getAdapter() == null && mRecyclerView.getAdapter().getItemCount() < 1)
             return false;
-        return isBottom() && !isLoading && isPullingUp();
+        return mEnableLoad && !isLoading && isPullingUp() && isBottom();
     }
 
     private boolean isBottom() {
-        if (mRecyclerView.getCount() > 0) {
-            if (mRecyclerView.getLastVisiblePosition() == mRecyclerView.getAdapter().getCount() - 1 ){
-                if(mRecyclerView.getFooterViewsCount() == 0){
-                    if(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1).getBottom() <= mRecyclerView.getHeight()) {
-                        return true;
-                    }
-                }else{
-                    if(mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 2).getBottom() <= mRecyclerView.getHeight()) {
-                        return true;
-                    }
+        if (mRecyclerView.getAdapter().getItemCount() > 0) {
+            if (((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastVisibleItemPosition() == mRecyclerView.getAdapter().getItemCount() - 1) {
+                if (mRecyclerView.getChildAt(mRecyclerView.getChildCount() - 1).getBottom() <= mRecyclerView.getHeight()) {
+                    return true;
                 }
             }
 
         }
+
         return false;
     }
 
@@ -126,19 +135,14 @@ public class RecyclerSwipeLayout extends BaseSwipeLayout {
         isLoading = loading;
         if (isLoading) {
             if (isRefreshing()) setRefreshing(false);
-            if (mRecyclerView.getFooterViewsCount() == 0) {
-                mRecyclerView.addFooterView(mRecyclerViewFooter);
-//                mRecyclerView.setSelection(mRecyclerView.getAdapter().getCount() - 1);
+            if (mRecyclerViewFooter == null) {
+                this.addView(mRecyclerViewFooter);
             } else {
                 mRecyclerViewFooter.setVisibility(VISIBLE);
-                //mRecyclerView.addFooterView(mRecyclerViewFooter);
+                L.i(TAG, "setLoading");
             }
         } else {
-//            if (mRecyclerView.getAdapter() instanceof HeaderViewListAdapter) {
-//                mRecyclerView.removeFooterView(mRecyclerViewFooter);
-//            } else {
             mRecyclerViewFooter.setVisibility(View.GONE);
-//            }
             mYDown = 0;
             mLastY = 0;
         }
@@ -148,19 +152,34 @@ public class RecyclerSwipeLayout extends BaseSwipeLayout {
         mOnLoadListener = loadListener;
     }
 
-    @Override
-    public void onScrollStateChanged(AbsRecyclerView absRecyclerView, int i) {
-        if(canLoad()){
-            loadData();
-        }
-    }
-
-    @Override
-    public void onScroll(AbsRecyclerView absRecyclerView, int i, int i1, int i2) {
-
-    }
 
     public static interface OnLoadListener {
         public void onLoad();
     }
-}*/
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        L.i(TAG, "onLayout");
+        if (mRecyclerViewFooter != null) {
+            L.i(TAG, "onLayout+mRecyclerViewFooter");
+            final int width = getMeasuredWidth();
+            final int height = getMeasuredHeight();
+            int footerWidth = mRecyclerViewFooter.getMeasuredWidth();
+            int footereHeight = mRecyclerViewFooter.getMeasuredHeight();
+            mRecyclerViewFooter.layout(left, mRecyclerView.getBottom()-200,
+                    right, mRecyclerView.getBottom()+mRecyclerViewFooter.getHeight());
+        }
+    }
+
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        if (mRecyclerViewFooter != null) {
+            L.i(TAG, "onMeasure");
+            mRecyclerViewFooter.measure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(mFooter_height, MeasureSpec.EXACTLY));
+        }
+
+    }
+}

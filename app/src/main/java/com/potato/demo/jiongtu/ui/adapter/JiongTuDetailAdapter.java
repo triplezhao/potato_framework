@@ -1,23 +1,29 @@
-package com.potato.demo.jiongtu.ui.viewbinder;
+package com.potato.demo.jiongtu.ui.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.demo.R;
-import com.potato.demo.databinding.ItemJiongtuDetailBinding;
-import com.potato.demo.jiongtu.data.bean.JiongtuPhoto;
-import com.potato.chips.base.BaseViewBinder;
+import com.potato.chips.base.BaseListAdapter;
 import com.potato.chips.base.BaseViewHolder;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.chips.util.ShareUtil;
+import com.potato.demo.R;
+import com.potato.demo.databinding.ItemJiongtuDetailBinding;
+import com.potato.demo.jiongtu.data.bean.JiongtuPhoto;
 
 /**
- * Created by ztw on 2015/7/22.
+ * Created by ztw on 2015/9/21.
  */
-public class JiongTuDetailViewBinder extends BaseViewBinder<JiongTuDetailViewBinder.ViewHolder> {
+public class JiongTuDetailAdapter extends BaseListAdapter{
+
+    public JiongTuDetailAdapter(Context context) {
+        super(context);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(int position, int type, ViewGroup parent) {
 
@@ -33,8 +39,8 @@ public class JiongTuDetailViewBinder extends BaseViewBinder<JiongTuDetailViewBin
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, Object object, int position, int type) {
-        final ItemJiongtuDetailBinding binding = (ItemJiongtuDetailBinding) holder.getBinding();
+    public void onBindViewHolder(BaseViewHolder holder, Object object, int position, int type) {
+        final ItemJiongtuDetailBinding binding = (ItemJiongtuDetailBinding) ((ViewHolder)holder).getBinding();
         final JiongtuPhoto bean = (JiongtuPhoto) object;
         binding.setBean(bean);
 //        L.i("Picasso", "URL," + bean.getBigUrl());
@@ -75,5 +81,4 @@ public class JiongTuDetailViewBinder extends BaseViewBinder<JiongTuDetailViewBin
             this.binding = binding;
         }
     }
-
 }

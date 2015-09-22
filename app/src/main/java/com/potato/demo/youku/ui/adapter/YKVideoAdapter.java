@@ -1,5 +1,6 @@
-package com.potato.demo.youku.ui.viewbinder;
+package com.potato.demo.youku.ui.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
@@ -8,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseViewBinder;
+import com.potato.chips.base.BaseListAdapter;
 import com.potato.chips.base.BaseViewHolder;
 import com.potato.chips.common.PageCtrl;
 import com.potato.chips.util.ImageLoaderUtil;
@@ -17,12 +18,14 @@ import com.potato.demo.databinding.ItemYkVideoBinding;
 import com.potato.demo.youku.data.bean.YKVideo;
 
 /**
- * Created by ztw on 2015/9/8.
+ * Created by ztw on 2015/9/21.
  */
-public class YKVideoViewBinder extends BaseViewBinder<YKVideoViewBinder.ViewHolder> {
+public class YKVideoAdapter extends BaseListAdapter{
 
-    public YKVideoViewBinder() {
+    public YKVideoAdapter(Context context) {
+        super(context);
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(int position, int type, ViewGroup parent) {
@@ -39,8 +42,8 @@ public class YKVideoViewBinder extends BaseViewBinder<YKVideoViewBinder.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, Object object, int position, int type) {
-        final ItemYkVideoBinding binding = (ItemYkVideoBinding) holder.getBinding();
+    public void onBindViewHolder(BaseViewHolder holder, Object object, int position, int type) {
+        final ItemYkVideoBinding binding = (ItemYkVideoBinding) ((ViewHolder)holder).getBinding();
         final YKVideo bean = (YKVideo) object;
         binding.setBean(bean);
         ImageLoaderUtil.displayImage(bean.getThumbnail(), binding.ivPic, R.drawable.def_gray_big);
@@ -54,7 +57,7 @@ public class YKVideoViewBinder extends BaseViewBinder<YKVideoViewBinder.ViewHold
                 intent.setData(content_url);
 //                binding.getRoot().getContext().startActivity(intent);
 
-                PageCtrl.start2WebViewActivity(binding.getRoot().getContext(),"https://shop108703695.taobao.com");
+                PageCtrl.start2WebViewActivity(binding.getRoot().getContext(), "https://shop108703695.taobao.com");
 //                PageCtrl.start2SchemaPage(content_url);
 //                https://shop108703695.taobao.com
             }
@@ -78,5 +81,4 @@ public class YKVideoViewBinder extends BaseViewBinder<YKVideoViewBinder.ViewHold
             this.binding = binding;
         }
     }
-
 }

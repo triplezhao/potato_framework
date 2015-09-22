@@ -5,11 +5,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 
+import com.potato.library.util.L;
 import com.potato.library.view.NormalEmptyView;
 
 public class BaseSwipeLayout extends SwipeRefreshLayout {
 
     private int mEnd;
+    protected int mTouchSlop;
 
     public BaseSwipeLayout(Context context) {
         this(context, null);
@@ -25,6 +27,7 @@ public class BaseSwipeLayout extends SwipeRefreshLayout {
     public void init(Context context) {
         final DisplayMetrics metrics = getResources().getDisplayMetrics();
         mEnd = (int) (24 * metrics.density);
+        L.i("BaseSwipeLayout","mEnd="+mEnd);
     }
 
     //设置刷新动画最大位置

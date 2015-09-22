@@ -1,4 +1,4 @@
-package com.potato.demo.jiongtu.ui.viewbinder;
+package com.potato.demo.jiongtu.ui.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -7,20 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.demo.databinding.ItemJiongtuListBinding;
-import com.potato.demo.R;
-import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
-import com.potato.chips.base.BaseViewBinder;
+import com.potato.chips.base.BaseListAdapter;
 import com.potato.chips.base.BaseViewHolder;
 import com.potato.chips.common.PageCtrl;
 import com.potato.chips.util.ImageLoaderUtil;
+import com.potato.demo.R;
+import com.potato.demo.databinding.ItemJiongtuListBinding;
+import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
 
 /**
- * Created by ztw on 2015/7/22.
+ * Created by ztw on 2015/9/21.
  */
-public class JiongTuViewBinder extends BaseViewBinder<JiongTuViewBinder.ViewHolder> {
+public class JiongTuListAdapter extends BaseListAdapter{
 
-    public JiongTuViewBinder() {
+    public JiongTuListAdapter(Context context) {
+        super(context);
     }
 
     @Override
@@ -38,8 +39,8 @@ public class JiongTuViewBinder extends BaseViewBinder<JiongTuViewBinder.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, Object object, int position, int type) {
-        ItemJiongtuListBinding binding = (ItemJiongtuListBinding) holder.getBinding();
+    public void onBindViewHolder(BaseViewHolder holder, Object object, int position, int type) {
+        ItemJiongtuListBinding binding = (ItemJiongtuListBinding) ((ViewHolder)holder).getBinding();
         final JiongtuAlbum bean = (JiongtuAlbum)object;
         binding.setBean(bean);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
@@ -49,11 +50,6 @@ public class JiongTuViewBinder extends BaseViewBinder<JiongTuViewBinder.ViewHold
                 PageCtrl.startJiongTuDetailActivity(context, bean);
             }
         });
-//        Picasso.with(binding.getRoot().getContext())
-//                .load(bean.getBigCover())
-//                .placeholder(R.drawable.def_gray_big)
-////                .resize(100,100)
-//                .into(binding.ivPic);
         ImageLoaderUtil.displayImage(bean.getBigCover(), binding.ivPic, R.drawable.def_gray_big);
     }
 
@@ -73,5 +69,4 @@ public class JiongTuViewBinder extends BaseViewBinder<JiongTuViewBinder.ViewHold
             this.binding = binding;
         }
     }
-
 }

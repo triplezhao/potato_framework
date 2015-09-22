@@ -5,13 +5,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
 public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnScrollListener {
 
-    private int mTouchSlop;
     private ListView mListView;
     private OnLoadListener mOnLoadListener;
     private View mListViewFooter;
@@ -38,7 +36,7 @@ public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnSc
     //set the footer of the ListView with a ProgressBar in it
     public void setFooterView(Context context, ListView mListView, int layoutId) {
         setLoadEnable(true);
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+
         mListViewFooter = LayoutInflater.from(context).inflate(layoutId, null,
                 false);
         mListView.addFooterView(mListViewFooter);
