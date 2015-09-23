@@ -141,8 +141,11 @@ public class RecyclerSwipeLayout extends BaseSwipeLayout {
                 mRecyclerViewFooter.setVisibility(VISIBLE);
                 L.i(TAG, "setLoading");
             }
+            mRecyclerView.setPadding(0, 0, 0, mFooter_height);
+            mRecyclerView.scrollToPosition(mRecyclerView.getAdapter().getItemCount()-1);
         } else {
             mRecyclerViewFooter.setVisibility(View.GONE);
+            mRecyclerView.setPadding(0,0,0,0);
             mYDown = 0;
             mLastY = 0;
         }
@@ -162,24 +165,27 @@ public class RecyclerSwipeLayout extends BaseSwipeLayout {
         super.onLayout(changed, left, top, right, bottom);
         L.i(TAG, "onLayout");
         if (mRecyclerViewFooter != null) {
-            L.i(TAG, "onLayout+mRecyclerViewFooter");
+            L.i(TAG, "onLayout+mRecyclerView.getBottom()"+mRecyclerView.getBottom());
+            L.i(TAG, "onLayout+mRecyclerViewFooter.getHeight()"+mRecyclerViewFooter.getHeight());
+            L.i(TAG, "onLayout+mRecyclerViewFooter.getWidth()"+mRecyclerViewFooter.getWidth());
             final int width = getMeasuredWidth();
             final int height = getMeasuredHeight();
             int footerWidth = mRecyclerViewFooter.getMeasuredWidth();
             int footereHeight = mRecyclerViewFooter.getMeasuredHeight();
-            mRecyclerViewFooter.layout(left, mRecyclerView.getBottom()-200,
-                    right, mRecyclerView.getBottom()+mRecyclerViewFooter.getHeight());
+            mRecyclerViewFooter.layout(left, mRecyclerView.getBottom()-mFooter_height,
+                    right, mRecyclerView.getBottom());
         }
     }
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (mRecyclerViewFooter != null) {
-            L.i(TAG, "onMeasure");
+            L.i(TAG, "onMeasure"+mFooter_height);
+            L.i(TAG, "MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY)" + MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY));
             mRecyclerViewFooter.measure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
                     MeasureSpec.makeMeasureSpec(mFooter_height, MeasureSpec.EXACTLY));
         }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
     }
 }

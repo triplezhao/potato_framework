@@ -44,34 +44,28 @@
                 android:src="@drawable/ic_add_white_24dp" />
         </RelativeLayout>
 
-        <FrameLayout
-            android:id="@+id/container"
+
+        <com.potato.library.view.refresh.RecyclerSwipeLayout
+            android:layout_below="@id/rl_header"
+            android:id="@+id/swipe_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/rl_header">
+            android:layout_height="match_parent">
 
-            <com.potato.library.view.refresh.RecyclerSwipeLayout
-                android:id="@+id/swipe_container"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/list"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:background="@android:color/transparent"
-                    android:cacheColorHint="@android:color/transparent"
-                    android:divider="@color/potato_gray3"
-                    android:dividerHeight="1px"
-                    android:listSelector="@android:color/transparent"
-                    android:scrollbars="none"></android.support.v7.widget.RecyclerView>
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@color/potato_gray3"
+                android:dividerHeight="1px"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none"
+                ></android.support.v7.widget.RecyclerView>
 
 
-            </com.potato.library.view.refresh.RecyclerSwipeLayout>
-
-
-        </FrameLayout>
+        </com.potato.library.view.refresh.RecyclerSwipeLayout>
 
 
         <View

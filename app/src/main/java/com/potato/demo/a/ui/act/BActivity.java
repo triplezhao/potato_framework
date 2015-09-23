@@ -54,7 +54,7 @@ public class BActivity extends BaseActivity {
 //                        mAdapter.notifyDataSetChanged();
                         binding.swipeContainer.setRefreshing(false);
                     }
-                }, 3000);
+                }, 300);
             }
         });
         binding.swipeContainer.setOnLoadListener(new RecyclerSwipeLayout.OnLoadListener() {
@@ -68,7 +68,7 @@ public class BActivity extends BaseActivity {
 //                        mAdapter.notifyDataSetChanged();
                         binding.swipeContainer.setLoading(false);
                     }
-                }, 3000);
+                }, 300);
 
             }
         });
@@ -81,7 +81,7 @@ public class BActivity extends BaseActivity {
                 mAdapter.notifyDataSetChanged();
                 binding.swipeContainer.setRefreshing(false);
             }
-        }, 3000);
+        }, 300);
     }
 
     private List<ABean> getRandomSublist(String[] array, int amount) {
