@@ -11,8 +11,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.cyou.model.common.R;
-
+import com.potato.library.R;
 
 /**
  * 个性化dialog的工具类，模板满足不了的，添加一个创建自定义dialog方法吧。

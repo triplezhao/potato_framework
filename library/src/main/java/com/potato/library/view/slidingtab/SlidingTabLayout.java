@@ -29,8 +29,7 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.cyou.model.common.R;
+import com.potato.library.R;
 import com.potato.library.util.L;
 
 

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cyou.model.common.R;
+import com.potato.library.R;
 import com.potato.library.util.L;
 
 
