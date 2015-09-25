@@ -1,6 +1,7 @@
-package com.potato.chips.base;
+package com.potato.library.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,22 +61,21 @@ public abstract class BaseListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //item控件
-        BaseViewHolder vh;
+        RecyclerView.ViewHolder vh;
         if (convertView == null) {
             //findview  clumn
-            vh = onCreateViewHolder(position, getItemViewType(position), parent);
-            convertView = vh.view;
+            vh = onCreateViewHolder(parent,getItemViewType(position));
+            convertView = vh.itemView;
         } else {
-            vh = (BaseViewHolder) convertView.getTag();
+            vh =(RecyclerView.ViewHolder)convertView.getTag();
         }
-        onBindViewHolder( vh, mData.get(position), position, getItemViewType(position));
+        onBindViewHolder(vh,position);
         return convertView;
     }
 
-
     //返回 inflate出 每个元素的 layout，可以根据type给不同的布局
-    public abstract BaseViewHolder onCreateViewHolder(int position, int type, ViewGroup parent);
+    public abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType);
 
-    //将数据设置到itemView上
-    public abstract void onBindViewHolder(BaseViewHolder holder,Object bean, int position, int type);
+    //将数据设置到itemView上 @Override
+    public abstract void onBindViewHolder(RecyclerView.ViewHolder holder, int position);
 }

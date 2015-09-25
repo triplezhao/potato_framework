@@ -4,30 +4,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseListAdapter;
-import com.potato.chips.base.BaseViewHolder;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.act.ADetailActivity;
 import com.potato.demo.databinding.ItemABinding;
+import com.potato.library.adapter.BaseListAdapter;
+import com.potato.library.adapter.BaseViewHolder;
 import com.potato.library.util.L;
 
 /**
  * Created by ztw on 2015/9/21.
  */
-public class AListAdapter extends BaseListAdapter{
+public class AListAdapter extends BaseListAdapter {
 
     public AListAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public AViewHolder onCreateViewHolder(int position, int type, ViewGroup parent) {
+    public AViewHolder onCreateViewHolder(ViewGroup parent, int type) {
 
         ItemABinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
@@ -42,9 +43,9 @@ public class AListAdapter extends BaseListAdapter{
 
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, Object object, int position, int type) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder,int position) {
         final ItemABinding binding = (ItemABinding) ((AViewHolder)holder).getBinding();
-        final ABean bean = (ABean) object;
+        final ABean bean = (ABean) mData.get(position);
         binding.setBean(bean);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

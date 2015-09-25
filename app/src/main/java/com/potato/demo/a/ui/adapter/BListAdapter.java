@@ -10,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseRecyclerViewAdapter;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.act.ADetailActivity;
 import com.potato.demo.databinding.ItemABinding;
+import com.potato.library.adapter.BaseRecyclerViewAdapter;
 import com.potato.library.util.L;
 
 /**

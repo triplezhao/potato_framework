@@ -1,6 +1,7 @@
-package com.potato.chips.base;
+package com.potato.library.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,8 +79,8 @@ public abstract class BaseMutiRowAdapter extends BaseAdapter {
             viewGroup.setOrientation(LinearLayout.HORIZONTAL);
             //findview  clumn
             for (int i = 0; i < getRowNum(); i++) {
-                BaseViewHolder vh = onCreateViewHolder(position, getItemViewType(position), parent);
-                viewGroup.addView(vh.view, layoutParams);
+                RecyclerView.ViewHolder vh = onCreateViewHolder(parent, getItemViewType(position));
+                viewGroup.addView(vh.itemView, layoutParams);
             }
         }
 
@@ -91,7 +92,7 @@ public abstract class BaseMutiRowAdapter extends BaseAdapter {
             } catch (Exception e) {
             }
             if (data != null) {
-                onBindViewHolder((BaseViewHolder) viewGroup.getChildAt(i).getTag(), data, position, getItemViewType(position));
+                onBindViewHolder((RecyclerView.ViewHolder) viewGroup.getChildAt(i).getTag(), position);
                 viewGroup.getChildAt(i).setVisibility(View.VISIBLE);
             } else {
                 viewGroup.getChildAt(i).setVisibility(View.INVISIBLE);
@@ -101,8 +102,8 @@ public abstract class BaseMutiRowAdapter extends BaseAdapter {
     }
 
     //返回 inflate出 每个元素的 layout，可以根据type给不同的布局
-    public abstract BaseViewHolder onCreateViewHolder(int position, int type, ViewGroup parent);
+    public abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType);
 
-    //将数据设置到itemView上
-    public abstract void onBindViewHolder(BaseViewHolder holder,Object bean, int position, int type);
+    //将数据设置到itemView上 @Override
+    public abstract void onBindViewHolder(RecyclerView.ViewHolder holder, int position);
 }

@@ -1,4 +1,4 @@
-package com.potato.chips.base;
+package com.potato.library.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
