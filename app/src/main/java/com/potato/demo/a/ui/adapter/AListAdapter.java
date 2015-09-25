@@ -28,14 +28,14 @@ public class AListAdapter extends BaseListAdapter {
     }
 
     @Override
-    public AViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+    public VH onCreateViewHolder(ViewGroup parent, int type) {
 
         ItemABinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.item_a,
                 parent,
                 false);
-        AViewHolder holder = new AViewHolder(binding.getRoot());
+        VH holder = new VH(binding.getRoot());
         holder.setBinding(binding);
 
         return holder;
@@ -44,7 +44,7 @@ public class AListAdapter extends BaseListAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder,int position) {
-        final ItemABinding binding = (ItemABinding) ((AViewHolder)holder).getBinding();
+        final ItemABinding binding = (ItemABinding) ((VH)holder).getBinding();
         final ABean bean = (ABean) mData.get(position);
         binding.setBean(bean);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
@@ -61,11 +61,11 @@ public class AListAdapter extends BaseListAdapter {
         ImageLoaderUtil.displayImage(bean.getIcon(), binding.avatar, R.drawable.def_gray_small);
     }
 
-    public static class AViewHolder extends BaseViewHolder {
+    public static class VH extends BaseViewHolder {
 
         private ViewDataBinding binding;
 
-        public AViewHolder(View itemView) {
+        public VH(View itemView) {
             super(itemView);
         }
 

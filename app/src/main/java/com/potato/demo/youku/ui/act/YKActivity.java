@@ -7,13 +7,13 @@ import android.view.View;
 
 import com.potato.chips.app.GlobleConstant;
 import com.potato.chips.base.BaseActivity;
-import com.potato.chips.base.BaseListAdapter;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ActivityYkVideosBinding;
 import com.potato.demo.youku.data.bean.YKVideo;
 import com.potato.demo.youku.data.parser.YKVideosByUserParser;
 import com.potato.demo.youku.data.request.YKRequestBuilder;
 import com.potato.demo.youku.ui.adapter.YKVideoAdapter;
+import com.potato.library.adapter.BaseListAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;

@@ -3,45 +3,46 @@ package com.potato.demo.jiongtu.ui.adapter;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseListAdapter;
-import com.potato.chips.base.BaseViewHolder;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.chips.util.ShareUtil;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ItemJiongtuDetailBinding;
 import com.potato.demo.jiongtu.data.bean.JiongtuPhoto;
+import com.potato.library.adapter.BaseListAdapter;
+import com.potato.library.adapter.BaseViewHolder;
 
 /**
  * Created by ztw on 2015/9/21.
  */
-public class JiongTuDetailAdapter extends BaseListAdapter{
+public class JiongTuDetailAdapter extends BaseListAdapter {
 
     public JiongTuDetailAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(int position, int type, ViewGroup parent) {
+    public VH onCreateViewHolder(ViewGroup parent, int type) {
 
         ItemJiongtuDetailBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.item_jiongtu_detail,
                 parent,
                 false);
-        ViewHolder holder = new ViewHolder(binding.getRoot());
+        VH holder = new VH(binding.getRoot());
         holder.setBinding(binding);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, Object object, int position, int type) {
-        final ItemJiongtuDetailBinding binding = (ItemJiongtuDetailBinding) ((ViewHolder)holder).getBinding();
-        final JiongtuPhoto bean = (JiongtuPhoto) object;
+    public void onBindViewHolder(RecyclerView.ViewHolder holder,int position) {
+        final ItemJiongtuDetailBinding binding = (ItemJiongtuDetailBinding) ((VH)holder).getBinding();
+        final JiongtuPhoto bean = (JiongtuPhoto) mData.get(position);
         binding.setBean(bean);
 //        L.i("Picasso", "URL," + bean.getBigUrl());
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
@@ -50,26 +51,15 @@ public class JiongTuDetailAdapter extends BaseListAdapter{
                 ShareUtil.shareImage(view.getContext(), bean.getBigUrl());
             }
         });
-//        Picasso.with(binding.getRoot().getContext())
-//                .load(bean.getBigUrl())
-//                .placeholder(R.drawable.def_gray_big1)
-//                .resize(MainApplication.screenWidth, 0)
-//                .into(binding.ivPic);
-//        ViewUtil.changeViewLayerType(binding.ivPic, View.LAYER_TYPE_NONE);
-//        binding.ivPic.setLayerType(View.LAYER_TYPE_NONE, null);
-//        L.i("JiongTuDetailViewBinder", "hardware="+binding.ivPic.isHardwareAccelerated());
-//        ;
-//        String url = "http://mmbiz.qpic.cn/mmbiz/2pNzmMNj5xzdoaw4ic9SicDjBq9409XEwbaPT3rwyiaMQRkF84oTsw6q820ibWeMfk7icbBicZt2GZ0skib3VPDsJhZmw/640?tp=webp&wxfrom=5&wx_lazy=1";
         ImageLoaderUtil.displayImage(bean.getBigUrl(), binding.ivPic, R.drawable.def_gray_big);
-
 
     }
 
-    public static class ViewHolder extends BaseViewHolder {
+    public static class VH extends BaseViewHolder {
 
         private ViewDataBinding binding;
 
-        public ViewHolder(View itemView) {
+        public VH(View itemView) {
             super(itemView);
         }
 

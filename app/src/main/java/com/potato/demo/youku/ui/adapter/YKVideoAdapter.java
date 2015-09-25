@@ -5,46 +5,45 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseListAdapter;
-import com.potato.chips.base.BaseViewHolder;
 import com.potato.chips.common.PageCtrl;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ItemYkVideoBinding;
 import com.potato.demo.youku.data.bean.YKVideo;
+import com.potato.library.adapter.BaseListAdapter;
+import com.potato.library.adapter.BaseViewHolder;
 
 /**
  * Created by ztw on 2015/9/21.
  */
-public class YKVideoAdapter extends BaseListAdapter{
+public class YKVideoAdapter extends BaseListAdapter {
 
     public YKVideoAdapter(Context context) {
         super(context);
     }
 
-
     @Override
-    public ViewHolder onCreateViewHolder(int position, int type, ViewGroup parent) {
-
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemYkVideoBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.item_yk_video,
                 parent,
                 false);
-        ViewHolder holder = new ViewHolder(binding.getRoot());
+        VH holder = new VH(binding.getRoot());
         holder.setBinding(binding);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, Object object, int position, int type) {
-        final ItemYkVideoBinding binding = (ItemYkVideoBinding) ((ViewHolder)holder).getBinding();
-        final YKVideo bean = (YKVideo) object;
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final ItemYkVideoBinding binding = (ItemYkVideoBinding) ((VH) holder).getBinding();
+        final YKVideo bean = (YKVideo) mData.get(position);
         binding.setBean(bean);
         ImageLoaderUtil.displayImage(bean.getThumbnail(), binding.ivPic, R.drawable.def_gray_big);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
@@ -62,14 +61,14 @@ public class YKVideoAdapter extends BaseListAdapter{
 //                https://shop108703695.taobao.com
             }
         });
-
     }
 
-    public static class ViewHolder extends BaseViewHolder {
+
+    public static class VH extends BaseViewHolder {
 
         private ViewDataBinding binding;
 
-        public ViewHolder(View itemView) {
+        public VH(View itemView) {
             super(itemView);
         }
 

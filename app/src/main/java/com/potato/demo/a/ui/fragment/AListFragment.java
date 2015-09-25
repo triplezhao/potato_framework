@@ -25,11 +25,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.potato.chips.base.BaseFragment;
-import com.potato.chips.base.BaseListAdapter;
 import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.adapter.AListAdapter;
 import com.potato.demo.databinding.FragmentAListBinding;
+import com.potato.library.adapter.BaseListAdapter;
 import com.potato.library.view.refresh.ListSwipeLayout;
 
 import java.util.ArrayList;
