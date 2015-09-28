@@ -1,1 +1,3 @@
-include ':app', 'library'
+include ':app'
+include ':librarygithub'
+project(':librarygithub').projectDir = new File('../potato_framework/library')
