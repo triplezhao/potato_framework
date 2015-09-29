@@ -32,7 +32,7 @@ public abstract class BaseMutiRowAdapter extends BaseAdapter {
             mData = new ArrayList();
         }
         mData.clear();
-        mData.add(data);
+        mData.addAll(data);
     }
 
     //返回每行有多少列
@@ -92,7 +92,7 @@ public abstract class BaseMutiRowAdapter extends BaseAdapter {
             } catch (Exception e) {
             }
             if (data != null) {
-                onBindViewHolder((RecyclerView.ViewHolder) viewGroup.getChildAt(i).getTag(), position);
+                onBindViewHolder((RecyclerView.ViewHolder) viewGroup.getChildAt(i).getTag(), position * getRowNum() + i);
                 viewGroup.getChildAt(i).setVisibility(View.VISIBLE);
             } else {
                 viewGroup.getChildAt(i).setVisibility(View.INVISIBLE);
