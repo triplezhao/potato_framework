@@ -7,8 +7,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.potato.library.util.NetUtil;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.potato.library.util.NetUtil;
 
 import org.apache.http.Header;
 import org.apache.http.client.HttpResponseException;
@@ -159,7 +159,15 @@ public class RequestManager {
         AsyncHttpResponseHandler responseHandler = new AsyncHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String content) {
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                String content = new String(responseBody);
+
+                if (TextUtils.isEmpty(content)) {
+                    dataListener.onFailure(null, content);
+                    return;
+                }
+
                 if (!dataListener.onPreCheck(content)) {
                     dataListener.onFailure(null, content);
                     return;
@@ -196,16 +204,22 @@ public class RequestManager {
                                     RequestCacheProvider.CONTENT_URI,
                                     dataListener.getId()), values, null, null);
                 }
+
+
             }
 
             @Override
-            public void onFailure(Throwable error, String content) {
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 NetLog.d(TAG, "Request failed, url: " + url + ", error: " + error);
+
+                String content = new String(responseBody);
+
                 dataListener.onFailure(error, content);
                 if (isInCache && cacheType == CACHE_TYPE_NETWORK_FIRST) {
                     dataListener.onCacheLoaded(cacheContent);
                 }
             }
+
         };
 
         // 网络不可用，不发送网络请求

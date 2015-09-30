@@ -17,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 public class RequestHttpClient {
     private static Context mContext;
     public static AsyncHttpClient sHttpClient;
-    public  String UA = "";
+    public String UA = "";
 
     private static final int TIMEOUT = 15 * 1000;
     private static final String CONTENTTYPE = "application/json";
@@ -34,19 +34,18 @@ public class RequestHttpClient {
         return sHttpClient;
     }
 
-    public static void init(){
+    public static void init() {
 
     }
 
     public static void request(String url, String bodyContent,
-            AsyncHttpResponseHandler responseHandler, int method) {
+                               AsyncHttpResponseHandler responseHandler, int method) {
 
         if (NetUtil.isNetworkAvailable(mContext)) {
             try {
                 AsyncHttpClient httpClient = getInstence(mContext);
                 if (httpClient == null) {
-                    responseHandler.onFailure(new Throwable("c/k错误"),
-                            "c/k错误,或者为 空");
+                    responseHandler.onFailure(0, null, "c/k错误,或者为 空".getBytes(), new Throwable("c/k错误"));
                     return;
                 }
 
@@ -64,24 +63,21 @@ public class RequestHttpClient {
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-                responseHandler.onFailure(new Throwable("对Entity转换字符串失败"),
-                        "entity utf-8 UnsupportedEncodingException");
+                responseHandler.onFailure(0, null, "entity utf-8 UnsupportedEncodingException".getBytes(), new Throwable("对Entity转换字符串失败"));
             }
         } else {
             // 表示网络被禁止
-            responseHandler.onFailure(new HttpResponseException(9999,
-                    "Network is Forbid 2G/3G,Wifi"),
-                    "Network is Forbid 2G/3G,Wifi");
+            responseHandler.onFailure(0, null, "Network is Forbid 2G/3G,Wifin".getBytes(), new HttpResponseException(9999, "Network is Forbid 2G/3G,Wifi"));
         }
     }
 
     public static void requestGet(String url, String bodyContent,
-            AsyncHttpResponseHandler responseHandler) {
+                                  AsyncHttpResponseHandler responseHandler) {
         request(url, bodyContent, responseHandler, Request.REQ_METHOD_GET);
     }
 
     public static void requestPost(String url, String bodyContent,
-            AsyncHttpResponseHandler responseHandler) {
+                                   AsyncHttpResponseHandler responseHandler) {
         request(url, bodyContent, responseHandler, Request.REQ_METHOD_POST);
     }
 
@@ -89,7 +85,7 @@ public class RequestHttpClient {
      * 囧图及下载应用使用此方法
      */
     public static void requestGet(String url,
-            AsyncHttpResponseHandler responseHandler) {
+                                  AsyncHttpResponseHandler responseHandler) {
         if (NetUtil.isNetworkAvailable(mContext)) {
             AsyncHttpClient httpClient = new AsyncHttpClient();
             httpClient.setTimeout(TIMEOUT * 3);
@@ -97,9 +93,7 @@ public class RequestHttpClient {
         } else {
             NetLog.d("Network not available, send fail message to response the request: "
                     + url);
-            responseHandler.onFailure(new HttpResponseException(9999,
-                    "Network is Forbid 2G/3G,Wifi"),
-                    "Network is Forbid 2G/3G,Wifi");
+            responseHandler.onFailure(0, null, "Network is Forbid 2G/3G,Wifin".getBytes(), new HttpResponseException(9999, "Network is Forbid 2G/3G,Wifi"));
 
         }
     }
