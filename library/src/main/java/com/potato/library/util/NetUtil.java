@@ -20,7 +20,7 @@ public class NetUtil {
 		// 是否禁用2g 3g网络
 //		boolean isforbid = SharedPreferenceManager.read(context, PREFERENCES_NAME, IS_FORBID, false);
 
-		return isNetworkAvailable(context, true);
+		return isNetworkAvailable(context, false);
 	}
 
 	/**
