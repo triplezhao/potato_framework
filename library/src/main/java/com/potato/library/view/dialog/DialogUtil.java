@@ -74,7 +74,7 @@ public class DialogUtil {
         final TempDialog progress = new TempDialog(context);
         progress.requestWindowFeature(Window.FEATURE_NO_TITLE);
         progress.setContentView(new ProgressBar(context));
-        progress.getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.color.background_material_dark));
+        progress.getWindow().setBackgroundDrawableResource(R.color.potato_trans);
         
         return progress;
     }
@@ -109,6 +109,6 @@ class TempDialog extends Dialog {
         // // p.y =180;
 //         p.alpha = 1f;
          getWindow().setAttributes(p); // 设置生效
-        getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.color.background_material_dark));
+//        getWindow().setBackgroundDrawable(context.getResources().getDrawable(R.color.background_material_dark));
     }
 }
