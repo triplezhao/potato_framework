@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnScrollListener {
 
-    private ListView mListView;
+    public ListView mListView;
     private OnLoadListener mOnLoadListener;
     private View mListViewFooter;
 

@@ -16,7 +16,7 @@ import com.potato.library.util.L;
 public class RecyclerSwipeLayout extends BaseSwipeLayout {
 
     public final String TAG = RecyclerSwipeLayout.class.getSimpleName();
-    private RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerView;
     private OnLoadListener mOnLoadListener;
     private View mRecyclerViewFooter;
 
