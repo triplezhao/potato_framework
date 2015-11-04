@@ -21,6 +21,8 @@ public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnSc
     private int mEnd;
     private boolean mEnableLoad;
 
+    public ScrollLisener scrollLisener;
+
     public ListSwipeLayout(Context context) {
         this(context, null);
     }
@@ -33,6 +35,15 @@ public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnSc
         super.init(context);
 
     }
+
+    public ScrollLisener getScrollLisener() {
+        return scrollLisener;
+    }
+
+    public void setScrollLisener(ScrollLisener scrollLisener) {
+        this.scrollLisener = scrollLisener;
+    }
+
     //set the footer of the ListView with a ProgressBar in it
     public void setFooterView(Context context, ListView mListView, int layoutId) {
         setLoadEnable(true);
@@ -71,28 +82,28 @@ public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnSc
         return super.dispatchTouchEvent(event);
     }
 
-    public void setLoadEnable(boolean enableLoad){
+    public void setLoadEnable(boolean enableLoad) {
         mEnableLoad = enableLoad;
-        if(!mEnableLoad){
+        if (!mEnableLoad) {
             mListView.removeFooterView(mListViewFooter);
         }
     }
 
     private boolean canLoad() {
-        if(mListView.getAdapter()==null||mListView.getAdapter().getCount()<1)
+        if (mListView.getAdapter() == null || mListView.getAdapter().getCount() < 1)
             return false;
         return isBottom() && !isLoading && isPullingUp();
     }
 
     private boolean isBottom() {
         if (mListView.getCount() > 0) {
-            if (mListView.getLastVisiblePosition() == mListView.getAdapter().getCount() - 1 ){
-                if(mListView.getFooterViewsCount() == 0){
-                    if(mListView.getChildAt(mListView.getChildCount() - 1).getBottom() <= mListView.getHeight()) {
+            if (mListView.getLastVisiblePosition() == mListView.getAdapter().getCount() - 1) {
+                if (mListView.getFooterViewsCount() == 0) {
+                    if (mListView.getChildAt(mListView.getChildCount() - 1).getBottom() <= mListView.getHeight()) {
                         return true;
                     }
-                }else{
-                    if(mListView.getChildAt(mListView.getChildCount() - 2).getBottom() <= mListView.getHeight()) {
+                } else {
+                    if (mListView.getChildAt(mListView.getChildCount() - 2).getBottom() <= mListView.getHeight()) {
                         return true;
                     }
                 }
@@ -129,7 +140,7 @@ public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnSc
 //            if (mListView.getAdapter() instanceof HeaderViewListAdapter) {
 //                mListView.removeFooterView(mListViewFooter);
 //            } else {
-                mListViewFooter.setVisibility(View.GONE);
+            mListViewFooter.setVisibility(View.GONE);
 //            }
             mYDown = 0;
             mLastY = 0;
@@ -142,7 +153,32 @@ public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnSc
 
     @Override
     public void onScrollStateChanged(AbsListView absListView, int i) {
-        if(canLoad()){
+        if (scrollLisener != null) {
+            switch (i) {
+
+                case AbsListView.OnScrollListener.SCROLL_STATE_IDLE://停止滚动
+                {
+                    //设置为停止滚动
+                    scrollLisener.resume();
+                    break;
+                }
+                case AbsListView.OnScrollListener.SCROLL_STATE_FLING://滚动做出了抛的动作
+                {
+                    //设置为正在滚动
+                    scrollLisener.pause();
+                    break;
+                }
+
+                case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL://正在滚动
+                {
+                    //设置为正在滚动
+                    scrollLisener.pause();
+                    break;
+                }
+            }
+        }
+
+        if (canLoad()) {
             loadData();
         }
     }
@@ -152,7 +188,15 @@ public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnSc
 
     }
 
-    public static interface OnLoadListener {
+    public interface OnLoadListener {
         public void onLoad();
     }
+
+    public interface ScrollLisener {
+        public void pause();
+
+        public void resume();
+    }
+
+
 }
