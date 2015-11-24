@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.potato.demo.R;
 import com.potato.demo.a.ui.act.AActivity;
 import com.potato.demo.a.ui.act.BActivity;
+import com.potato.demo.a.ui.act.MainActivity;
 import com.potato.demo.jiongtu.ui.act.JiongtuActivity;
 import com.potato.demo.youku.ui.act.YKActivity;
 
@@ -53,7 +54,7 @@ public class MainTabActivity extends BaseTabHostActivity {
                 iv_icon.setImageResource(R.drawable.selector_nav_contact);
                 tabItem.setTitle("" + position);
                 tabItem.setView(tabItemView);
-                tabItem.setIntent(new Intent(getApplication(), BActivity.class));
+                tabItem.setIntent(new Intent(getApplication(), MainActivity.class));
                 break;
             case 4:
 
