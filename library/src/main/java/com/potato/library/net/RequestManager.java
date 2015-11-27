@@ -211,9 +211,12 @@ public class RequestManager {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 NetLog.d(TAG, "Request failed, url: " + url + ", error: " + error);
-
-                String content = new String(responseBody);
-
+                String content = "";
+                if (responseBody != null) {
+                    content = new String(responseBody);
+                } else {
+                    content = " responseBody is null";
+                }
                 dataListener.onFailure(error, content);
                 if (isInCache && cacheType == CACHE_TYPE_NETWORK_FIRST) {
                     dataListener.onCacheLoaded(cacheContent);
