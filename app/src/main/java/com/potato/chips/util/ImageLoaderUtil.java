@@ -64,9 +64,9 @@ public class ImageLoaderUtil {
         //  ImageLoaderConfiguration.createDefault(this);
         // method.
         return new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_launcher) // resource or drawable
-                .showImageForEmptyUri(R.drawable.ic_launcher) // resource or drawable
-                .showImageOnFail(R.drawable.ic_launcher) // resource or drawable
+                .showImageOnLoading(R.drawable.potato_ic_close) // resource or drawable
+                .showImageForEmptyUri(R.drawable.potato_ic_close) // resource or drawable
+                .showImageOnFail(R.drawable.potato_ic_close) // resource or drawable
                 .cacheInMemory(true) // default false
                 .cacheOnDisk(true) // default false
 //                .resetViewBeforeLoading(false)  // default
