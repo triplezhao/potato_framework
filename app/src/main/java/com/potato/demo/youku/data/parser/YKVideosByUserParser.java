@@ -4,15 +4,9 @@ import com.potato.demo.youku.data.bean.YKVideo;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
-
 public class YKVideosByUserParser extends YKBaseParser {
 
-    public String total;
-    public String page;
-    public String count;
     public String last_item;
-    public ArrayList<YKVideo> list = new ArrayList<YKVideo>();
 
     public YKVideosByUserParser(String jsonStr) {
         super(jsonStr);
