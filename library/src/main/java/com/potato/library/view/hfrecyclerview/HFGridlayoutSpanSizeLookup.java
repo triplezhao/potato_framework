@@ -9,8 +9,8 @@ import android.support.v7.widget.GridLayoutManager;
  */
 public class HFGridlayoutSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
 
-    private HFRecyclerViewAdapter adapter;
-    private int mSpanSize = 1;
+    public HFRecyclerViewAdapter adapter;
+    public int mSpanSize = 1;
 
     public HFGridlayoutSpanSizeLookup(HFRecyclerViewAdapter adapter, int spanSize) {
         this.adapter = adapter;
@@ -20,6 +20,10 @@ public class HFGridlayoutSpanSizeLookup extends GridLayoutManager.SpanSizeLookup
     @Override
     public int getSpanSize(int position) {
         boolean isHeaderOrFooter = adapter.isHeader(position) || adapter.isFooter(position);
-        return isHeaderOrFooter ? mSpanSize : 1;
+        if (isHeaderOrFooter) {
+            return mSpanSize;
+        } else {
+            return 1;
+        }
     }
 }

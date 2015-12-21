@@ -19,27 +19,26 @@ package com.potato.demo.jiongtu.ui.fragment;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.potato.chips.base.BaseFragment;
 import com.potato.demo.R;
 import com.potato.demo.databinding.FragmentJiongtuListBinding;
 import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
 import com.potato.demo.jiongtu.data.parser.JiongtuAlbumListParser;
 import com.potato.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.potato.demo.jiongtu.ui.adapter.JiongTuListAdapter;
-import com.potato.library.adapter.BaseListAdapter;
+import com.potato.library.adapter.BaseRecyclerViewAdapter;
+import com.potato.library.data.PotatoBaseParser;
+import com.potato.library.fragment.PotatoDefListFragment;
 import com.potato.library.net.Request;
-import com.potato.library.net.RequestManager;
-import com.potato.library.util.L;
-import com.potato.library.view.refresh.ListSwipeLayout;
+import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 
 import java.util.ArrayList;
 
-public class JiongTuListFragment extends BaseFragment {
+public class JiongTuListFragment extends PotatoDefListFragment {
     private static final String TAG = "ListFragmentJiongtu";
     /**
      * extrars
@@ -49,7 +48,7 @@ public class JiongTuListFragment extends BaseFragment {
     private long mSectionId;
     private String mTitle;
     private ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
-    private BaseListAdapter mAdapter;
+    private BaseRecyclerViewAdapter mAdapter;
     private JiongtuAlbumListParser mParser;
     private FragmentJiongtuListBinding mBinding;
 
@@ -67,145 +66,80 @@ public class JiongTuListFragment extends BaseFragment {
                 container,
                 false);
 
+        mAdapter = new JiongTuListAdapter(mContext);
         mParser = new JiongtuAlbumListParser();
-        mBinding.swipeContainer.setFooterView(getActivity(), mBinding.list, R.layout.listview_footer);
 
-        mAdapter = new JiongTuListAdapter(getActivity());
-        mBinding.list.setAdapter(mAdapter);
+        initListView(mBinding.includeA.llSwipe);
 
-        mBinding.swipeContainer.setColorSchemeResources(R.color.google_blue,
-                R.color.google_green,
-                R.color.google_red,
-                R.color.google_yellow);
-
-        mBinding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        GridLayoutManager manager = new GridLayoutManager(mContext, 2);
+        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup(mSwipeContainer.getHFAdapter(), manager.getSpanCount()) {
             @Override
-            public void onRefresh() {
-                sendRequest2RefreshList();
+            public int getSpanSize(int position) {
+                boolean isHeaderOrFooter = adapter.isHeader(position) || adapter.isFooter(position);
+                if (isHeaderOrFooter) {
+                    return mSpanSize;
+                } else if (position % 3 == 0) {
+                    return mSpanSize;
+                } else {
+                    return 1;
+                }
             }
         });
-        mBinding.swipeContainer.setOnLoadListener(new ListSwipeLayout.OnLoadListener() {
-            @Override
-            public void onLoad() {
-                sendRequest2LoadMoreList();
-            }
-        });
-
-        mBinding.swipeContainer.setEmptyView(mBinding.emptyView);
-        mBinding.emptyView.setOnClickListener(this);
-        mBinding.swipeContainer.showProgress();
-        sendRequest2RefreshList();
+        mSwipeContainer.setLayoutManager(manager);
+        mSwipeContainer.showProgress();
+        reqRefresh();
 
         return mBinding.getRoot();
     }
 
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.empty_view:
-                mBinding.swipeContainer.showProgress();
-                sendRequest2RefreshList();
-                break;
-        }
+    public BaseRecyclerViewAdapter getAdapter() {
+        return mAdapter;
     }
 
-    /**
-     * 刷新图册列表
-     */
-    private void sendRequest2RefreshList() {
-        L.e(TAG, "请求图册列表:sectionId=" + mSectionId);
-
-        Request request = JiongtuRequestBuilder.getAlbumListRequest(mSectionId, 0);
-        RequestManager.DataLoadListener dataLoadListener = new RequestManager.DataLoadListener() {
-
-            @Override
-            public void onSuccess(int statusCode, String content) {
-                L.e(TAG, "onSuccess" + this);
-                onRefreshSucc(content);
-            }
-
-            @Override
-            public void onFailure(Throwable error, String errMsg) {
-                L.e("拉取图册数据失败!!!,EMPTY_TYPE_ERROR" + this);
-                mBinding.swipeContainer.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mBinding.swipeContainer.showEmptyViewFail();
-                    }
-                }, 2000);
-
-            }
-
-            @Override
-            public void onCacheLoaded(String content) {
-                L.e(TAG, "onCacheLoaded," + this);
-                onRefreshSucc(content);
-            }
-        };
-        RequestManager.requestData(
-                request,
-                dataLoadListener,
-                RequestManager.CACHE_TYPE_NOCACHE
-        );
+    @Override
+    public Request getRefreshRequest() {
+        return JiongtuRequestBuilder.getAlbumListRequest(mSectionId, 0);
     }
 
-    /**
-     * 刷新图册列表
-     */
-    private void sendRequest2LoadMoreList() {
-        L.e(TAG, "请求图册列表:sectionId=" + mSectionId);
-
-        Request request = JiongtuRequestBuilder.getAlbumListRequest(mSectionId, mParser.maxPublicDate);
-        RequestManager.DataLoadListener dataLoadListener = new RequestManager.DataLoadListener() {
-
-            @Override
-            public void onSuccess(int statusCode, String content) {
-                L.e(TAG, "onSuccess" + this);
-                onLoadSucc(content);
-
-            }
-
-            @Override
-            public void onFailure(Throwable error, String errMsg) {
-                L.e("拉取图册数据失败!!!,EMPTY_TYPE_ERROR" + this);
-                mBinding.swipeContainer.setLoading(false);
-            }
-
-            @Override
-            public void onCacheLoaded(String content) {
-                L.e(TAG, "onCacheLoaded," + this);
-            }
-        };
-        RequestManager.requestData(
-                request,
-                dataLoadListener,
-                RequestManager.CACHE_TYPE_NOCACHE
-        );
+    @Override
+    public Request getLoadMoreRequest() {
+        return JiongtuRequestBuilder.getAlbumListRequest(mSectionId, mParser.maxPublicDate);
     }
 
-    private void onRefreshSucc(String content) {
-        mBinding.swipeContainer.showSucc();
+    public PotatoBaseParser getParser(String json) {
+        return null;
+    }
+
+    @Override
+    public void onRefreshSucc(String content) {
+        mSwipeContainer.showSucc();
         mList = mParser.parseToAlbumList(content);
         mAdapter.setDataList(mList);
         mAdapter.notifyDataSetChanged();
-        mBinding.swipeContainer.setRefreshing(false);
+        mSwipeContainer.setRefreshing(false);
         if (mList != null && mList.size() != 0) {
-            mBinding.swipeContainer.setLoadEnable(true);
+            mSwipeContainer.setLoadEnable(true);
         }
 
     }
 
-    private void onLoadSucc(String content) {
-        mBinding.swipeContainer.setLoading(false);
-        ArrayList<JiongtuAlbum> moreData = mParser.parseToAlbumList(content);
+    @Override
+    public void onLoadMoreSucc(String json) {
+        mSwipeContainer.setLoading(false);
+        ArrayList<JiongtuAlbum> moreData = mParser.parseToAlbumList(json);
         if (moreData == null || moreData.size() == 0) {
-            mBinding.swipeContainer.setLoadEnable(false);
+            mSwipeContainer.setLoadEnable(false);
             return;
         }
         mList.addAll(moreData);
         mAdapter.setDataList(mList);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyItemInserted(mList.size() - 1);
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
 }

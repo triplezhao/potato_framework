@@ -13,13 +13,13 @@ import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ItemJiongtuListBinding;
 import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
-import com.potato.library.adapter.BaseListAdapter;
+import com.potato.library.adapter.BaseRecyclerViewAdapter;
 import com.potato.library.adapter.BaseViewHolder;
 
 /**
  * Created by ztw on 2015/9/21.
  */
-public class JiongTuListAdapter extends BaseListAdapter {
+public class JiongTuListAdapter extends BaseRecyclerViewAdapter {
 
     public JiongTuListAdapter(Context context) {
         super(context);

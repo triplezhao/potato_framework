@@ -28,31 +28,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.potato.library.view.NormalEmptyView
-            android:id="@+id/empty_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-        </com.potato.library.view.NormalEmptyView>
-
-        <com.potato.library.view.refresh.ListSwipeLayout
-            android:id="@+id/swipe_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ListView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0px"
-                android:listSelector="@android:color/transparent"
-                android:scrollbars="none" />
-
-        </com.potato.library.view.refresh.ListSwipeLayout>
-
-
+        <include
+            android:id="@+id/include_a"
+            layout="@layout/include_list"
+            ></include>
     </LinearLayout>
 </layout>

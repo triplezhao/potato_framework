@@ -2,6 +2,7 @@ package com.potato.demo.youku.ui.act;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 
 import com.potato.chips.app.GlobleConstant;
 import com.potato.demo.R;
@@ -14,6 +15,7 @@ import com.potato.library.act.PotatoDefListActivity;
 import com.potato.library.adapter.BaseRecyclerViewAdapter;
 import com.potato.library.data.PotatoBaseParser;
 import com.potato.library.net.Request;
+import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,19 @@ public class YKActivity extends PotatoDefListActivity {
 
         initListView(mBinding.includeA.llSwipe);
 
+        GridLayoutManager manager = new GridLayoutManager(mContext, 3);
+        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup(mSwipeContainer.getHFAdapter(), manager.getSpanCount()) {
+            @Override
+            public int getSpanSize(int position) {
+                boolean isHeaderOrFooter = adapter.isHeader(position) || adapter.isFooter(position);
+                if (isHeaderOrFooter) {
+                    return mSpanSize;
+                } else {
+                    return (3 - position % 3);
+                }
+            }
+        });
+        mSwipeContainer.setLayoutManager(manager);
         mSwipeContainer.showProgress();
         reqRefresh();
     }

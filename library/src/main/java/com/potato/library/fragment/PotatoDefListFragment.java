@@ -1,7 +1,6 @@
-package com.potato.library.act;
+package com.potato.library.fragment;
 
-
-import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.potato.library.act.PotatoDefListActivity;
 import com.potato.library.adapter.BaseRecyclerViewAdapter;
 import com.potato.library.data.PotatoBaseParser;
 import com.potato.library.net.Request;
@@ -17,11 +17,10 @@ import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;
 import com.potato.library.view.NormalEmptyView;
 import com.potato.library.view.refresh.HFRecyclerSwipeLayout;
-import com.potato.library.view.refresh.HFRefreshImpl;
 
 import java.util.ArrayList;
 
-public abstract class PotatoDefListActivity extends PotatoBaseActivity implements HFRefreshImpl {
+public abstract class PotatoDefListFragment extends PotatoBaseFragment implements View.OnClickListener, Handler.Callback {
 
     public static final String TAG = PotatoDefListActivity.class.getSimpleName();
 
@@ -33,12 +32,6 @@ public abstract class PotatoDefListActivity extends PotatoBaseActivity implement
     public int mPage = 0;
     public ArrayList mList = new ArrayList();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-    }
 
     public void initListView(View view) {
 
@@ -197,7 +190,7 @@ public abstract class PotatoDefListActivity extends PotatoBaseActivity implement
             @Override
             public void onCacheLoaded(String content) {
                 L.e(TAG, "onCacheLoaded," + this);
-                PotatoDefListActivity.this.onCacheLoaded(content);
+                PotatoDefListFragment.this.onCacheLoaded(content);
             }
         };
         RequestManager.requestData(
@@ -227,7 +220,7 @@ public abstract class PotatoDefListActivity extends PotatoBaseActivity implement
             @Override
             public void onCacheLoaded(String content) {
                 L.e(TAG, "onCacheLoaded," + this);
-                PotatoDefListActivity.this.onCacheLoaded(content);
+                PotatoDefListFragment.this.onCacheLoaded(content);
             }
         };
         RequestManager.requestData(
@@ -236,4 +229,5 @@ public abstract class PotatoDefListActivity extends PotatoBaseActivity implement
                 RequestManager.CACHE_TYPE_NOCACHE
         );
     }
+
 }
