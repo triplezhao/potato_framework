@@ -10,7 +10,6 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.potato.library.R;
 
 /**
@@ -30,7 +29,7 @@ public class DialogUtil {
         final TempDialog dialog = new TempDialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.lib_dialog, null,
+        View view = inflater.inflate(R.layout.potato_dialog, null,
                 false);
         TextView tv_title = (TextView)view.findViewById(R.id.tv_title);
         TextView tv_content = (TextView)view.findViewById(R.id.tv_content);

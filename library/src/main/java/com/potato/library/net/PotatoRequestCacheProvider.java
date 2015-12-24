@@ -25,12 +25,12 @@ import java.util.ArrayList;
  * @author ztw
  * 
  */
-public class RequestCacheProvider extends ContentProvider {
+public class PotatoRequestCacheProvider extends ContentProvider {
     private static final String TAG = "RequestCacheProvider";
     protected static String packageName = "com.mobile17173.game";
     static{
         
-        InputStream inputStream = RequestCacheProvider.class.getClassLoader().getResourceAsStream("assets/packagename_for_provider");
+        InputStream inputStream = PotatoRequestCacheProvider.class.getClassLoader().getResourceAsStream("assets/packagename_for_provider");
         ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
         int len = -1;
@@ -70,7 +70,7 @@ public class RequestCacheProvider extends ContentProvider {
 
     /**
      * Use this static method to create the table It will be called by
-     * {@link RequestCacheDBHelper} during first launch time to create DB.
+     * {@link PotatoRequestCacheDBHelper} during first launch time to create DB.
      * 
      * @param db
      */
@@ -91,7 +91,7 @@ public class RequestCacheProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mOpenHelper = RequestCacheDBHelper.getInstance(getContext());
+        mOpenHelper = PotatoRequestCacheDBHelper.getInstance(getContext());
         NetLog.d(TAG, "In onCreate method, create the provider: " + this
                 + ", and DatabaseHelper: " + mOpenHelper);
         return true;

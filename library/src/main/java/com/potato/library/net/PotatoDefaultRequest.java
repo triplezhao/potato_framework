@@ -2,7 +2,7 @@ package com.potato.library.net;
 
 import android.text.TextUtils;
 
-import com.potato.library.net.RequestManager.DataLoadListener;
+import com.potato.library.net.PotatoRequestManager.DataLoadListener;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONException;
@@ -17,7 +17,7 @@ import java.util.Map;
  * @Description: TODO(默认的请求类。用户可以基础，重写请求方法，和key过滤方法。这里过滤方法去掉了vts等参数，给173用。)
  * @date 2015-4-10 下午6:50:38
  */
-public class DefaultRequest extends Request {
+public class PotatoDefaultRequest extends PotatoRequest {
 
     private static final String TAG = "DefaultRequest";
     public static final int REQ_METHOD_GET = 1;
@@ -64,21 +64,21 @@ public class DefaultRequest extends Request {
     }
 
     @Override
-    public void doRequest(final Request request,
+    public void doRequest(final PotatoRequest request,
                           final AsyncHttpResponseHandler responseHandler,
                           final DataLoadListener dataListener, final int cacheType,
                           final int cacheTimeoutSeconds) {
         // TODO Auto-generated method stub
-        RequestHttpClient.request(
-                RequestUtil.getParamedUrl(DefaultRequest.this, null),
+        PotatoRequestHttpClient.request(
+                PotatoRequestUtil.getParamedUrl(PotatoDefaultRequest.this, null),
                 request.body, responseHandler, request.reqMethod);
     }
 
     public int getUrlHash() {
         // TODO Auto-generated method stub
         int hash = -1;
-        String url = RequestUtil.getParamedUrl(DefaultRequest.this,
-                RequestUtil.getCommonFilteredParams());
+        String url = PotatoRequestUtil.getParamedUrl(PotatoDefaultRequest.this,
+                PotatoRequestUtil.getCommonFilteredParams());
         if (!TextUtils.isEmpty(url)) {
             hash = url.hashCode();
         }

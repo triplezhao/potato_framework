@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class PotatoBaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public Context mContext;
 
@@ -16,7 +16,7 @@ public abstract class BaseRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
     public LayoutInflater mInflater;
 
 
-    public BaseRecyclerViewAdapter(Context context) {
+    public PotatoBaseRecyclerViewAdapter(Context context) {
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
     }

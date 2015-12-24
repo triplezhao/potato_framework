@@ -5,30 +5,30 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class RequestCacheDBHelper extends SQLiteOpenHelper {
+public class PotatoRequestCacheDBHelper extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     private static final String DB_NAME = "req_cache.db";
-    private static RequestCacheDBHelper sInstance;
+    private static PotatoRequestCacheDBHelper sInstance;
 
-    private RequestCacheDBHelper(Context context) {
+    private PotatoRequestCacheDBHelper(Context context) {
         this(context, DB_NAME, null, DB_VERSION);
     }
 
-    private RequestCacheDBHelper(Context context, String name, CursorFactory factory,
-            int version) {
+    private PotatoRequestCacheDBHelper(Context context, String name, CursorFactory factory,
+                                       int version) {
         super(context, name, factory, version);
     }
 
-    public static RequestCacheDBHelper getInstance(Context context) {
+    public static PotatoRequestCacheDBHelper getInstance(Context context) {
         Context cxt = context.getApplicationContext();
         if (sInstance == null)
-            sInstance = new RequestCacheDBHelper(cxt);
+            sInstance = new PotatoRequestCacheDBHelper(cxt);
         return sInstance;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        RequestCacheProvider.createTable(db);
+        PotatoRequestCacheProvider.createTable(db);
         
     }
 

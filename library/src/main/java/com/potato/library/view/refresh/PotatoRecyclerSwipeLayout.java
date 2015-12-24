@@ -12,9 +12,9 @@ import com.potato.library.util.L;
 import com.potato.library.view.hfrecyclerview.HFRecyclerViewAdapter;
 
 
-public class HFRecyclerSwipeLayout extends BaseSwipeLayout {
+public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout {
 
-    public final String TAG = HFRecyclerSwipeLayout.class.getSimpleName();
+    public final String TAG = PotatoRecyclerSwipeLayout.class.getSimpleName();
     public RecyclerView mRecyclerView;
     private OnLoadListener mOnLoadListener;
 
@@ -28,12 +28,12 @@ public class HFRecyclerSwipeLayout extends BaseSwipeLayout {
 
     public ScrollStateLisener ScrollStateLisener;
 
-    public HFRecyclerSwipeLayout(Context context) {
+    public PotatoRecyclerSwipeLayout(Context context) {
         this(context, null);
         init(context);
     }
 
-    public HFRecyclerSwipeLayout(Context context, AttributeSet attrs) {
+    public PotatoRecyclerSwipeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }

@@ -7,14 +7,12 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.potato.library.util.NetUtil;
 
-import java.io.UnsupportedEncodingException;
-
 import cz.msebera.android.httpclient.HttpEntity;
 import cz.msebera.android.httpclient.client.HttpResponseException;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.protocol.HTTP;
 
-public class RequestHttpClient {
+public class PotatoRequestHttpClient {
     private static Context mContext;
     public static AsyncHttpClient sHttpClient;
     public String UA = "";
@@ -54,9 +52,9 @@ public class RequestHttpClient {
                     httpEntity = new StringEntity(bodyContent, HTTP.UTF_8);
                 }
 
-                if (method == Request.REQ_METHOD_GET) {
+                if (method == PotatoRequest.REQ_METHOD_GET) {
                     sHttpClient.get(url, responseHandler);
-                } else if (method == Request.REQ_METHOD_POST) {
+                } else if (method == PotatoRequest.REQ_METHOD_POST) {
                     sHttpClient.post(null, url, httpEntity, CONTENTTYPE,
                             responseHandler);
                 }
@@ -73,12 +71,12 @@ public class RequestHttpClient {
 
     public static void requestGet(String url, String bodyContent,
                                   AsyncHttpResponseHandler responseHandler) {
-        request(url, bodyContent, responseHandler, Request.REQ_METHOD_GET);
+        request(url, bodyContent, responseHandler, PotatoRequest.REQ_METHOD_GET);
     }
 
     public static void requestPost(String url, String bodyContent,
                                    AsyncHttpResponseHandler responseHandler) {
-        request(url, bodyContent, responseHandler, Request.REQ_METHOD_POST);
+        request(url, bodyContent, responseHandler, PotatoRequest.REQ_METHOD_POST);
     }
 
     /**

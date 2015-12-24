@@ -5,7 +5,7 @@ import android.view.View;
 /**
  * Created by ztw on 2015/12/18.
  */
-public interface HFRefreshImpl {
+public interface PotatoRefreshImpl {
 
 
     public void initListView(View view);

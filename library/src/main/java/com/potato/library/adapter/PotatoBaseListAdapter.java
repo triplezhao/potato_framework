@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseListAdapter extends BaseAdapter {
+public abstract class PotatoBaseListAdapter extends BaseAdapter {
 
     public Context mContext;
 
@@ -19,7 +19,7 @@ public abstract class BaseListAdapter extends BaseAdapter {
     public LayoutInflater mInflater;
 
 
-    public BaseListAdapter(Context context) {
+    public PotatoBaseListAdapter(Context context) {
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
     }

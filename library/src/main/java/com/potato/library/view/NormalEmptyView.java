@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.potato.library.R;
 import com.potato.library.util.L;
 
@@ -38,7 +37,7 @@ public class NormalEmptyView extends RelativeLayout {
     public NormalEmptyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
-        LayoutInflater.from(context).inflate(R.layout.normal_empty, this);
+        LayoutInflater.from(context).inflate(R.layout.potato_normal_empty, this);
         tv_empty_text = (TextView) findViewById(R.id.tv_empty_text);
         pb_empty_loading = (View) findViewById(R.id.pb_empty_loading);
         pb_empty_fail = (View) findViewById(R.id.pb_empty_fail);

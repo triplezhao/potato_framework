@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="10dip"
-        android:background="@color/background_material_light"
+        android:background="@color/global_bt_bg_blue"
         android:orientation="vertical" >
 
         <RelativeLayout
@@ -43,7 +43,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
-            android:background="@color/material_blue_grey_950" />
+            android:background="@color/potato_gray1" />
 
         <LinearLayout
             android:id="@+id/rl"
@@ -63,7 +63,7 @@
             <View
                 android:layout_width="1px"
                 android:layout_height="fill_parent"
-                android:background="@color/material_blue_grey_950" />
+                android:background="@color/potato_gray1" />
 
             <Button
                 android:id="@+id/tv_cancel"

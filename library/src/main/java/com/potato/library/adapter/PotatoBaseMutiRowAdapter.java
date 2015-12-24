@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseMutiRowAdapter extends BaseAdapter {
+public abstract class PotatoBaseMutiRowAdapter extends BaseAdapter {
 
     public Context mContext;
 
@@ -21,7 +21,7 @@ public abstract class BaseMutiRowAdapter extends BaseAdapter {
     public LayoutInflater mInflater;
 
 
-    public BaseMutiRowAdapter(Context context) {
+    public PotatoBaseMutiRowAdapter(Context context) {
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
     }

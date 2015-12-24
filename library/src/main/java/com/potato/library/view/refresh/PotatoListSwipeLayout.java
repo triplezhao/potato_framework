@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnScrollListener {
+public class PotatoListSwipeLayout extends PotatoBaseSwipeLayout implements AbsListView.OnScrollListener {
 
     public ListView mListView;
     private OnLoadListener mOnLoadListener;
@@ -23,11 +23,11 @@ public class ListSwipeLayout extends BaseSwipeLayout implements AbsListView.OnSc
 
     public ScrollLisener scrollLisener;
 
-    public ListSwipeLayout(Context context) {
+    public PotatoListSwipeLayout(Context context) {
         this(context, null);
     }
 
-    public ListSwipeLayout(Context context, AttributeSet attrs) {
+    public PotatoListSwipeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

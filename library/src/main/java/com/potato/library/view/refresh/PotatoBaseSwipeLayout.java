@@ -8,17 +8,17 @@ import android.util.DisplayMetrics;
 import com.potato.library.util.L;
 import com.potato.library.view.NormalEmptyView;
 
-public class BaseSwipeLayout extends SwipeRefreshLayout {
+public class PotatoBaseSwipeLayout extends SwipeRefreshLayout {
 
     private int mEnd;
     protected int mTouchSlop;
 
-    public BaseSwipeLayout(Context context) {
+    public PotatoBaseSwipeLayout(Context context) {
         this(context, null);
         init(context);
     }
 
-    public BaseSwipeLayout(Context context, AttributeSet attrs) {
+    public PotatoBaseSwipeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
