@@ -24,7 +24,7 @@ import cz.msebera.android.httpclient.Header;
  * @Description: TODO(这里只保存激活方法、发出请求方法、和缓存逻辑。方法都是静态调用，context使用的appContext，使用时候传递act等上下文)
  * @date 2015-4-8 下午7:45:53
  */
-public class PotatoRequestManager {
+public class RequestManager {
     private static final String TAG = "RequestManager";
     public static final int DEFAULT_REQ_TIME_SPACE = 30 * 60 * 1000; // 两次相同请求间隔，30分钟
 
@@ -50,19 +50,19 @@ public class PotatoRequestManager {
             mContext = cxt;
         }
 
-        mProjection = new String[]{PotatoRequestCacheProvider.Columns._ID,
-                PotatoRequestCacheProvider.Columns.responseStr,
-                PotatoRequestCacheProvider.Columns.time};
+        mProjection = new String[]{RequestCacheProvider.Columns._ID,
+                RequestCacheProvider.Columns.responseStr,
+                RequestCacheProvider.Columns.time};
         mCacheTimes = new HashMap<String, Long>();
 
     }
 
-    public static void requestData(PotatoRequest request,
+    public static void requestData(Request request,
                                    DataLoadListener dataListener, int cacheType) {
         requestData(request, dataListener, cacheType, DEFAULT_REQ_TIME_SPACE);
     }
 
-    public static void requestData(PotatoRequest request,
+    public static void requestData(Request request,
                                    DataLoadListener dataListener, int cacheType,
                                    int cacheTimeOutSeconds) {
         requestDataBasic(request, dataListener, cacheType,
@@ -70,16 +70,16 @@ public class PotatoRequestManager {
     }
 
 
-    private static void requestDataBasic(PotatoRequest request,
+    private static void requestDataBasic(Request request,
                                          final DataLoadListener dataListener, final int cacheType,
                                          int cacheTimeoutSeconds) {
         final String reqType = request.reqType;
         final String url = request.url;
         final String bodyContent = request.body;
 
-        String selection = PotatoRequestUtil.getCacheSelection(request);
+        String selection = RequestUtil.getCacheSelection(request);
 
-        String paramedUrl = PotatoRequestUtil.getParamedUrl(request, null);
+        String paramedUrl = RequestUtil.getParamedUrl(request, null);
 
         NetLog.d(TAG, "RequestData, url: " + paramedUrl + ", bodyContent: "
                 + bodyContent + ", loadCache: " + cacheType + ", selection: "
@@ -94,16 +94,16 @@ public class PotatoRequestManager {
 
         // 从缓存中取数据
         Cursor cursor = mContext.getContentResolver().query(
-                PotatoRequestCacheProvider.CONTENT_URI, mProjection, selection, null,
+                RequestCacheProvider.CONTENT_URI, mProjection, selection, null,
                 null);
 
         if (cursor != null && cursor.moveToFirst()) {
             cacheTime = cursor.getLong(cursor
-                    .getColumnIndex(PotatoRequestCacheProvider.Columns.time));
+                    .getColumnIndex(RequestCacheProvider.Columns.time));
             cacheResult = cursor.getString(cursor
-                    .getColumnIndex(PotatoRequestCacheProvider.Columns.responseStr));
+                    .getColumnIndex(RequestCacheProvider.Columns.responseStr));
             cacheId = cursor.getLong(cursor
-                    .getColumnIndex(PotatoRequestCacheProvider.Columns._ID));
+                    .getColumnIndex(RequestCacheProvider.Columns._ID));
             hasCache = true;
         }
         if (cursor != null)
@@ -190,18 +190,18 @@ public class PotatoRequestManager {
                 mCacheTimes.put(cacheKey, curTime);
 
                 ContentValues values = new ContentValues();
-                values.put(PotatoRequestCacheProvider.Columns.requestStr, cacheKey);
-                values.put(PotatoRequestCacheProvider.Columns.requestType, reqType);
-                values.put(PotatoRequestCacheProvider.Columns.responseStr, content);
-                values.put(PotatoRequestCacheProvider.Columns.time, curTime);
+                values.put(RequestCacheProvider.Columns.requestStr, cacheKey);
+                values.put(RequestCacheProvider.Columns.requestType, reqType);
+                values.put(RequestCacheProvider.Columns.responseStr, content);
+                values.put(RequestCacheProvider.Columns.time, curTime);
 
                 if (dataListener.getId() == -1) {
                     mContext.getContentResolver().insert(
-                            PotatoRequestCacheProvider.CONTENT_URI, values);
+                            RequestCacheProvider.CONTENT_URI, values);
                 } else {
                     mContext.getContentResolver().update(
                             ContentUris.withAppendedId(
-                                    PotatoRequestCacheProvider.CONTENT_URI,
+                                    RequestCacheProvider.CONTENT_URI,
                                     dataListener.getId()), values, null, null);
                 }
 
@@ -244,24 +244,24 @@ public class PotatoRequestManager {
         mCacheTimes.clear();
     }
 
-    public static long getCacheTime(PotatoRequest request) {
+    public static long getCacheTime(Request request) {
 
         String cacheKey = request.getCacheKey();
         if (mCacheTimes.containsKey(cacheKey)) {
             return mCacheTimes.get(cacheKey);
         }
 
-        String selection = PotatoRequestUtil.getCacheSelection(request);
+        String selection = RequestUtil.getCacheSelection(request);
         long time = -1;
 
         Cursor cursor = mContext.getContentResolver().query(
-                PotatoRequestCacheProvider.CONTENT_URI,
-                new String[]{PotatoRequestCacheProvider.Columns.time}, selection,
+                RequestCacheProvider.CONTENT_URI,
+                new String[]{RequestCacheProvider.Columns.time}, selection,
                 null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             time = cursor.getLong(cursor
-                    .getColumnIndex(PotatoRequestCacheProvider.Columns.time));
+                    .getColumnIndex(RequestCacheProvider.Columns.time));
         }
         if (cursor != null)
             cursor.close();

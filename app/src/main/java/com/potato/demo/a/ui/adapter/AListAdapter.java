@@ -14,14 +14,14 @@ import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.act.ADetailActivity;
 import com.potato.demo.databinding.ItemABinding;
-import com.potato.library.adapter.BaseListAdapter;
-import com.potato.library.adapter.BaseViewHolder;
+import com.potato.library.adapter.PotatoBaseListAdapter;
+import com.potato.library.adapter.PotatoBaseViewHolder;
 import com.potato.library.util.L;
 
 /**
  * Created by ztw on 2015/9/21.
  */
-public class AListAdapter extends BaseListAdapter {
+public class AListAdapter extends PotatoBaseListAdapter {
 
     public AListAdapter(Context context) {
         super(context);
@@ -61,7 +61,7 @@ public class AListAdapter extends BaseListAdapter {
         ImageLoaderUtil.displayImage(bean.getIcon(), binding.avatar, R.drawable.def_gray_small);
     }
 
-    public static class VH extends BaseViewHolder {
+    public static class VH extends PotatoBaseViewHolder {
 
         private ViewDataBinding binding;
 

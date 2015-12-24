@@ -24,21 +24,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.potato.chips.base.BaseDefaultListFragment;
+import com.potato.chips.base.BaseParser;
 import com.potato.demo.R;
 import com.potato.demo.databinding.FragmentJiongtuListBinding;
 import com.potato.demo.jiongtu.data.bean.JiongtuAlbum;
 import com.potato.demo.jiongtu.data.parser.JiongtuAlbumListParser;
 import com.potato.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.potato.demo.jiongtu.ui.adapter.JiongTuListAdapter;
-import com.potato.library.adapter.BaseRecyclerViewAdapter;
-import com.potato.library.data.PotatoBaseParser;
-import com.potato.library.fragment.PotatoDefListFragment;
+import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 
 import java.util.ArrayList;
 
-public class JiongTuListFragment extends PotatoDefListFragment {
+public class JiongTuListFragment extends BaseDefaultListFragment {
     private static final String TAG = "ListFragmentJiongtu";
     /**
      * extrars
@@ -48,7 +48,7 @@ public class JiongTuListFragment extends PotatoDefListFragment {
     private long mSectionId;
     private String mTitle;
     private ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
-    private BaseRecyclerViewAdapter mAdapter;
+    private PotatoBaseRecyclerViewAdapter mAdapter;
     private JiongtuAlbumListParser mParser;
     private FragmentJiongtuListBinding mBinding;
 
@@ -94,7 +94,7 @@ public class JiongTuListFragment extends PotatoDefListFragment {
 
 
     @Override
-    public BaseRecyclerViewAdapter getAdapter() {
+    public PotatoBaseRecyclerViewAdapter getAdapter() {
         return mAdapter;
     }
 
@@ -108,7 +108,7 @@ public class JiongTuListFragment extends PotatoDefListFragment {
         return JiongtuRequestBuilder.getAlbumListRequest(mSectionId, mParser.maxPublicDate);
     }
 
-    public PotatoBaseParser getParser(String json) {
+    public BaseParser getParser(String json) {
         return null;
     }
 

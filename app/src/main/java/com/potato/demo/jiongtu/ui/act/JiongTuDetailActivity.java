@@ -30,7 +30,7 @@ import com.potato.demo.jiongtu.data.bean.JiongtuPhoto;
 import com.potato.demo.jiongtu.data.parser.JiongtuPhotoListParser;
 import com.potato.demo.jiongtu.data.request.JiongtuRequestBuilder;
 import com.potato.demo.jiongtu.ui.adapter.JiongTuDetailAdapter;
-import com.potato.library.adapter.BaseListAdapter;
+import com.potato.library.adapter.PotatoBaseListAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 
@@ -45,7 +45,7 @@ public class JiongTuDetailActivity extends BaseActivity {
     /** views */
     private ListView lv_list;
     /** adapters */
-    private BaseListAdapter mAdapter;
+    private PotatoBaseListAdapter mAdapter;
     /** data */
     /** 图片数据集合 */
     private ArrayList<JiongtuPhoto> mPhotos;

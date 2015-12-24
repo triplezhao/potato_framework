@@ -15,13 +15,13 @@ import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ItemYkVideoBinding;
 import com.potato.demo.youku.data.bean.YKVideo;
-import com.potato.library.adapter.BaseRecyclerViewAdapter;
-import com.potato.library.adapter.BaseViewHolder;
+import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
+import com.potato.library.adapter.PotatoBaseViewHolder;
 
 /**
  * Created by ztw on 2015/9/21.
  */
-public class YKVideoAdapter extends BaseRecyclerViewAdapter {
+public class YKVideoAdapter extends PotatoBaseRecyclerViewAdapter {
 
     public YKVideoAdapter(Context context) {
         super(context);
@@ -64,7 +64,7 @@ public class YKVideoAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-    public static class VH extends BaseViewHolder {
+    public static class VH extends PotatoBaseViewHolder {
 
         private ViewDataBinding binding;
 

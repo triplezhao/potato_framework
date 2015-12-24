@@ -13,13 +13,13 @@ import com.potato.chips.util.ShareUtil;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ItemJiongtuDetailBinding;
 import com.potato.demo.jiongtu.data.bean.JiongtuPhoto;
-import com.potato.library.adapter.BaseListAdapter;
-import com.potato.library.adapter.BaseViewHolder;
+import com.potato.library.adapter.PotatoBaseListAdapter;
+import com.potato.library.adapter.PotatoBaseViewHolder;
 
 /**
  * Created by ztw on 2015/9/21.
  */
-public class JiongTuDetailAdapter extends BaseListAdapter {
+public class JiongTuDetailAdapter extends PotatoBaseListAdapter {
 
     public JiongTuDetailAdapter(Context context) {
         super(context);
@@ -55,7 +55,7 @@ public class JiongTuDetailAdapter extends BaseListAdapter {
 
     }
 
-    public static class VH extends BaseViewHolder {
+    public static class VH extends PotatoBaseViewHolder {
 
         private ViewDataBinding binding;
 

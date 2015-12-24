@@ -5,7 +5,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class PotatoRequest {
+public abstract class Request {
 
     public static final int REQ_METHOD_GET = 1;
     public static final int REQ_METHOD_POST = 2;
@@ -32,9 +32,9 @@ public abstract class PotatoRequest {
      */
     public int reqMethod;
 
-    public abstract void doRequest(PotatoRequest request,
+    public abstract void doRequest(Request request,
                                    AsyncHttpResponseHandler responseHandler,
-                                   final PotatoRequestManager.DataLoadListener dataListener, final int cacheType,
+                                   final RequestManager.DataLoadListener dataListener, final int cacheType,
                                    final int cacheTimeoutSeconds);
 
     /**

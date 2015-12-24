@@ -5,15 +5,15 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 
 import com.potato.chips.app.GlobleConstant;
+import com.potato.chips.base.BaseDefaultListActivity;
+import com.potato.chips.base.BaseParser;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ActivityYkVideosBinding;
 import com.potato.demo.youku.data.bean.YKVideo;
 import com.potato.demo.youku.data.parser.YKVideosByUserParser;
 import com.potato.demo.youku.data.request.YKRequestBuilder;
 import com.potato.demo.youku.ui.adapter.YKVideoAdapter;
-import com.potato.library.act.PotatoDefListActivity;
-import com.potato.library.adapter.BaseRecyclerViewAdapter;
-import com.potato.library.data.PotatoBaseParser;
+import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 
@@ -22,12 +22,12 @@ import java.util.ArrayList;
 /**
  * Created by ztw on 2015/7/3.
  */
-public class YKActivity extends PotatoDefListActivity {
+public class YKActivity extends BaseDefaultListActivity {
 
     public static final String TAG = YKActivity.class.getSimpleName();
 
     private ArrayList<YKVideo> mList = new ArrayList<YKVideo>();
-    private BaseRecyclerViewAdapter mAdapter;
+    private PotatoBaseRecyclerViewAdapter mAdapter;
     private ActivityYkVideosBinding mBinding;
 
     @Override
@@ -61,7 +61,7 @@ public class YKActivity extends PotatoDefListActivity {
     }
 
     @Override
-    public BaseRecyclerViewAdapter getAdapter() {
+    public PotatoBaseRecyclerViewAdapter getAdapter() {
         return mAdapter;
     }
 
@@ -75,7 +75,7 @@ public class YKActivity extends PotatoDefListActivity {
         return YKRequestBuilder.videosByUser(GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", mPage + 1 + "", "", "");
     }
 
-    public PotatoBaseParser getParser(String json) {
+    public BaseParser getParser(String json) {
         return new YKVideosByUserParser(json);
     }
 

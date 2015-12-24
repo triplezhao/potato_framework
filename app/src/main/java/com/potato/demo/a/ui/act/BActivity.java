@@ -12,7 +12,7 @@ import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.adapter.BListAdapter;
 import com.potato.demo.a.ui.fragment.Cheeses;
 import com.potato.demo.databinding.ActivityBBinding;
-import com.potato.library.view.refresh.HFRecyclerSwipeLayout;
+import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class BActivity extends BaseActivity {
 
         binding.swipeContainer.setRecyclerView(binding.list,mAdapter);
         binding.swipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
-        binding.swipeContainer.setFooterView(binding.list, R.layout.listview_footer);
+        binding.swipeContainer.setFooterView(binding.list, R.layout.potato_listview_footer);
 
         binding.swipeContainer.setColorSchemeResources(R.color.google_blue,
                 R.color.google_green,
@@ -58,7 +58,7 @@ public class BActivity extends BaseActivity {
                 }, 300);
             }
         });
-        binding.swipeContainer.setOnLoadListener(new HFRecyclerSwipeLayout.OnLoadListener() {
+        binding.swipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener(){
             @Override
             public void onLoad() {
                 mHandler.postDelayed(new Runnable() {
@@ -76,7 +76,7 @@ public class BActivity extends BaseActivity {
             }
         });
 
-        binding.swipeContainer.setScrollStateLisener(new HFRecyclerSwipeLayout.ScrollStateLisener() {
+        binding.swipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
             @Override
             public void pause() {
                 ImageLoader.getInstance().pause();

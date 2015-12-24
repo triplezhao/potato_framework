@@ -15,13 +15,13 @@ import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.act.ADetailActivity;
 import com.potato.demo.databinding.ItemABinding;
-import com.potato.library.adapter.BaseRecyclerViewAdapter;
+import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.util.L;
 
 /**
  * Created by ztw on 2015/9/21.
  */
-public class BListAdapter extends BaseRecyclerViewAdapter {
+public class BListAdapter extends PotatoBaseRecyclerViewAdapter {
 
     public BListAdapter(Context context) {
         super(context);

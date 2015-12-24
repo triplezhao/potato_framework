@@ -29,8 +29,8 @@ import com.potato.demo.R;
 import com.potato.demo.a.data.bean.ABean;
 import com.potato.demo.a.ui.adapter.AListAdapter;
 import com.potato.demo.databinding.FragmentAListBinding;
-import com.potato.library.adapter.BaseListAdapter;
-import com.potato.library.view.refresh.ListSwipeLayout;
+import com.potato.library.adapter.PotatoBaseListAdapter;
+import com.potato.library.view.refresh.PotatoListSwipeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class AListFragment extends BaseFragment {
      * logic
      */
     private List<ABean> mValues = new ArrayList<ABean>();
-    private BaseListAdapter mAdapter;
+    private PotatoBaseListAdapter mAdapter;
     private FragmentAListBinding binding;
 
     @Nullable
@@ -59,7 +59,7 @@ public class AListFragment extends BaseFragment {
                 false);
 
 
-        binding.swipeContainer.setFooterView(getActivity(), binding.list, R.layout.listview_footer);
+        binding.swipeContainer.setFooterView(getActivity(), binding.list, R.layout.potato_listview_footer);
 
         mAdapter = new AListAdapter(getActivity());
         binding.list.setAdapter(mAdapter);
@@ -83,7 +83,7 @@ public class AListFragment extends BaseFragment {
                 }, 3000);
             }
         });
-        binding.swipeContainer.setOnLoadListener(new ListSwipeLayout.OnLoadListener() {
+        binding.swipeContainer.setOnLoadListener(new PotatoListSwipeLayout.OnLoadListener() {
             @Override
             public void onLoad() {
                 mHandler.postDelayed(new Runnable() {

@@ -11,7 +11,7 @@ import java.util.Set;
 * @author ztw tianwuzhao@cyou-inc.com
 * @date 2015-4-8 下午7:18:51  
 */
-public class PotatoRequestUtil {
+public class RequestUtil {
    
     /** 
     * @Description: TODO(去除请求中的的某些参数，比如时间ts、vts等，缓存请求时候需要忽略这些参数) 
@@ -20,7 +20,7 @@ public class PotatoRequestUtil {
     * @return String    返回类型
     * @date: 2015-4-8 下午7:25:55
     */
-    public static String getParamedUrl(PotatoRequest request,
+    public static String getParamedUrl(Request request,
             Set<String> unParamedKeys) {
         StringBuilder paramedUrl = new StringBuilder(request.url);
         Map<String, Object> params = request.params;
@@ -70,8 +70,8 @@ public class PotatoRequestUtil {
     * @return String    返回类型
     * @date: 2015-4-8 下午7:29:07
     */
-    public static String getCacheSelection(PotatoRequest request) {
-        String selection = PotatoRequestCacheProvider.Columns.requestStr + " = '"
+    public static String getCacheSelection(Request request) {
+        String selection = RequestCacheProvider.Columns.requestStr + " = '"
                 + request.getCacheKey()+"'";
         return selection;
     }
