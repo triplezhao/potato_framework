@@ -10,13 +10,13 @@ import android.text.TextUtils;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.potato.library.util.NetUtil;
 
-import org.apache.http.Header;
-import org.apache.http.client.HttpResponseException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * @author ztw tianwuzhao@cyou-inc.com
@@ -227,7 +227,7 @@ public class RequestManager {
 
         // 网络不可用，不发送网络请求
         if (!NetUtil.isNetworkAvailable(mContext)) {
-            dataListener.onFailure(new HttpResponseException(9999,
+            dataListener.onFailure(new Exception(
                     "Network not avilable!"), "Network not avilable!");
             if (hasCache && cacheType == CACHE_TYPE_NETWORK_FIRST) {
                 dataListener.onCacheLoaded(cacheContent);

@@ -3,16 +3,16 @@ package com.potato.library.net;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.potato.library.util.NetUtil;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.client.HttpResponseException;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.protocol.HTTP;
+import com.potato.library.util.NetUtil;
 
 import java.io.UnsupportedEncodingException;
+
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.client.HttpResponseException;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class RequestHttpClient {
     private static Context mContext;
@@ -61,7 +61,7 @@ public class RequestHttpClient {
                             responseHandler);
                 }
 
-            } catch (UnsupportedEncodingException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 responseHandler.onFailure(0, null, "entity utf-8 UnsupportedEncodingException".getBytes(), new Throwable("对Entity转换字符串失败"));
             }
