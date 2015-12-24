@@ -13,15 +13,15 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.potato.demo.R;
 import com.potato.chips.app.MainApplication;
-
-import org.apache.http.client.HttpResponseException;
+import com.potato.demo.R;
 
 import java.io.File;
 import java.io.InterruptedIOException;
 import java.lang.reflect.Method;
 import java.net.SocketException;
+
+import cz.msebera.android.httpclient.client.HttpResponseException;
 
 
 /**
