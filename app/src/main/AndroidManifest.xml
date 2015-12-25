@@ -68,6 +68,7 @@
         <!--demo-->
         <activity android:name="com.potato.demo.a.ui.act.AActivity"></activity>
         <activity android:name="com.potato.demo.a.ui.act.BActivity"></activity>
+        <activity android:name="com.potato.demo.a.ui.act.AppStoreActivity"></activity>
         <activity android:name="com.potato.demo.a.ui.act.ADetailActivity"></activity>
         <activity android:name="com.potato.demo.a.ui.act.MainActivity"></activity>
 

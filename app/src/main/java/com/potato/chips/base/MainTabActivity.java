@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.potato.demo.R;
-import com.potato.demo.a.ui.act.AActivity;
+import com.potato.demo.a.ui.act.AppStoreActivity;
 import com.potato.demo.a.ui.act.BActivity;
 import com.potato.demo.a.ui.act.MainActivity;
 import com.potato.demo.jiongtu.ui.act.JiongtuActivity;
@@ -47,7 +47,7 @@ public class MainTabActivity extends BaseTabHostActivity {
 
                 tabItem.setTitle("" + position);
                 tabItem.setView(tabItemView);
-                tabItem.setIntent(new Intent(getApplication(), AActivity.class));
+                tabItem.setIntent(new Intent(getApplication(), AppStoreActivity.class));
                 break;
             case 3:
 

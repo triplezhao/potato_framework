@@ -9,15 +9,12 @@ import com.potato.chips.base.BaseDefaultListActivity;
 import com.potato.chips.base.BaseParser;
 import com.potato.demo.R;
 import com.potato.demo.databinding.ActivityYkVideosBinding;
-import com.potato.demo.youku.data.bean.YKVideo;
 import com.potato.demo.youku.data.parser.YKVideosByUserParser;
 import com.potato.demo.youku.data.request.YKRequestBuilder;
 import com.potato.demo.youku.ui.adapter.YKVideoAdapter;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.net.Request;
 import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
-
-import java.util.ArrayList;
 
 /**
  * Created by ztw on 2015/7/3.
@@ -26,7 +23,6 @@ public class YKActivity extends BaseDefaultListActivity {
 
     public static final String TAG = YKActivity.class.getSimpleName();
 
-    private ArrayList<YKVideo> mList = new ArrayList<YKVideo>();
     private PotatoBaseRecyclerViewAdapter mAdapter;
     private ActivityYkVideosBinding mBinding;
 
