@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.mozillaonline.providers.DownloadManager;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.chips.util.PhoneUtils;
 import com.potato.library.net.RequestHttpClient;
@@ -28,6 +29,7 @@ public class MainApplication extends Application {
      * 获取全局的上下文
      */
     public static Context context;
+    public static DownloadManager mDownloadManager;
 
     @Override
     public void onCreate() {
@@ -54,7 +56,13 @@ public class MainApplication extends Application {
 //        instence.setUserAgent(PhoneUtils.getDeviceUA(context));
         initPicasso();
         initUIL();
+        initDownloadManager();
+        
+    }
 
+    private void initDownloadManager() {
+        mDownloadManager = new DownloadManager(getContentResolver(),
+                getPackageName());
     }
 
 

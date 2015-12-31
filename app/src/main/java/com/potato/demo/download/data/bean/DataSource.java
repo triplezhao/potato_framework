@@ -1,4 +1,4 @@
-package com.potato.demo.a.data.bean;
+package com.potato.demo.download.data.bean;
 
 
 /**

@@ -1,16 +1,23 @@
-package com.potato.demo.a.ui.act;
+package com.potato.demo.download.ui.act;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.mozillaonline.providers.DownloadManager;
+import com.mozillaonline.providers.downloads.DownloadService;
+import com.mozillaonline.providers.downloads.ui.DownloadListActivity;
 import com.potato.chips.base.BaseDefaultListActivity;
 import com.potato.chips.base.BaseParser;
 import com.potato.chips.common.AppPool;
 import com.potato.demo.R;
-import com.potato.demo.a.data.bean.AppBean;
-import com.potato.demo.a.data.bean.DataSource;
-import com.potato.demo.a.ui.adapter.AppListAdapter;
+import com.potato.demo.download.data.bean.AppBean;
+import com.potato.demo.download.data.bean.DataSource;
+import com.potato.demo.download.ui.adapter.AppListAdapter;
 import com.potato.demo.databinding.ActivityAppStoreBinding;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.net.Request;
@@ -23,6 +30,8 @@ public class AppStoreActivity extends BaseDefaultListActivity {
     private AppListAdapter mAdapter;
     private ActivityAppStoreBinding mBinding;
 
+
+    private BroadcastReceiver mReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,37 @@ public class AppStoreActivity extends BaseDefaultListActivity {
         mSwipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
         mSwipeContainer.showProgress();
         reqRefresh();
+
+        startDownloadService();
+
+        mReceiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                showDownloadList();
+            }
+        };
+
+        registerReceiver(mReceiver, new IntentFilter(
+                DownloadManager.ACTION_NOTIFICATION_CLICKED));
+    }
+
+    private void startDownloadService() {
+        Intent intent = new Intent();
+        intent.setClass(this, DownloadService.class);
+        startService(intent);
+    }
+
+    private void showDownloadList() {
+        Intent intent = new Intent();
+        intent.setClass(this, DownloadListActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(mReceiver);
+        super.onDestroy();
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.potato.demo.R;
-import com.potato.demo.a.ui.act.AppStoreActivity;
+import com.potato.demo.download.ui.act.AppStoreActivity;
 import com.potato.demo.a.ui.act.BActivity;
 import com.potato.demo.a.ui.act.MainActivity;
 import com.potato.demo.jiongtu.ui.act.JiongtuActivity;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.potato.demo">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -48,6 +49,27 @@
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- Allows access to the Download Manager -->
+    <permission
+        android:name="com.mozillaonline.permission.ACCESS_DOWNLOAD_MANAGER"
+        android:protectionLevel="normal" />
+
+    <!-- Allows advanced access to the Download Manager -->
+    <permission
+        android:name="com.mozillaonline.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED"
+        android:protectionLevel="normal" />
+
+    <!-- Allows to send broadcasts on download completion -->
+    <permission
+        android:name="com.mozillaonline.permission.SEND_DOWNLOAD_COMPLETED_INTENTS"
+        android:protectionLevel="normal" />
+
+    <uses-permission android:name="com.mozillaonline.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="com.mozillaonline.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED" />
+    <uses-permission android:name="com.mozillaonline.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
+
+    <permission android:name="android.permission.STATUS_BAR_SERVICE"></permission>
     <application
         android:name="com.potato.chips.app.MainApplication"
         android:allowBackup="true"
@@ -56,8 +78,7 @@
         android:theme="@style/Theme.AppTheme">
         <activity
             android:name="com.potato.chips.base.MainTabActivity"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,17 +89,38 @@
         <!--demo-->
         <activity android:name="com.potato.demo.a.ui.act.AActivity"></activity>
         <activity android:name="com.potato.demo.a.ui.act.BActivity"></activity>
-        <activity android:name="com.potato.demo.a.ui.act.AppStoreActivity"></activity>
         <activity android:name="com.potato.demo.a.ui.act.ADetailActivity"></activity>
         <activity android:name="com.potato.demo.a.ui.act.MainActivity"></activity>
 
         <!--jiongtu-->
         <activity android:name="com.potato.demo.jiongtu.ui.act.JiongtuActivity"></activity>
-        <activity android:name="com.potato.demo.jiongtu.ui.act.JiongTuDetailActivity" android:hardwareAccelerated="true" ></activity>
+        <activity
+            android:name="com.potato.demo.jiongtu.ui.act.JiongTuDetailActivity"
+            android:hardwareAccelerated="true"></activity>
 
         <!--youku-->
-        <activity android:name="com.potato.demo.youku.ui.act.YKActivity"  ></activity>
-        <activity android:name="com.potato.chips.common.WebViewActivity"  ></activity>
+        <activity android:name="com.potato.demo.youku.ui.act.YKActivity"></activity>
+        <activity android:name="com.potato.chips.common.WebViewActivity"></activity>
+
+        <!--download-->
+        <activity android:name=".download.ui.act.AppStoreActivity"></activity>
+        <activity android:name="com.mozillaonline.providers.downloads.ui.DownloadListActivity"></activity>
+
+        <provider
+            android:name="com.mozillaonline.providers.downloads.DownloadProvider"
+            android:authorities="com.potato.demo.DownloadProvider" />
+
+        <service android:name="com.mozillaonline.providers.downloads.DownloadService" />
+
+        <receiver
+            android:name="com.mozillaonline.providers.downloads.DownloadReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <!--downloadend-->
 
         <provider
             android:name="com.potato.library.net.RequestCacheProvider"

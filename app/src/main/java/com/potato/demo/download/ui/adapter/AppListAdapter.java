@@ -1,6 +1,7 @@
-package com.potato.demo.a.ui.adapter;
+package com.potato.demo.download.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -8,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mozillaonline.downloadprovider.DownLoadUtil;
+import com.mozillaonline.providers.downloads.ui.DownloadListActivity;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.demo.R;
-import com.potato.demo.a.data.bean.AppBean;
+import com.potato.demo.download.data.bean.AppBean;
 import com.potato.demo.databinding.ItemAppListBinding;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.util.L;
@@ -40,14 +43,22 @@ public class AppListAdapter extends PotatoBaseRecyclerViewAdapter {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final ItemAppListBinding binding = (ItemAppListBinding) ((VH)holder).getBinding();
+        final ItemAppListBinding binding = (ItemAppListBinding) ((VH) holder).getBinding();
         final AppBean bean = (AppBean) mData.get(position);
         binding.setBean(bean);
         binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, DownloadListActivity.class);
+                mContext.startActivity(intent);
+            }
+        });
+        binding.tvDownload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Context context = v.getContext();
-
+                DownLoadUtil.startDownload(context, bean.getApkUrl(), bean.getTitle());
             }
         });
         L.i("with", bean.getIcon());
