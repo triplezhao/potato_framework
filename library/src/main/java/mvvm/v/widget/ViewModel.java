@@ -1,4 +1,4 @@
-package mvvm.vm;
+package mvvm.v.widget;
 
 import android.databinding.BaseObservable;
 

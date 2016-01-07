@@ -1,4 +1,3 @@
-package mvvm.vm;
 
 import android.databinding.BaseObservable;
 
