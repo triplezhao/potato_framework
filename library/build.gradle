@@ -4,12 +4,15 @@ android {
     dataBinding {
         enabled = true
     }
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 23
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
         versionCode 1
         versionName "1.0"
     }
@@ -23,11 +26,19 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'com.squareup.okhttp:okhttp:2.6.0'
-    compile 'com.makeramen:roundedimageview:2.2.0'
+    /* compile 'com.android.support:design:23.1.1'
+     compile 'com.android.support:appcompat-v7:23.1.1'
+     compile 'com.android.support:cardview-v7:23.1.1'
+     compile 'com.android.support:recyclerview-v7:23.1.1'
+     compile 'com.loopj.android:android-async-http:1.4.9'
+     compile 'com.squareup.okhttp:okhttp:2.6.0'
+     compile 'com.makeramen:roundedimageview:2.2.0'*/
+    def libDepend = rootProject.ext.libDepend
+    compile libDepend.design;
+    compile libDepend.cardView;
+    compile libDepend.appcompat;
+    compile libDepend.recyclerView;
+    compile libDepend.asynchttp;
+    compile libDepend.okhttp;
+    compile libDepend.roundedimageview;
 }
