@@ -7,6 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.potato.library.util.NetUtil;
 
@@ -36,13 +37,15 @@ public class RequestManager {
     public static final int CACHE_TYPE_NOCACHE = 504; // 只加载网络数据
     public static final int CACHE_TYPE_CACHEONLY = 505; // 只加载缓存数据
 
-    private static Context mContext;
+    public static Context mContext;
     private static String[] mProjection;
     private static Map<String, Long> mCacheTimes; // 缓存数据的时间，客户端退出是清空此map
 
-    private static String sUID;
+    public static AsyncHttpClient asyncHttpClient;
+    private static final int TIMEOUT = 15 * 1000;
+    public static final String DEF_CONTENTTYPE = "application/json";
 
-    public static void init(Context cxt) {
+    public static RequestManager init(Context cxt) {
 
         if (cxt instanceof Activity) {
             mContext = ((Activity) cxt).getApplicationContext();
@@ -55,6 +58,14 @@ public class RequestManager {
                 RequestCacheProvider.Columns.time};
         mCacheTimes = new HashMap<String, Long>();
 
+        if (asyncHttpClient == null) {
+            asyncHttpClient = new AsyncHttpClient();
+            asyncHttpClient.addHeader("Accept", DEF_CONTENTTYPE);
+            asyncHttpClient.addHeader("Content-Type", DEF_CONTENTTYPE);
+//            sHttpClient.setUserAgent(PhoneUtils.getDeviceUA(context));
+            asyncHttpClient.setTimeout(TIMEOUT);
+        }
+        return new RequestManager();
     }
 
     public static void requestData(Request request,
@@ -237,7 +248,7 @@ public class RequestManager {
 
         //根据Request中配置的 Request方式发送请求。默认有一种，如果用户有特殊要求，则可以执行自定义的请求方式，
         //比如畅言用的自定义CyanClient.getInstance().requestData(request.reqType, request.body,responseHandler);。
-        request.doRequest(request, responseHandler, dataListener, cacheType, cacheTimeoutSeconds);
+        request.doRequest(responseHandler, dataListener, cacheType, cacheTimeoutSeconds);
     }
 
     public static void clearCacheTime() {
@@ -334,5 +345,6 @@ public class RequestManager {
             return true;
         }
     }
+
 
 }

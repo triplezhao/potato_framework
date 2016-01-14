@@ -2,14 +2,17 @@ package com.potato.library.net;
 
 import android.text.TextUtils;
 
-import com.potato.library.net.RequestManager.DataLoadListener;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.potato.library.net.RequestManager.DataLoadListener;
+import com.potato.library.util.NetUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.client.HttpResponseException;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 /**
  * @author ztw tianwuzhao@cyou-inc.com
@@ -20,34 +23,6 @@ import java.util.Map;
 public class DefaultRequest extends Request {
 
     private static final String TAG = "DefaultRequest";
-    public static final int REQ_METHOD_GET = 1;
-    public static final int REQ_METHOD_POST = 2;
-
-    /**
-     * 1.请求的标记tag。例如，在清除缓存的时候，会根据type值来决定是否清除这个请求的缓存。
-     * 2.不同的请求，最终调用请求的基础方法不同，比如畅言，执行的畅言CyanClient.requestData()方法。
-     */
-    public String reqType = "0";
-    /**
-     * 可能是拼接处来的。比如：/rest/cont/strategy/channel/{0} 这里的参数不是?后面的。
-     */
-    public String url;
-    /**
-     * 请求的参数，放在url后面的参数
-     */
-    public Map<String, Object> params = new HashMap<String, Object>();
-    /**
-     * 请求的body
-     */
-    public String body;
-    /**
-     * post或者get等
-     */
-    public int reqMethod;
-    /**
-     * 标记是否需要激活才能发出请求 ，默认是，如果想默认为否，requestBuilder方法中可以配置。或者基础request，修改默认值
-     */
-    public boolean needActive = true;
 
     /**
      * 返回这个请求的缓存 key
@@ -64,14 +39,45 @@ public class DefaultRequest extends Request {
     }
 
     @Override
-    public void doRequest(final Request request,
-                          final AsyncHttpResponseHandler responseHandler,
-                          final DataLoadListener dataListener, final int cacheType,
-                          final int cacheTimeoutSeconds) {
+    public void doRequest(
+            final AsyncHttpResponseHandler responseHandler,
+            final DataLoadListener dataListener, final int cacheType,
+            final int cacheTimeoutSeconds) {
         // TODO Auto-generated method stub
-        RequestHttpClient.request(
+        /*RequestManager.request(
                 RequestUtil.getParamedUrl(DefaultRequest.this, null),
-                request.body, responseHandler, request.reqMethod);
+                request.body, responseHandler, request.reqMethod);*/
+
+        String url = RequestUtil.getParamedUrl(DefaultRequest.this, null);
+
+        if (NetUtil.isNetworkAvailable(RequestManager.mContext)) {
+            try {
+                if (RequestManager.asyncHttpClient == null) {
+                    responseHandler.onFailure(0, null, "asyncHttpClient为空".getBytes(), new Throwable("asyncHttpClient为 空"));
+                    return;
+                }
+
+                HttpEntity httpEntity = null;
+                if (!TextUtils.isEmpty(this.body)) {
+                    httpEntity = new StringEntity(this.body, HTTP.UTF_8);
+                }
+
+                if (this.reqMethod == Request.REQ_METHOD_GET) {
+                    RequestManager.asyncHttpClient.get(url, responseHandler);
+                } else if (this.reqMethod == Request.REQ_METHOD_POST) {
+                    RequestManager.asyncHttpClient.post(null, url, httpEntity, RequestManager.DEF_CONTENTTYPE,
+                            responseHandler);
+                }
+
+            } catch (Exception e) {
+//                e.printStackTrace();
+                responseHandler.onFailure(0, null, "entity utf-8 UnsupportedEncodingException".getBytes(), new Throwable(e.getMessage()));
+            }
+        } else {
+            // 表示网络被禁止
+            responseHandler.onFailure(0, null, "Network is Forbid 2G/3G,Wifin".getBytes(), new HttpResponseException(9999, "Network is Forbid 2G/3G,Wifi"));
+        }
+
     }
 
     public int getUrlHash() {

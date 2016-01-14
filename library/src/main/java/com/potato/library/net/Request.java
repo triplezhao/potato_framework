@@ -32,8 +32,7 @@ public abstract class Request {
      */
     public int reqMethod;
 
-    public abstract void doRequest(Request request,
-                                   AsyncHttpResponseHandler responseHandler,
+    public abstract void doRequest(AsyncHttpResponseHandler responseHandler,
                                    final RequestManager.DataLoadListener dataListener, final int cacheType,
                                    final int cacheTimeoutSeconds);
 
