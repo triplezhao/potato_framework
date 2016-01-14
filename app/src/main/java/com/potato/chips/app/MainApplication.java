@@ -4,11 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.mozillaonline.providers.DownloadManager;
 import com.potato.chips.util.ImageLoaderUtil;
 import com.potato.chips.util.PhoneUtils;
-import com.potato.library.net.RequestHttpClient;
 import com.potato.library.net.RequestManager;
 
 import cn.sharesdk.framework.ShareSDK;
@@ -51,7 +49,6 @@ public class MainApplication extends Application {
         //请求缓存管理
         RequestManager.init(context);
         //请求初始化
-        AsyncHttpClient instence = RequestHttpClient.getInstence(context);
 //        RequestConfig.addHttpClientRASHead(instence);
 //        instence.setUserAgent(PhoneUtils.getDeviceUA(context));
         initPicasso();

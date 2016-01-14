@@ -1,15 +1,16 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.1'
     dataBinding {
         enabled = true
     }
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
     defaultConfig {
         applicationId "com.potato.demo"
-        minSdkVersion 17
-        targetSdkVersion 23
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
         versionCode 1
         versionName "1.0"
     }
