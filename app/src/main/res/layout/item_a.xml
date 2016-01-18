@@ -20,7 +20,7 @@
 
         <variable
             name="bean"
-            type="com.potato.demo.m.bean.ABean" />
+            type="potato.demo.mvvm.m.bean.ABean" />
     </data>
 
     <LinearLayout

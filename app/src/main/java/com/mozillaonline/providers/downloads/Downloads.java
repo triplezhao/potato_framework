@@ -28,7 +28,7 @@ import java.io.InputStream;
  * @pending
  */
 public final class Downloads implements BaseColumns {
-    protected static String packageName = "com.potato.demo";
+    protected static String packageName = "potato.demo";
 
     static {
 

@@ -25,10 +25,10 @@ import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.RemoteViews;
 
-import com.potato.demo.R;
-
 import java.util.Collection;
 import java.util.HashMap;
+
+import potato.demo.R;
 
 /**
  * This class handles the updating of the Notification Manager for the

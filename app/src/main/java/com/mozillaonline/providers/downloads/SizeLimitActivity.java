@@ -27,10 +27,10 @@ import android.net.Uri;
 import android.text.format.Formatter;
 import android.util.Log;
 
-import com.potato.demo.R;
-
 import java.util.LinkedList;
 import java.util.Queue;
+
+import potato.demo.R;
 
 /**
  * Activity to show dialogs to the user when a download exceeds a limit on download sizes for

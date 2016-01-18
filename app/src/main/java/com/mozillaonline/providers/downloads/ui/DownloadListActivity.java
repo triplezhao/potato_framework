@@ -43,7 +43,7 @@ import android.widget.Toast;
 
 import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.downloads.ui.DownloadItem.DownloadSelectListener;
-import com.potato.demo.R;
+import potato.demo.R;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
