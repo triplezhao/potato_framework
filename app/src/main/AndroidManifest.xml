@@ -87,23 +87,23 @@
         </activity>
 
         <!--demo-->
-        <activity android:name=".mvvm.v.act.AActivity"></activity>
-        <activity android:name=".mvvm.v.act.BActivity"></activity>
-        <activity android:name=".mvvm.v.act.ADetailActivity"></activity>
-        <activity android:name=".mvvm.v.act.MainActivity"></activity>
+        <activity android:name=".v.act.AActivity"></activity>
+        <activity android:name=".v.act.BActivity"></activity>
+        <activity android:name=".v.act.ADetailActivity"></activity>
+        <activity android:name=".v.act.MainActivity"></activity>
 
         <!--jiongtu-->
-        <activity android:name=".mvvm.v.act.JiongtuActivity"></activity>
+        <activity android:name=".v.act.JiongtuActivity"></activity>
         <activity
-            android:name=".mvvm.v.act.JiongTuDetailActivity"
+            android:name=".v.act.JiongTuDetailActivity"
             android:hardwareAccelerated="true"></activity>
 
         <!--youku-->
-        <activity android:name=".mvvm.v.act.YKActivity"></activity>
+        <activity android:name=".v.act.YKActivity"></activity>
         <activity android:name="com.potato.chips.common.WebViewActivity"></activity>
 
         <!--download-->
-        <activity android:name=".mvvm.v.act.AppStoreActivity"></activity>
+        <activity android:name=".v.act.AppStoreActivity"></activity>
         <activity android:name="com.mozillaonline.providers.downloads.ui.DownloadListActivity"></activity>
 
         <provider

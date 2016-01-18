@@ -6,11 +6,11 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.potato.demo.R;
-import com.potato.demo.mvvm.v.act.AppStoreActivity;
-import com.potato.demo.mvvm.v.act.BActivity;
-import com.potato.demo.mvvm.v.act.MainActivity;
-import com.potato.demo.mvvm.v.act.JiongtuActivity;
-import com.potato.demo.mvvm.v.act.YKActivity;
+import com.potato.demo.v.act.AppStoreActivity;
+import com.potato.demo.v.act.BActivity;
+import com.potato.demo.v.act.MainActivity;
+import com.potato.demo.v.act.JiongtuActivity;
+import com.potato.demo.v.act.YKActivity;
 
 public class MainTabActivity extends BaseTabHostActivity {
 
