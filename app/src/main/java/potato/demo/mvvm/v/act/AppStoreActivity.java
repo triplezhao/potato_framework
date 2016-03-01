@@ -29,8 +29,7 @@ import potato.demo.mvvm.v.adapter.AppListAdapter;
 public class AppStoreActivity extends BaseDefaultListActivity {
 
     private AppListAdapter mAdapter;
-    private ActivityAppStoreBinding mBinding = DataBindingUtil.setContentView(
-            this, R.layout.activity_app_store);
+    private ActivityAppStoreBinding mBinding;
 
 
     private BroadcastReceiver mReceiver;
@@ -38,9 +37,9 @@ public class AppStoreActivity extends BaseDefaultListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mBinding = DataBindingUtil.setContentView(
+                this, R.layout.activity_app_store);
         setSupportActionBar(mBinding.toolbar);
-
         mAdapter = new AppListAdapter(mContext);
 
         initListView(mBinding.includeA.llSwipe);

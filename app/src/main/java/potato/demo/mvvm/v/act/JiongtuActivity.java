@@ -8,18 +8,19 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 
-import potato.demo.R;
-import potato.demo.mvvm.m.bean.JiongtuSection;
-import potato.demo.mvvm.m.parser.JiongtuSectionListParser;
-import potato.demo.mvvm.m.request.JiongtuRequestBuilder;
-import potato.demo.mvvm.v.fragment.JiongTuListFragment;
-import potato.demo.chips.base.BaseActivity;
 import com.potato.library.net.Request;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import potato.demo.R;
+import potato.demo.chips.base.BaseActivity;
+import potato.demo.mvvm.m.bean.JiongtuSection;
+import potato.demo.mvvm.m.parser.JiongtuSectionListParser;
+import potato.demo.mvvm.m.request.JiongtuRequestBuilder;
+import potato.demo.mvvm.v.fragment.JiongTuListFragment;
 
 /**
  * Created by ztw on 2015/7/3.
@@ -72,7 +73,7 @@ public class JiongtuActivity extends BaseActivity {
             public void onFailure(Throwable error, String errMsg) {
                 L.i(TAG,errMsg+"");
             }
-        }, RequestManager.CACHE_TYPE_NORMAL);
+        }, RequestManager.CACHE_TYPE_IGNORE_TIME);
 
     }
 

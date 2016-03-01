@@ -42,7 +42,7 @@ public class RequestManager {
     private static Map<String, Long> mCacheTimes; // 缓存数据的时间，客户端退出是清空此map
 
     public static AsyncHttpClient asyncHttpClient;
-    private static final int TIMEOUT = 15 * 1000;
+    private static final int TIMEOUT = 5 * 1000;
     public static final String DEF_CONTENTTYPE = "application/json";
 
     public static RequestManager init(Context cxt) {
