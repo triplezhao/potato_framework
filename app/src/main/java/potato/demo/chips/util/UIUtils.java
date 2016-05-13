@@ -13,16 +13,14 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import potato.demo.chips.app.MainApplication;
-import potato.demo.R;
-
 import java.io.File;
+import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.lang.reflect.Method;
 import java.net.SocketException;
 
-import cz.msebera.android.httpclient.client.HttpResponseException;
-
+import potato.demo.R;
+import potato.demo.chips.app.MainApplication;
 
 /**
  * 界面有关工具类 Toast 各种Dialog
@@ -112,28 +110,8 @@ public class UIUtils {
         }
 
         // 304 表示该设备已经激活过，可认为激活成功，继续请求数据
-        if (error instanceof HttpResponseException) {
-            int code = ((HttpResponseException) error).getStatusCode();
-            switch (code) {
-                case 502:
-                case 504:
-                case 408:
-                case 0:
-                    toast.setText(R.string.potato_net_timeout);
-                    break;
-                case 9999:
-                    toast.setText(R.string.potato_no_net);
-                    break;
-                default:
-                    // toast.setText(""+code);
-
-                    int errorcode = code / 100;
-                    if (errorcode == 4 || errorcode == 5) {
-                        toast.setText(R.string.potato_data_exception);
-                    }
-
-                    break;
-            }
+        if (error instanceof IOException) {
+            toast.setText(R.string.potato_data_exception);
         } else if (error instanceof InterruptedIOException) {
             toast.setText(R.string.potato_net_timeout);
         } else if (error instanceof SocketException) {
@@ -162,25 +140,25 @@ public class UIUtils {
             }
         }
     }
-    
+
     /**
      * 顶部通知栏弹出的方式
-     * 
-     * @param context 上下文 
-     * @param title 标题
-     * @param downloadState 下载的状态，可以为空
-     * @param text 显示的内容
-     * @param show_icon 提示的图片，在顶部弹出
-     * @param notifyId 这个通知的惟一标识的id （每个应用应该是唯一的）
-     * @param totalSize 文件总大小
-     * @param currentSize 当前下载的进度数
-     * @param file 文件路径，可以不传递
+     *
+     * @param context        上下文
+     * @param title          标题
+     * @param downloadState  下载的状态，可以为空
+     * @param text           显示的内容
+     * @param show_icon      提示的图片，在顶部弹出
+     * @param notifyId       这个通知的惟一标识的id （每个应用应该是唯一的）
+     * @param totalSize      文件总大小
+     * @param currentSize    当前下载的进度数
+     * @param file           文件路径，可以不传递
      * @param isForbidCancel 是否可以 禁止 取消顶部通知栏的通知
      */
     public static void showNotificationAppDownload(Context context,
-            String title, String downloadState, String text, int show_icon,
-            int notifyId, long totalSize, long currentSize, File file,
-            boolean isForbidCancel) {
+                                                   String title, String downloadState, String text, int show_icon,
+                                                   int notifyId, long totalSize, long currentSize, File file,
+                                                   boolean isForbidCancel) {
         context = MainApplication.context;
         NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -203,7 +181,7 @@ public class UIUtils {
         }
 
         // 创建RemoteViews用在Notification中
-        RemoteViews contentView = new RemoteViews(context.getPackageName(),R.layout.notification_view_layout);
+        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_view_layout);
         contentView.setTextViewText(R.id.notificationTitle, title);
         contentView.setTextViewText(R.id.downlaod_state, downloadState);
         contentView.setTextViewText(R.id.notificationPercent, precent + "%");

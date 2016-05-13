@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.net.Request;
+import com.potato.library.net.RequestWraper;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;
 import com.potato.library.view.NormalEmptyView;
@@ -104,9 +104,9 @@ public abstract class BaseDefaultListActivity extends BaseActivity implements Po
 
     public abstract PotatoBaseRecyclerViewAdapter getAdapter();
 
-    public abstract Request getRefreshRequest();
+    public abstract RequestWraper getRefreshRequest();
 
-    public abstract Request getLoadMoreRequest();
+    public abstract RequestWraper getLoadMoreRequest();
 
 
     public abstract BaseParser getParser(String json);

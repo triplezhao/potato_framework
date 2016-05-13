@@ -18,7 +18,6 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-import potato.demo.chips.app.MainApplication;
 import com.potato.library.util.L;
 
 import java.text.DateFormat;
@@ -27,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+
+import potato.demo.chips.app.MainApplication;
 
 /**
  * 各种phone信息接口 例如 imei 手机型号，系统 ，分辨率，应用包及包名
@@ -161,7 +162,7 @@ public class PhoneUtils {
                 .getSystemService(Context.WINDOW_SERVICE);
         w.getDefaultDisplay().getMetrics(dm);
         sPoneDisplayMetrics = dm.widthPixels + " * " + dm.heightPixels;
-        L.d(sPoneDisplayMetrics);
+        L.d(TAG,sPoneDisplayMetrics);
         return sPoneDisplayMetrics;
     }
 
@@ -188,7 +189,7 @@ public class PhoneUtils {
                     + MainApplication.IMEI + "(android;unknown)";
         }
 
-        L.d("getDeviceUA==" + UAInfo);
+        L.d(TAG,"getDeviceUA==" + UAInfo);
         return UAInfo;
     }
 
@@ -248,7 +249,7 @@ public class PhoneUtils {
                 strUID = strUID + ran.nextInt(100);
             }
         }
-        L.d("手机UID==" + strUID);
+        L.d(TAG,"手机UID==" + strUID);
         return strUID;
     }
 
@@ -277,7 +278,7 @@ public class PhoneUtils {
         for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
                 .getRunningAppProcesses()) {
             if (pid == appProcess.pid) {
-                L.i("MainApplication", "onCreate(),pid=" + pid
+                L.i(TAG,"MainApplication"+"onCreate(),pid=" + pid
                         + ",processName=" + appProcess.processName
                         + ",PackageName=" + context.getPackageName());
                 if (appProcess.processName.equals(context.getPackageName())) {
@@ -296,7 +297,7 @@ public class PhoneUtils {
 
         if (TextUtils.isEmpty(IMEI)) {
             IMEI = PhoneUtils.getPhoneUID(context);
-            L.d("MainApplication_phone_uid==" + IMEI);
+            L.d(TAG,"MainApplication_phone_uid==" + IMEI);
         }
         return IMEI;
     }

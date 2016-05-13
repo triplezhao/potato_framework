@@ -15,21 +15,23 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 
+import com.potato.library.util.L;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
  * Use this provider to access the cache(缓存表) table
- * 
+ *
  * @author ztw
- * 
+ *
  */
 public class RequestCacheProvider extends ContentProvider {
     private static final String TAG = "RequestCacheProvider";
     protected static String packageName = "com.mobile17173.game";
     static{
-        
+
         InputStream inputStream = RequestCacheProvider.class.getClassLoader().getResourceAsStream("assets/packagename_for_provider");
         ByteArrayOutputStream outSteam = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
@@ -48,9 +50,9 @@ public class RequestCacheProvider extends ContentProvider {
             outSteam = null;
             inputStream = null;
         }
-            
+
     }
-    
+
     protected SQLiteOpenHelper mOpenHelper;
     public static final int ITEMS = 1;
     public static final int ITEMS_ID = 2;
@@ -71,7 +73,7 @@ public class RequestCacheProvider extends ContentProvider {
     /**
      * Use this static method to create the table It will be called by
      * {@link RequestCacheDBHelper} during first launch time to create DB.
-     * 
+     *
      * @param db
      */
     public static void createTable(SQLiteDatabase db) {
@@ -92,7 +94,7 @@ public class RequestCacheProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = RequestCacheDBHelper.getInstance(getContext());
-        NetLog.d(TAG, "In onCreate method, create the provider: " + this
+        L.d(TAG, "In onCreate method, create the provider: " + this
                 + ", and DatabaseHelper: " + mOpenHelper);
         return true;
     }
@@ -116,7 +118,7 @@ public class RequestCacheProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
             String[] selectionArgs, String sortOrder) {
-        NetLog.d(TAG, "In query method, uri: " + uri + ", selection: " + selection);
+        L.d(TAG, "In query method, uri: " + uri + ", selection: " + selection);
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         UriMatcher uriMatcher = getUriMatcher();
         String tablePath = getTablePath();
@@ -139,7 +141,7 @@ public class RequestCacheProvider extends ContentProvider {
                 null, null, sortOrder);
 
         if (result == null) {
-            NetLog.d("Query failed with uri: " + uri);
+            L.d("Query failed with uri: " + uri);
         } else {
             result.setNotificationUri(getContext().getContentResolver(), uri);
         }
@@ -149,7 +151,7 @@ public class RequestCacheProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
             String[] selectionArgs) {
-        NetLog.d(TAG, "In update method, uri: " + uri + ", selection: " + selection);
+        L.d(TAG, "In update method, uri: " + uri + ", selection: " + selection);
         int count = 0;
         UriMatcher uriMatcher = getUriMatcher();
         String tablePath = getTablePath();
@@ -176,7 +178,7 @@ public class RequestCacheProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        NetLog.d(TAG, "In delete method, uri: " + uri + ", selection: " + selection);
+        L.d(TAG, "In delete method, uri: " + uri + ", selection: " + selection);
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count;
         UriMatcher uriMatcher = getUriMatcher();
@@ -223,9 +225,9 @@ public class RequestCacheProvider extends ContentProvider {
 
     /**
      * 对数据库使用事务处理。
-     * 
+     *
      * @author wangqing
-     * 
+     *
      *         ArrayList<ContentProviderOperation>ops = new
      *         ArrayList<ContentProviderOperation>();
      *         ops.add(ContentProviderOperation
@@ -234,8 +236,8 @@ public class RequestCacheProvider extends ContentProvider {
      *         (ContentProviderOperation.newInsert(Home.CONTENT_URI).withValues
      *         (values).build());//添加一条记录到Home表
      *         getContentResolver().applyBatch(PROVIDER.AUTHORITY,ops);//处理事务
-     * 
-     * 
+     *
+     *
      */
     @Override
     public ContentProviderResult[] applyBatch(

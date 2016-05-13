@@ -24,19 +24,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import potato.demo.chips.base.BaseDefaultListFragment;
-import potato.demo.chips.base.BaseParser;
-import potato.demo.R;
-import potato.demo.databinding.FragmentJiongtuListBinding;
-import potato.demo.mvvm.m.request.JiongtuRequestBuilder;
-import potato.demo.mvvm.m.bean.JiongtuAlbum;
-import potato.demo.mvvm.m.parser.JiongtuAlbumListParser;
-import potato.demo.mvvm.v.adapter.JiongTuListAdapter;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.net.Request;
+import com.potato.library.net.RequestWraper;
 import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 
 import java.util.ArrayList;
+
+import potato.demo.R;
+import potato.demo.chips.base.BaseDefaultListFragment;
+import potato.demo.chips.base.BaseParser;
+import potato.demo.databinding.FragmentJiongtuListBinding;
+import potato.demo.mvvm.m.bean.JiongtuAlbum;
+import potato.demo.mvvm.m.parser.JiongtuAlbumListParser;
+import potato.demo.mvvm.m.request.JiongtuRequestBuilder;
+import potato.demo.mvvm.v.adapter.JiongTuListAdapter;
 
 public class JiongTuListFragment extends BaseDefaultListFragment {
     private static final String TAG = "ListFragmentJiongtu";
@@ -99,12 +100,12 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
     }
 
     @Override
-    public Request getRefreshRequest() {
+    public RequestWraper getRefreshRequest() {
         return JiongtuRequestBuilder.getAlbumListRequest(mSectionId, 0);
     }
 
     @Override
-    public Request getLoadMoreRequest() {
+    public RequestWraper getLoadMoreRequest() {
         return JiongtuRequestBuilder.getAlbumListRequest(mSectionId, mParser.maxPublicDate);
     }
 

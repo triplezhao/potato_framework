@@ -15,7 +15,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 
-import com.potato.library.net.NetLog;
+import com.potato.library.util.L;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -62,14 +62,14 @@ public abstract class BaseProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         mOpenHelper = DatabaseHelper.getInstance(getContext());
-        NetLog.d(TAG, "In onCreate method, create the provider: " + this + ", and DatabaseHelper: " + mOpenHelper);
+        L.d(TAG, "In onCreate method, create the provider: " + this + ", and DatabaseHelper: " + mOpenHelper);
         return true;
     }
     
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
             String[] selectionArgs, String sortOrder) {
-        NetLog.d(TAG, "In query method, uri: " + uri + ", selection: " + selection);
+        L.d(TAG, "In query method, uri: " + uri + ", selection: " + selection);
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         UriMatcher uriMatcher = getUriMatcher();
         String tablePath = getTablePath();
@@ -92,7 +92,7 @@ public abstract class BaseProvider extends ContentProvider {
                 null, sortOrder);
 
         if (result == null) {
-            NetLog.d("Query failed with uri: " + uri);
+            L.d("Query failed with uri: " + uri);
         } else {
             result.setNotificationUri(getContext().getContentResolver(), uri);
         }
@@ -102,7 +102,7 @@ public abstract class BaseProvider extends ContentProvider {
     @Override
     public int update(Uri uri, ContentValues values, String selection,
             String[] selectionArgs) {
-        NetLog.d(TAG, "In update method, uri: " + uri + ", selection: " + selection);
+        L.d(TAG, "In update method, uri: " + uri + ", selection: " + selection);
         int count = 0;
         UriMatcher uriMatcher = getUriMatcher();
         String tablePath = getTablePath();
@@ -128,7 +128,7 @@ public abstract class BaseProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        NetLog.d(TAG, "In delete method, uri: " + uri + ", selection: " + selection);
+        L.d(TAG, "In delete method, uri: " + uri + ", selection: " + selection);
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         int count;
         UriMatcher uriMatcher = getUriMatcher();

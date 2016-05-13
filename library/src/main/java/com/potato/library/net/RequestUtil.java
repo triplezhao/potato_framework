@@ -20,7 +20,7 @@ public class RequestUtil {
     * @return String    返回类型
     * @date: 2015-4-8 下午7:25:55
     */
-    public static String getParamedUrl(Request request,
+    public static String getParamedUrl(RequestWraper request,
             Set<String> unParamedKeys) {
         StringBuilder paramedUrl = new StringBuilder(request.url);
         Map<String, Object> params = request.params;
@@ -70,7 +70,7 @@ public class RequestUtil {
     * @return String    返回类型
     * @date: 2015-4-8 下午7:29:07
     */
-    public static String getCacheSelection(Request request) {
+    public static String getCacheSelection(RequestWraper request) {
         String selection = RequestCacheProvider.Columns.requestStr + " = '"
                 + request.getCacheKey()+"'";
         return selection;

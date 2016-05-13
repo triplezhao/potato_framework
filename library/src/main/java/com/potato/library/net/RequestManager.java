@@ -5,19 +5,23 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.potato.library.util.L;
 import com.potato.library.util.NetUtil;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import cz.msebera.android.httpclient.Header;
 
 /**
  * @author ztw tianwuzhao@cyou-inc.com
@@ -27,8 +31,12 @@ import cz.msebera.android.httpclient.Header;
  */
 public class RequestManager {
     private static final String TAG = "RequestManager";
-    public static final int DEFAULT_REQ_TIME_SPACE = 30 * 60 * 1000; // 两次相同请求间隔，30分钟
 
+    private static final int TIMEOUT = 5 * 1000;
+    public static final String DEF_CONTENTTYPE = "application/json";
+
+    //缓存相关
+    public static final int DEFAULT_REQ_TIME_SPACE = 30 * 60 * 1000; // 两次相同请求间隔，30分钟
 
     public static final int CACHE_TYPE_NORMAL = 500; // 先加载缓存数据，如果缓存时间大于半小时，则请求网络
     public static final int CACHE_TYPE_IGNORE_TIME = 501; // 先加载缓存数据，然后请求网络
@@ -37,14 +45,17 @@ public class RequestManager {
     public static final int CACHE_TYPE_NOCACHE = 504; // 只加载网络数据
     public static final int CACHE_TYPE_CACHEONLY = 505; // 只加载缓存数据
 
-    public static Context mContext;
-    private static String[] mProjection;
-    private static Map<String, Long> mCacheTimes; // 缓存数据的时间，客户端退出是清空此map
+    // 缓存数据的时间，客户端退出是清空此map
+    private static Map<String, Long> mCacheTimes = new HashMap<String, Long>();
+    private static String[] mProjection = new String[]{RequestCacheProvider.Columns._ID,
+            RequestCacheProvider.Columns.responseStr,
+            RequestCacheProvider.Columns.time};
 
-    public static AsyncHttpClient asyncHttpClient;
-    private static final int TIMEOUT = 5 * 1000;
-    public static final String DEF_CONTENTTYPE = "application/json";
+    private static Context mContext;
+    private static OkHttpClient asyncHttpClient;
+    private static Handler mDelivery;
 
+    //只能在Application中做初始化
     public static RequestManager init(Context cxt) {
 
         if (cxt instanceof Activity) {
@@ -52,28 +63,19 @@ public class RequestManager {
         } else if (cxt != null) {
             mContext = cxt;
         }
-
-        mProjection = new String[]{RequestCacheProvider.Columns._ID,
-                RequestCacheProvider.Columns.responseStr,
-                RequestCacheProvider.Columns.time};
-        mCacheTimes = new HashMap<String, Long>();
-
+        mDelivery = new Handler(Looper.getMainLooper());
         if (asyncHttpClient == null) {
-            asyncHttpClient = new AsyncHttpClient();
-            asyncHttpClient.addHeader("Accept", DEF_CONTENTTYPE);
-            asyncHttpClient.addHeader("Content-Type", DEF_CONTENTTYPE);
-//            sHttpClient.setUserAgent(PhoneUtils.getDeviceUA(context));
-            asyncHttpClient.setTimeout(TIMEOUT);
+            asyncHttpClient = new OkHttpClient();
         }
         return new RequestManager();
     }
 
-    public static void requestData(Request request,
+    public static void requestData(RequestWraper request,
                                    DataLoadListener dataListener, int cacheType) {
         requestData(request, dataListener, cacheType, DEFAULT_REQ_TIME_SPACE);
     }
 
-    public static void requestData(Request request,
+    public static void requestData(RequestWraper request,
                                    DataLoadListener dataListener, int cacheType,
                                    int cacheTimeOutSeconds) {
         requestDataBasic(request, dataListener, cacheType,
@@ -81,10 +83,9 @@ public class RequestManager {
     }
 
 
-    private static void requestDataBasic(Request request,
+    private static void requestDataBasic(RequestWraper request,
                                          final DataLoadListener dataListener, final int cacheType,
                                          int cacheTimeoutSeconds) {
-        final String reqType = request.reqType;
         final String url = request.url;
         final String bodyContent = request.body;
 
@@ -92,7 +93,7 @@ public class RequestManager {
 
         String paramedUrl = RequestUtil.getParamedUrl(request, null);
 
-        NetLog.d(TAG, "RequestData, url: " + paramedUrl + ", bodyContent: "
+        L.d(TAG, "RequestData, url: " + paramedUrl + ", bodyContent: "
                 + bodyContent + ", loadCache: " + cacheType + ", selection: "
                 + selection);
 
@@ -125,7 +126,7 @@ public class RequestManager {
 
         if (hasCache) {
             if (cacheType == CACHE_TYPE_NORMAL) {
-                NetLog.d(TAG, "Return result from cache, url: " + url
+                L.d(TAG, "Return result from cache, url: " + url
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
@@ -134,23 +135,23 @@ public class RequestManager {
                     return;
 
             } else if (cacheType == CACHE_TYPE_IGNORE_TIME) {
-                NetLog.d(TAG, "Return result from cache, url: " + url
+                L.d(TAG, "Return result from cache, url: " + url
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
             } else if (cacheType == CACHE_TYPE_FIRST_REQUEST) {
-                NetLog.d(TAG, "Return result from cache, url: " + url
+                L.d(TAG, "Return result from cache, url: " + url
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
                 if (mCacheTimes.get(cacheKey) != null
                         && mCacheTimes.get(cacheKey) > 0) {
-                    NetLog.d(TAG,
+                    L.d(TAG,
                             "This request has been responded from server, do not send the request again");
                     return;
                 }
             } else if (cacheType == CACHE_TYPE_CACHEONLY) {
-                NetLog.d(TAG, "Return result from cache, url: " + url
+                L.d(TAG, "Return result from cache, url: " + url
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
@@ -167,74 +168,78 @@ public class RequestManager {
 
         final String cacheContent = cacheResult;
         final boolean isInCache = hasCache;
-        AsyncHttpResponseHandler responseHandler = new AsyncHttpResponseHandler() {
-
+        Callback responseHandler = new Callback() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                String content = new String(responseBody);
-
-                if (TextUtils.isEmpty(content)) {
-                    dataListener.onFailure(null, content);
-                    return;
-                }
-
-                if (!dataListener.onPreCheck(content)) {
-                    dataListener.onFailure(null, content);
-                    return;
-                }
-
-                dataListener.onSuccess(statusCode, content);
-
-                if (!dataListener.isShouldSaveCache()) {
-                    NetLog.d(TAG,
-                            "Return result from server without saving in cache, url: "
-                                    + url + ", cacheType: " + cacheType
-                                    + ", result: " + content);
-                    return;
-                }
-                NetLog.d(TAG, "Return result from server and save in cache, url: "
-                        + url + ", cacheType: " + cacheType + ", result: "
-                        + content);
-
-                long curTime = System.currentTimeMillis();
-                mCacheTimes.put(cacheKey, curTime);
-
-                ContentValues values = new ContentValues();
-                values.put(RequestCacheProvider.Columns.requestStr, cacheKey);
-                values.put(RequestCacheProvider.Columns.requestType, reqType);
-                values.put(RequestCacheProvider.Columns.responseStr, content);
-                values.put(RequestCacheProvider.Columns.time, curTime);
-
-                if (dataListener.getId() == -1) {
-                    mContext.getContentResolver().insert(
-                            RequestCacheProvider.CONTENT_URI, values);
-                } else {
-                    mContext.getContentResolver().update(
-                            ContentUris.withAppendedId(
-                                    RequestCacheProvider.CONTENT_URI,
-                                    dataListener.getId()), values, null, null);
-                }
-
-
+            public void onFailure(final Request request, final IOException e) {
+                L.d(TAG, "Request failed, url: " + url + ", error: " + e.getMessage());
+                mDelivery.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String content = e.getMessage();
+                        dataListener.onFailure(e, content);
+                        if (isInCache && cacheType == CACHE_TYPE_NETWORK_FIRST) {
+                            dataListener.onCacheLoaded(cacheContent);
+                        }
+                    }
+                });
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                NetLog.d(TAG, "Request failed, url: " + url + ", error: " + error);
-                String content = "";
-                if (responseBody != null) {
-                    content = new String(responseBody);
-                } else {
-                    content = " responseBody is null";
-                }
-                dataListener.onFailure(error, content);
-                if (isInCache && cacheType == CACHE_TYPE_NETWORK_FIRST) {
-                    dataListener.onCacheLoaded(cacheContent);
-                }
-            }
+            public void onResponse(final Response response) throws IOException {
+                final String responseBody = response.body().string();
+                mDelivery.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String content = new String(responseBody);
+                        if (TextUtils.isEmpty(content)) {
+                            dataListener.onFailure(null, content);
+                            return;
+                        }
+                        if (response.code() != 200) {
+                            dataListener.onFailure(null, content);
+                            return;
+                        }
+                        if (!dataListener.onPreCheck(content)) {
+                            dataListener.onFailure(null, content);
+                            return;
+                        }
 
+                        dataListener.onSuccess(response.code(), content);
+
+                        if (!dataListener.isShouldSaveCache()) {
+                            L.d(TAG,
+                                    "Return result from server without saving in cache, url: "
+                                            + url + ", cacheType: " + cacheType
+                                            + ", result: " + content);
+                            return;
+                        }
+                        L.d(TAG, "Return result from server and save in cache, url: "
+                                + url + ", cacheType: " + cacheType + ", result: "
+                                + content);
+
+                        long curTime = System.currentTimeMillis();
+                        mCacheTimes.put(cacheKey, curTime);
+
+                        ContentValues values = new ContentValues();
+                        values.put(RequestCacheProvider.Columns.requestStr, cacheKey);
+                        values.put(RequestCacheProvider.Columns.responseStr, content);
+                        values.put(RequestCacheProvider.Columns.time, curTime);
+
+                        if (dataListener.getId() == -1) {
+                            mContext.getContentResolver().insert(
+                                    RequestCacheProvider.CONTENT_URI, values);
+                        } else {
+                            mContext.getContentResolver().update(
+                                    ContentUris.withAppendedId(
+                                            RequestCacheProvider.CONTENT_URI,
+                                            dataListener.getId()), values, null, null);
+                        }
+                    }
+                });
+
+            }
         };
+
 
         // 网络不可用，不发送网络请求
         if (!NetUtil.isNetworkAvailable(mContext)) {
@@ -248,14 +253,15 @@ public class RequestManager {
 
         //根据Request中配置的 Request方式发送请求。默认有一种，如果用户有特殊要求，则可以执行自定义的请求方式，
         //比如畅言用的自定义CyanClient.getInstance().requestData(request.reqType, request.body,responseHandler);。
-        request.doRequest(responseHandler, dataListener, cacheType, cacheTimeoutSeconds);
+//        request.doRequest(responseHandler, dataListener, cacheType, cacheTimeoutSeconds);
+        asyncHttpClient.newCall(request.buildRequest()).enqueue(responseHandler);
     }
 
     public static void clearCacheTime() {
         mCacheTimes.clear();
     }
 
-    public static long getCacheTime(Request request) {
+    public static long getCacheTime(RequestWraper request) {
 
         String cacheKey = request.getCacheKey();
         if (mCacheTimes.containsKey(cacheKey)) {

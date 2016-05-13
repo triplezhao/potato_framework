@@ -13,7 +13,7 @@ import potato.demo.mvvm.m.parser.YKVideosByUserParser;
 import potato.demo.mvvm.m.request.YKRequestBuilder;
 import potato.demo.mvvm.v.adapter.YKVideoAdapter;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.net.Request;
+import com.potato.library.net.RequestWraper;
 import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 
 /**
@@ -62,12 +62,12 @@ public class YKActivity extends BaseDefaultListActivity {
     }
 
     @Override
-    public Request getRefreshRequest() {
+    public RequestWraper getRefreshRequest() {
         return YKRequestBuilder.videosByUser(GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", "1", "", "");
     }
 
     @Override
-    public Request getLoadMoreRequest() {
+    public RequestWraper getLoadMoreRequest() {
         return YKRequestBuilder.videosByUser(GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", mPage + 1 + "", "", "");
     }
 

@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 
-import com.potato.library.net.Request;
+import com.potato.library.net.RequestWraper;
 import com.potato.library.net.RequestManager;
 import com.potato.library.util.L;
 
@@ -57,7 +57,7 @@ public class JiongtuActivity extends BaseActivity {
         adapter = new HeaderPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        Request request = JiongtuRequestBuilder.getSectionListRequest();
+        RequestWraper request = JiongtuRequestBuilder.getSectionListRequest();
         RequestManager.requestData(request, new RequestManager.DataLoadListener() {
             @Override
             public void onCacheLoaded(String content) {

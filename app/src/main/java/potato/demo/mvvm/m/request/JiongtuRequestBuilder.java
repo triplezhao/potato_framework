@@ -1,10 +1,11 @@
 package potato.demo.mvvm.m.request;
 
-import potato.demo.chips.base.BaseRequestBuilder;
 import com.potato.library.net.DefaultRequest;
-import com.potato.library.net.Request;
+import com.potato.library.net.RequestWraper;
 
 import java.util.HashMap;
+
+import potato.demo.chips.base.BaseRequestBuilder;
 
 public class JiongtuRequestBuilder extends BaseRequestBuilder {
 
@@ -12,9 +13,9 @@ public class JiongtuRequestBuilder extends BaseRequestBuilder {
      * 秀场-手机首页列表
      */
     // 手机首页列表 http://show.17173.com/m/index.action?uct=2&hct=1
-    public static Request getShowIndexRequest(String uct, String hct) {
-        Request request = new DefaultRequest();
-        request.reqMethod = Request.REQ_METHOD_GET;
+    public static RequestWraper getShowIndexRequest(String uct, String hct) {
+        RequestWraper request = new DefaultRequest();
+        request.reqMethod = RequestWraper.REQ_METHOD_GET;
         request.url = JiongtuRequestUrls.URL_TEST;
 
         request.params = new HashMap<String, Object>();
@@ -30,10 +31,10 @@ public class JiongtuRequestBuilder extends BaseRequestBuilder {
      * @param sectionId     囧图栏目ID
      * @param minPublicDate 本地已有数据的最早更新时间
      */
-    public static Request getAlbumListRequest(long sectionId, long minPublicDate) {
-        Request req = new DefaultRequest();
+    public static RequestWraper getAlbumListRequest(long sectionId, long minPublicDate) {
+        RequestWraper req = new DefaultRequest();
         req.url = JiongtuRequestUrls.URL_JIONG_ALBUM_LIST;
-        req.reqMethod = Request.REQ_METHOD_GET;
+        req.reqMethod = RequestWraper.REQ_METHOD_GET;
         req.params = new HashMap<String, Object>();
 
         addParam(req.params, "platCode", "ANDROID");
@@ -47,10 +48,10 @@ public class JiongtuRequestBuilder extends BaseRequestBuilder {
     /**
      * 囧图栏目列表请求
      */
-    public static Request getSectionListRequest() {
-        Request req = new DefaultRequest();
+    public static RequestWraper getSectionListRequest() {
+        RequestWraper req = new DefaultRequest();
         req.url = JiongtuRequestUrls.URL_JIONG_SECTION_LIST;
-        req.reqMethod = Request.REQ_METHOD_GET;
+        req.reqMethod = RequestWraper.REQ_METHOD_GET;
         req.params = new HashMap<String, Object>();
 
         addParam(req.params, "platCode", "ANDROID");
@@ -63,10 +64,10 @@ public class JiongtuRequestBuilder extends BaseRequestBuilder {
      *
      * @param albumId 图册ID
      */
-    public static Request getPhotoListRequest(String albumId) {
-        Request req = new DefaultRequest();
+    public static RequestWraper getPhotoListRequest(String albumId) {
+        RequestWraper req = new DefaultRequest();
         req.url = JiongtuRequestUrls.URL_JIONG_PHOTO_LIST;
-        req.reqMethod = Request.REQ_METHOD_GET;
+        req.reqMethod = RequestWraper.REQ_METHOD_GET;
         req.params = new HashMap<String, Object>();
 
         addParam(req.params, "platCode", "ANDROID");

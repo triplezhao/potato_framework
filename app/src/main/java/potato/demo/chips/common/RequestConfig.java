@@ -1,14 +1,5 @@
 package potato.demo.chips.common;
 
-import android.databinding.tool.util.L;
-import android.text.TextUtils;
-
-import potato.demo.chips.app.MainApplication;
-import potato.demo.chips.util.PhoneUtils;
-import com.potato.library.util.encrypt.PrivateUtil;
-import com.potato.library.util.encrypt.SecurityUtil;
-import com.loopj.android.http.AsyncHttpClient;
-
 /**
  * Created by ztw on 2015/6/30.
  */
@@ -17,7 +8,7 @@ public class RequestConfig {
      * 添加加密的头信息 WangQing 2013-8-28 void
      * @throws Exception
      */
-    public static void addHttpClientRASHead(AsyncHttpClient httpClient) throws Exception {
+    /*public static void addHttpClientRASHead(AsyncHttpClient httpClient) throws Exception {
         String k = "", c = "";
         String flag = MainApplication.IMEI;
         String currentTime = String.valueOf(System.currentTimeMillis());
@@ -43,5 +34,5 @@ public class RequestConfig {
         if (TextUtils.isEmpty(c)|| TextUtils.isEmpty(k)) {
             throw new Exception();
         }
-    }
+    }*/
 }

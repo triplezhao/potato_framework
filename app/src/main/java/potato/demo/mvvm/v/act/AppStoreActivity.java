@@ -12,7 +12,7 @@ import com.mozillaonline.providers.DownloadManager;
 import com.mozillaonline.providers.downloads.DownloadService;
 import com.mozillaonline.providers.downloads.ui.DownloadListActivity;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.net.Request;
+import com.potato.library.net.RequestWraper;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -86,12 +86,12 @@ public class AppStoreActivity extends BaseDefaultListActivity {
     }
 
     @Override
-    public Request getRefreshRequest() {
+    public RequestWraper getRefreshRequest() {
         return null;
     }
 
     @Override
-    public Request getLoadMoreRequest() {
+    public RequestWraper getLoadMoreRequest() {
         return null;
     }
 

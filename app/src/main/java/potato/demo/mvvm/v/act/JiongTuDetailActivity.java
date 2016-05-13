@@ -22,19 +22,20 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 
-import potato.demo.chips.base.BaseActivity;
+import com.potato.library.adapter.PotatoBaseListAdapter;
+import com.potato.library.net.RequestManager;
+import com.potato.library.net.RequestWraper;
+
+import java.util.ArrayList;
+
 import potato.demo.R;
+import potato.demo.chips.base.BaseActivity;
 import potato.demo.databinding.ActivityJiongtuDetailBinding;
+import potato.demo.mvvm.m.bean.JiongtuAlbum;
 import potato.demo.mvvm.m.bean.JiongtuPhoto;
 import potato.demo.mvvm.m.parser.JiongtuPhotoListParser;
 import potato.demo.mvvm.m.request.JiongtuRequestBuilder;
-import potato.demo.mvvm.m.bean.JiongtuAlbum;
 import potato.demo.mvvm.v.adapter.JiongTuDetailAdapter;
-import com.potato.library.adapter.PotatoBaseListAdapter;
-import com.potato.library.net.Request;
-import com.potato.library.net.RequestManager;
-
-import java.util.ArrayList;
 
 public class JiongTuDetailActivity extends BaseActivity {
 
@@ -83,7 +84,7 @@ public class JiongTuDetailActivity extends BaseActivity {
 
     public void bindData() {
         if (!TextUtils.isEmpty(mAlbumId)) {// 来自囧图图册列表
-            Request request = JiongtuRequestBuilder.getPhotoListRequest(mAlbumId);
+            RequestWraper request = JiongtuRequestBuilder.getPhotoListRequest(mAlbumId);
             RequestManager.requestData(request,
                     new RequestManager.DataLoadListener() {
                         @Override
