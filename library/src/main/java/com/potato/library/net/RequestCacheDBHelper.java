@@ -28,8 +28,7 @@ public class RequestCacheDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        RequestCacheProvider.createTable(db);
-        
+        RequestCacheDAO.createTable(db);
     }
 
     @Override

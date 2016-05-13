@@ -16,7 +16,7 @@ ext {
     rxJavaVersion = '1.0.14'
     rxAndroidVersion = '1.0.1'
     gsonVersion = '2.3'
-    androidAnnotationsVersion = '23.0.1'
+    androidAnnotationsVersion = '23.1.1'
     designVersion = '23.1.1'
     appcompatVersion = '23.1.1'
     cardViewVersion = '23.1.1'

@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+
 android {
-    dataBinding {
+    /*dataBinding {
         enabled = true
-    }
+    }*/
     def globalConfiguration = rootProject.extensions.getByName("ext")
     compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
     buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
@@ -26,3 +27,4 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':protato_lib')
 }
+

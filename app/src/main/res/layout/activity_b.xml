@@ -1,79 +1,67 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
-
-        <variable
-            name="test"
-            type="String" />
-    </data>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/rl_header"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:background="@color/sticker_blue"
+        android:gravity="center_vertical">
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="FitTime"
+            android:textColor="@color/potato_white"
+            android:textSize="@dimen/txt_max" />
 
-        <RelativeLayout
-            android:id="@+id/rl_header"
-            android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:background="@color/sticker_blue"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="FitTime"
-                android:textColor="@color/potato_white"
-                android:textSize="@dimen/txt_max" />
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:onClick="onClick"
-                android:padding="10dip"
-                android:src="@drawable/ic_add_white_24dp" />
-        </RelativeLayout>
-
-
-        <com.potato.library.view.refresh.PotatoRecyclerSwipeLayout
-            android:layout_below="@id/rl_header"
-            android:id="@+id/swipe_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:background="@android:color/transparent"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@color/potato_gray3"
-                android:dividerHeight="1px"
-                android:listSelector="@android:color/transparent"
-                android:scrollbars="none"
-                ></android.support.v7.widget.RecyclerView>
-
-
-        </com.potato.library.view.refresh.PotatoRecyclerSwipeLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@id/rl_header"
-            android:background="@drawable/bottom_shadow_bg" />
-
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:onClick="onClick"
+            android:padding="10dip"
+            android:src="@drawable/ic_add_white_24dp" />
     </RelativeLayout>
 
-</layout>
+
+    <com.potato.library.view.refresh.PotatoRecyclerSwipeLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_header">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:background="@android:color/transparent"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/potato_gray3"
+            android:dividerHeight="1px"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"></android.support.v7.widget.RecyclerView>
+
+
+    </com.potato.library.view.refresh.PotatoRecyclerSwipeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/rl_header"
+        android:background="@drawable/bottom_shadow_bg" />
+
+</RelativeLayout>

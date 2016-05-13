@@ -77,7 +77,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppTheme">
         <activity
-            android:name="potato.demo.chips.base.MainTabActivity"
+            android:name=".chips.app.MainTabActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,23 +87,23 @@
         </activity>
 
         <!--demo-->
-        <activity android:name="potato.demo.mvvm.v.act.AActivity"></activity>
-        <activity android:name="potato.demo.mvvm.v.act.BActivity"></activity>
-        <activity android:name="potato.demo.mvvm.v.act.ADetailActivity"></activity>
-        <activity android:name="potato.demo.mvvm.v.act.MainActivity"></activity>
+        <activity android:name=".ui.ab.AActivity"></activity>
+        <activity android:name=".ui.ab.BActivity"></activity>
+        <activity android:name=".ui.ab.ADetailActivity"></activity>
+        <activity android:name=".chips.app.MainActivity"></activity>
 
         <!--jiongtu-->
-        <activity android:name="potato.demo.mvvm.v.act.JiongtuActivity"></activity>
+        <activity android:name=".ui.jiongtu.JiongtuActivity"></activity>
         <activity
-            android:name="potato.demo.mvvm.v.act.JiongTuDetailActivity"
+            android:name=".ui.jiongtu.JiongTuDetailActivity"
             android:hardwareAccelerated="true"></activity>
 
         <!--youku-->
-        <activity android:name="potato.demo.mvvm.v.act.YKActivity"></activity>
-        <activity android:name="potato.demo.chips.common.WebViewActivity"></activity>
+        <activity android:name=".ui.yk.YKActivity"></activity>
+        <activity android:name=".chips.app.WebViewActivity"></activity>
 
         <!--download-->
-        <activity android:name="potato.demo.mvvm.v.act.AppStoreActivity"></activity>
+        <activity android:name=".ui.appstore.AppStoreActivity"></activity>
         <activity android:name="com.mozillaonline.providers.downloads.ui.DownloadListActivity"></activity>
 
         <provider

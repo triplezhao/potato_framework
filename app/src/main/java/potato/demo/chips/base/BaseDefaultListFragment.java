@@ -163,7 +163,7 @@ public abstract class BaseDefaultListFragment extends BaseFragment implements Vi
     }
 
     public void onCacheLoaded(String json) {
-
+        onRefreshSucc(json);
     }
 
     public void reqRefresh() {
@@ -194,7 +194,7 @@ public abstract class BaseDefaultListFragment extends BaseFragment implements Vi
         RequestManager.requestData(
                 getRefreshRequest(),
                 dataLoadListener,
-                RequestManager.CACHE_TYPE_NOCACHE
+                RequestManager.CACHE_TYPE_NORMAL
         );
     }
 

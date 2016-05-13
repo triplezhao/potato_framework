@@ -25,14 +25,11 @@ public final class L {
     private static int RECORD_LEVEL = 5;
     private static Context mContext;
     private static String LOG_DIR_PATH = "/potato/logs";
-    public static boolean isOpen = false;
+    public static boolean isOpen = PotatoConfig.IS_DEBUG;
+    ;
     public static boolean isWrite = false;
     public static String TAG = "LOG";
     private static String logPath;
-
-    {
-        isOpen = PotatoConfig.IS_DEBUG;
-    }
 
     public static void openLog() {
         if (!isOpen) {

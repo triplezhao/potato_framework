@@ -1,8 +1,6 @@
 package com.potato.library.net;
 
 import android.app.Activity;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Handler;
@@ -101,32 +99,20 @@ public class RequestManager {
 
         long cacheTime = 0;
         String cacheResult = null;
-        long cacheId = -1;
         boolean hasCache = false;
 
         // 从缓存中取数据
-        Cursor cursor = mContext.getContentResolver().query(
-                RequestCacheProvider.CONTENT_URI, mProjection, selection, null,
-                null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            cacheTime = cursor.getLong(cursor
-                    .getColumnIndex(RequestCacheProvider.Columns.time));
-            cacheResult = cursor.getString(cursor
-                    .getColumnIndex(RequestCacheProvider.Columns.responseStr));
-            cacheId = cursor.getLong(cursor
-                    .getColumnIndex(RequestCacheProvider.Columns._ID));
+        RequestCacheDAO.Cache cache = new RequestCacheDAO(mContext).getCacheByKey(request.getCacheKey());
+        if (cache != null) {
             hasCache = true;
+            cacheTime = cache.time;
+            cacheResult = cache.responseStr;
         }
-        if (cursor != null)
-            cursor.close();
-
-        dataListener.setId(cacheId);
         dataListener.setCacheTime(cacheTime);
 
         if (hasCache) {
             if (cacheType == CACHE_TYPE_NORMAL) {
-                L.d(TAG, "Return result from cache, url: " + url
+                L.d(TAG, "Return result from cache, url: " + paramedUrl
                         + ", cacheType: " + cacheType + ", result: "
                         + cacheResult);
                 dataListener.onCacheLoaded(cacheResult);
@@ -220,20 +206,11 @@ public class RequestManager {
                         long curTime = System.currentTimeMillis();
                         mCacheTimes.put(cacheKey, curTime);
 
-                        ContentValues values = new ContentValues();
-                        values.put(RequestCacheProvider.Columns.requestStr, cacheKey);
-                        values.put(RequestCacheProvider.Columns.responseStr, content);
-                        values.put(RequestCacheProvider.Columns.time, curTime);
-
-                        if (dataListener.getId() == -1) {
-                            mContext.getContentResolver().insert(
-                                    RequestCacheProvider.CONTENT_URI, values);
-                        } else {
-                            mContext.getContentResolver().update(
-                                    ContentUris.withAppendedId(
-                                            RequestCacheProvider.CONTENT_URI,
-                                            dataListener.getId()), values, null, null);
-                        }
+                        RequestCacheDAO.Cache cache1 = new RequestCacheDAO.Cache();
+                        cache1.requestStr = cacheKey;
+                        cache1.responseStr = content;
+                        cache1.time = curTime;
+                        new RequestCacheDAO(mContext).insert(cache1);
                     }
                 });
 

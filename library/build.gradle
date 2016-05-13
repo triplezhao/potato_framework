@@ -1,9 +1,11 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+def AAVersion = '3.3.2'
 android {
 
-    dataBinding {
+   /* dataBinding {
         enabled = true
-    }
+    }*/
 
     def globalConfiguration = rootProject.extensions.getByName("ext")
     compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
@@ -40,4 +42,7 @@ dependencies {
     compile libDepend.recyclerView;
     compile libDepend.okhttp;
     compile libDepend.roundedimageview;
+    compile 'com.jakewharton:butterknife:6.1.0'
+//    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    //配置Android annotations
 }

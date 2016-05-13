@@ -14,71 +14,59 @@
   ~ limitations under the License.
 -->
 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <variable
-            name="bean"
-            type="potato.demo.mvvm.m.bean.JiongtuAlbum" />
-    </data>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/rl_header"
+        android:layout_width="fill_parent"
+        android:layout_height="51dip">
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="100dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="title"
+            android:textSize="@dimen/txt_normal" />
 
-        <RelativeLayout
-            android:id="@+id/rl_header"
-            android:layout_width="fill_parent"
-            android:layout_height="51dip">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="100dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@{bean.getTitle}"
-                android:textSize="@dimen/txt_normal" />
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:onClick="onClick"
-                android:padding="10dip"
-                android:src="@drawable/icon_back_arrow_selector" />
-        </RelativeLayout>
-
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/rl_header">
-
-            <ListView
-                android:id="@+id/lv_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cacheColorHint="@color/potato_trans"
-                android:divider="@color/potato_trans" />
-
-        </FrameLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:layout_below="@id/rl_header"
-            android:background="@drawable/bottom_shadow_bg" />
-
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:onClick="onClick"
+            android:padding="10dip"
+            android:src="@drawable/icon_back_arrow_selector" />
     </RelativeLayout>
 
-</layout>
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_header">
+
+        <ListView
+            android:id="@+id/lv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@color/potato_trans"
+            android:divider="@color/potato_trans" />
+
+    </FrameLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/rl_header"
+        android:background="@drawable/bottom_shadow_bg" />
+
+</RelativeLayout>

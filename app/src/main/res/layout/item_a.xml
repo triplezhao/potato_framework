@@ -20,7 +20,7 @@
 
         <variable
             name="bean"
-            type="potato.demo.mvvm.m.bean.ABean" />
+            type="potato.demo.data.bean.ABean" />
     </data>
 
     <LinearLayout
@@ -50,15 +50,17 @@
             android:padding="9dp">
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{bean.getTitle}"
+                android:text="title"
                 android:textAppearance="?attr/textAppearanceListItem" />
 
             <TextView
+                android:id="@+id/tv_contet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{bean.getContent}"
+                android:text="tv_contet"
                 android:textAppearance="?attr/textAppearanceListItem" />
         </LinearLayout>
     </LinearLayout>

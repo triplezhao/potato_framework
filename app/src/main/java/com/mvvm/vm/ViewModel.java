@@ -1,6 +1,5 @@
 package com.mvvm.vm;
 
-import android.databinding.BaseObservable;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Created by rocko on 15-11-5.
  */
-public abstract class ViewModel extends BaseObservable{ // TODO: Need Context(Activity)?
+public abstract class ViewModel{ // TODO: Need Context(Activity)?
 
 	/* Just mark a method in ViewModel */
 	@Target(ElementType.METHOD)
