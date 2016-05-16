@@ -22,7 +22,7 @@ public class RequestCacheDAO {
     private static final String TAG = "RequestCacheDAO";
 
     protected SQLiteOpenHelper mOpenHelper;
-    public static final String TABLE_PATH = "cache";
+    public static final String TABLE_NAME = "cache";
 
     public static class Columns implements BaseColumns {
         public static final String requestType = "requestType";
@@ -32,13 +32,14 @@ public class RequestCacheDAO {
         public static final String time = "time";
     }
 
-    String[] mProjection = new String[]{
+   public String[] allProjection = new String[]{
             Columns._ID,
             Columns.requestType,
             Columns.requestStr,
             Columns.responseStr,
             Columns.specStr,
-            Columns.time};
+            Columns.time
+   };
 
 
     public static class Cache {
@@ -55,8 +56,8 @@ public class RequestCacheDAO {
      *
      * @param db
      */
-    public static void createTable(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_PATH + "("
+    public  static void createTable(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + TABLE_NAME + "("
                 + Columns._ID + " integer , "
                 + Columns.requestType + " text, "
                 + Columns.requestStr + " text primary key not null UNIQUE ON CONFLICT REPLACE, "
@@ -74,7 +75,7 @@ public class RequestCacheDAO {
     public long insert(@NonNull Cache cache) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         ContentValues values = bean2CV(cache);
-        long id = db.insert(TABLE_PATH, null, values);
+        long id = db.insert(TABLE_NAME, null, values);
         db.close();
         return id;
     }
@@ -83,7 +84,7 @@ public class RequestCacheDAO {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         String selection = Columns.requestStr + " = ?";
         String[] selectionArgs = {key};
-        db.delete(TABLE_PATH, selection, selectionArgs);
+        db.delete(TABLE_NAME, selection, selectionArgs);
         db.close();
     }
 
@@ -93,7 +94,7 @@ public class RequestCacheDAO {
         String selection = Columns.requestStr + " = ?";
         String[] selectionArgs = {cache.requestStr};
 
-        db.update(TABLE_PATH, values, selection, selectionArgs);
+        db.update(TABLE_NAME, values, selection, selectionArgs);
         db.close();
     }
 
@@ -103,7 +104,7 @@ public class RequestCacheDAO {
         String selection = Columns.requestStr + " = ?";
         String[] selectionArgs = {key};
         Cursor c = db.query(
-                TABLE_PATH, mProjection, selection, selectionArgs, null, null, null);
+                TABLE_NAME, allProjection, selection, selectionArgs, null, null, null);
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
                 bean = cursor2bean(c);
@@ -121,7 +122,7 @@ public class RequestCacheDAO {
         List<Cache> list = new ArrayList<Cache>();
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         Cursor c = db.query(
-                TABLE_PATH, mProjection, null, null, null, null, null);
+                TABLE_NAME, allProjection, null, null, null, null, null);
         if (c != null && c.getCount() > 0) {
             Cache bean = null;
             while (c.moveToNext()) {

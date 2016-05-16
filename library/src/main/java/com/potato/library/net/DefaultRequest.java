@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.MessageFormat;
+
 /**
  * @author ztw tianwuzhao@cyou-inc.com
  * @ClassName: DefaultRequest
@@ -67,5 +69,22 @@ public class DefaultRequest extends RequestWraper {
             }
         }
         return hash;
+    }
+
+    /**
+     * @Title: getRealRequestUrl
+     * @Description: 将url中的占位符替换成真实的数据,
+     * @param: @param baseUrl 基础url
+     * @param: @param args url里面的参数数组
+     * @param: @return 设定文件
+     * @return: String 返回类型
+     * @date: 2014-4-14 下午1:57:22
+     */
+    public static String getRealRequestUrl(String baseUrl, Object args[]) {
+        String url = "";
+        if (args != null && !TextUtils.isEmpty(baseUrl)) {
+            url = MessageFormat.format(baseUrl, args);
+        }
+        return url;
     }
 }

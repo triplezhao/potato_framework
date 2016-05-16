@@ -89,7 +89,7 @@ public class RequestManager {
 
         String selection = RequestUtil.getCacheSelection(request);
 
-        String paramedUrl = RequestUtil.getParamedUrl(request, null);
+        final String paramedUrl = RequestUtil.getParamedUrl(request, null);
 
         L.d(TAG, "RequestData, url: " + paramedUrl + ", bodyContent: "
                 + bodyContent + ", loadCache: " + cacheType + ", selection: "
@@ -195,12 +195,12 @@ public class RequestManager {
                         if (!dataListener.isShouldSaveCache()) {
                             L.d(TAG,
                                     "Return result from server without saving in cache, url: "
-                                            + url + ", cacheType: " + cacheType
+                                            + paramedUrl + ", cacheType: " + cacheType
                                             + ", result: " + content);
                             return;
                         }
                         L.d(TAG, "Return result from server and save in cache, url: "
-                                + url + ", cacheType: " + cacheType + ", result: "
+                                + paramedUrl + ", cacheType: " + cacheType + ", result: "
                                 + content);
 
                         long curTime = System.currentTimeMillis();
