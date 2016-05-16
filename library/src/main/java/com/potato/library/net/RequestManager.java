@@ -68,14 +68,12 @@ public class RequestManager {
         return new RequestManager();
     }
 
-    public static void requestData(RequestWraper request,
-                                   DataLoadListener dataListener, int cacheType) {
-        requestData(request, dataListener, cacheType, DEFAULT_REQ_TIME_SPACE);
+    public static void requestData(RequestWraper request, int cacheType, DataLoadListener dataListener) {
+        requestData(request, cacheType, DEFAULT_REQ_TIME_SPACE, dataListener);
     }
 
     public static void requestData(RequestWraper request,
-                                   DataLoadListener dataListener, int cacheType,
-                                   int cacheTimeOutSeconds) {
+                                   int cacheType, int cacheTimeOutSeconds, DataLoadListener dataListener) {
         requestDataBasic(request, dataListener, cacheType,
                 cacheTimeOutSeconds);
     }
