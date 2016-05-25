@@ -24,20 +24,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.lzy.okhttputils.cache.CacheMode;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.net.RequestWraper;
 import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 import potato.demo.R;
+import potato.demo.chips.api.BaseResultEntity;
+import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseDefaultListFragment;
-import potato.demo.chips.base.BaseParser;
 import potato.demo.data.bean.JiongtuAlbum;
-import potato.demo.data.parser.JiongtuAlbumListParser;
-import potato.demo.data.request.JiongtuRequestBuilder;
+import potato.demo.data.parser.JiongtuAlbumListEntity;
+import potato.demo.data.request.JiongtuApi;
 
 public class JiongTuListFragment extends BaseDefaultListFragment {
     private static final String TAG = "ListFragmentJiongtu";
@@ -50,10 +54,10 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
     private String mTitle;
     private ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
     private PotatoBaseRecyclerViewAdapter mAdapter;
-    private JiongtuAlbumListParser mParser;
+    private JiongtuAlbumListEntity mEntity;
     private View mView;
 
-    @InjectView(R.id.include_a)
+    @Bind(R.id.include_a)
     LinearLayout include_a;
 
     @Nullable
@@ -68,10 +72,10 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
                 container,
                 false);
 
-        ButterKnife.inject(this, mView);
+        ButterKnife.bind(this, mView);
 
         mAdapter = new JiongTuListAdapter(mContext);
-        mParser = new JiongtuAlbumListParser();
+        mEntity = new JiongtuAlbumListEntity();
 
         initListView(include_a);
 
@@ -96,30 +100,48 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
         return mView;
     }
 
-
     @Override
     public PotatoBaseRecyclerViewAdapter getAdapter() {
         return mAdapter;
     }
 
     @Override
-    public RequestWraper getRefreshRequest() {
-        return JiongtuRequestBuilder.getAlbumListRequest(mSectionId, 0);
+    public void reqRefresh() {
+        JiongtuApi.getAlbumListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, mSectionId, 0, new JiongtuCallback<JiongtuAlbumListEntity>() {
+            @Override
+            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                onRefreshFail(e.getMessage());
+            }
+
+            @Override
+            public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
+                onRefreshSucc((JiongtuAlbumListEntity) entity);
+            }
+        });
     }
 
     @Override
-    public RequestWraper getLoadMoreRequest() {
-        return JiongtuRequestBuilder.getAlbumListRequest(mSectionId, mParser.maxPublicDate);
+    public void reqLoadMore() {
+        JiongtuApi.getAlbumListRequest(CacheMode.DEFAULT, mSectionId, mEntity.maxPublicDate, new JiongtuCallback<JiongtuAlbumListEntity>() {
+            @Override
+            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                onLoadMoreFail(e.getMessage());
+            }
+
+            @Override
+            public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
+                onLoadMoreSucc((JiongtuAlbumListEntity) entity);
+
+
+            }
+        });
     }
 
-    public BaseParser getParser(String json) {
-        return null;
-    }
 
-    @Override
-    public void onRefreshSucc(String content) {
+    public void onRefreshSucc(JiongtuAlbumListEntity entity) {
+        mEntity = entity;
         mSwipeContainer.showSucc();
-        mList = mParser.parseToAlbumList(content);
+        mList = entity.list;
         mAdapter.setDataList(mList);
         mAdapter.notifyDataSetChanged();
         mSwipeContainer.setRefreshing(false);
@@ -129,10 +151,10 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
 
     }
 
-    @Override
-    public void onLoadMoreSucc(String json) {
+    public void onLoadMoreSucc(JiongtuAlbumListEntity entity) {
+        mEntity = entity;
         mSwipeContainer.setLoading(false);
-        ArrayList<JiongtuAlbum> moreData = mParser.parseToAlbumList(json);
+        ArrayList<JiongtuAlbum> moreData = entity.list;
         if (moreData == null || moreData.size() == 0) {
             mSwipeContainer.setLoadEnable(false);
             return;

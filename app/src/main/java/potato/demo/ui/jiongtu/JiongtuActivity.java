@@ -1,25 +1,29 @@
 package potato.demo.ui.jiongtu;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 
-import com.potato.library.net.RequestWraper;
-import com.potato.library.net.RequestManager;
+import com.lzy.okhttputils.cache.CacheMode;
 import com.potato.library.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 import potato.demo.R;
+import potato.demo.chips.api.BaseResultEntity;
+import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseActivity;
 import potato.demo.data.bean.JiongtuSection;
-import potato.demo.data.parser.JiongtuSectionListParser;
-import potato.demo.data.request.JiongtuRequestBuilder;
+import potato.demo.data.parser.JiongtuSectionListEntity;
+import potato.demo.data.request.JiongtuApi;
 
 /**
  * Created by ztw on 2015/7/3.
@@ -56,33 +60,27 @@ public class JiongtuActivity extends BaseActivity {
         adapter = new HeaderPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        RequestWraper request = JiongtuRequestBuilder.getSectionListRequest();
-        RequestManager.requestData(request, RequestManager.CACHE_TYPE_IGNORE_TIME, new RequestManager.DataLoadListener() {
+        JiongtuApi.getSectionListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, new JiongtuCallback<JiongtuSectionListEntity>() {
             @Override
-            public void onCacheLoaded(String content) {
-                updateUI(content);
+            public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
+                updateUI((JiongtuSectionListEntity) entity);
             }
 
             @Override
-            public void onSuccess(int statusCode, String content) {
-                updateUI(content);
+            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+
             }
 
-            @Override
-            public void onFailure(Throwable error, String errMsg) {
-                L.i(TAG,errMsg+"");
-            }
         });
 
     }
 
 
-    private void updateUI(String content) {
-        L.i(TAG,content+"");
-        if (TextUtils.isEmpty(content)) {
+    private void updateUI(JiongtuSectionListEntity jiongtuResultEntity) {
+        if (jiongtuResultEntity == null) {
             return;
         }
-       List<JiongtuSection> list = JiongtuSectionListParser.parseToSectionList(content);
+        List<JiongtuSection> list = jiongtuResultEntity.list;
         if (list != null && list.size() > 0) {
             mList.clear();
             mList.addAll(list);

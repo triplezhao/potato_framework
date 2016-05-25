@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 
-import com.potato.library.net.RequestCacheDBHelper;
 import com.potato.library.util.L;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class DemoDAO {
 
     /**
      * Use this static method to create the table It will be called by
-     * {@link RequestCacheDBHelper} during first launch time to create DB.
+     * {@link } during first launch time to create DB.
      *
      * @param db
      */

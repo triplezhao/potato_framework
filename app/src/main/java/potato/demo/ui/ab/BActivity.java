@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import potato.demo.R;
 import potato.demo.chips.base.BaseActivity;
 import potato.demo.data.bean.ABean;
@@ -22,9 +22,9 @@ public class BActivity extends BaseActivity {
 
     BListAdapter mAdapter;
     List<ABean> mValues = new ArrayList<ABean>();
-    @InjectView(R.id.swipe_container)
+    @Bind(R.id.swipe_container)
     PotatoRecyclerSwipeLayout swipeContainer;
-    @InjectView(R.id.list)
+    @Bind(R.id.list)
     RecyclerView lv_list;
 
     @Override
@@ -33,7 +33,7 @@ public class BActivity extends BaseActivity {
 //        setContentView(R.layout.activity_show);
 //        ImageView iv = (ImageView)findViewById(R.id.iv_icon);
         setContentView(R.layout.activity_b);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         mAdapter = new BListAdapter(mContext);
 
         swipeContainer.setRecyclerView(lv_list, mAdapter);

@@ -1,10 +1,10 @@
-package potato.demo.chips.base;
+package potato.demo.chips.api;
 
 /**
  * 这里通常放置一些常量
  * 
  */
-public class BaseRequestUrls {
+public interface ApiUrls {
 
 	public static String BaseURL = "http://v.17173.com/show"; // 秀场正式地址
 	// //测试地址-新闻、视频等

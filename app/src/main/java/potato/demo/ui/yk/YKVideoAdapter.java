@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.adapter.PotatoBaseViewHolder;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import potato.demo.R;
 import potato.demo.chips.common.PageCtrl;
 import potato.demo.chips.util.ImageLoaderUtil;
@@ -66,14 +66,14 @@ public class YKVideoAdapter extends PotatoBaseRecyclerViewAdapter {
 
     public static class VH extends PotatoBaseViewHolder {
 
-        @InjectView(R.id.iv_pic)
+        @Bind(R.id.iv_pic)
         ImageView iv_pic;
-        @InjectView(R.id.tv_title)
+        @Bind(R.id.tv_title)
         TextView tv_title;
 
         public VH(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

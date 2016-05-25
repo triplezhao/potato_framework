@@ -122,9 +122,6 @@
         </receiver>
         <!--downloadend-->
 
-        <provider
-            android:name="com.potato.library.net.RequestCacheProvider"
-            android:authorities="potato.demo.RequestCacheProvider" />
     </application>
 
 </manifest>

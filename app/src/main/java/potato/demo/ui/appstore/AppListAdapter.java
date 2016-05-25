@@ -13,8 +13,8 @@ import com.mozillaonline.providers.downloads.ui.DownloadListActivity;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.util.L;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import potato.demo.R;
 import potato.demo.chips.util.ImageLoaderUtil;
 import potato.demo.data.bean.AppBean;
@@ -67,14 +67,14 @@ public class AppListAdapter extends PotatoBaseRecyclerViewAdapter {
 
     public static class VH extends ViewHolder {
 
-        @InjectView(R.id.iv_pic)
+        @Bind(R.id.iv_pic)
         RoundedImageView iv_pic;
-        @InjectView(R.id.tv_download)
+        @Bind(R.id.tv_download)
         TextView tv_download;
 
         public VH(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

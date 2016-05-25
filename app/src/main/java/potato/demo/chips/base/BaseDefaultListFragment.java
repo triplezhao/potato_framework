@@ -4,19 +4,17 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.net.RequestWraper;
-import com.potato.library.net.RequestManager;
-import com.potato.library.util.L;
 import com.potato.library.view.NormalEmptyView;
 import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
 
 import java.util.ArrayList;
+
+import potato.demo.chips.api.BaseResultEntity;
 
 public abstract class BaseDefaultListFragment extends BaseFragment implements View.OnClickListener, Handler.Callback {
 
@@ -96,26 +94,17 @@ public abstract class BaseDefaultListFragment extends BaseFragment implements Vi
 
     public abstract PotatoBaseRecyclerViewAdapter getAdapter();
 
-    public abstract RequestWraper getRefreshRequest();
 
-    public abstract RequestWraper getLoadMoreRequest();
+    public void onRefreshSucc(BaseResultEntity entity) {
 
-
-    public abstract BaseParser getParser(String json);
-
-
-    public void onRefreshSucc(String json) {
-
-        if (TextUtils.isEmpty(json)) {
+        if (entity == null) {
             Toast.makeText(mContext, "token fail", Toast.LENGTH_SHORT).show();
             mSwipeContainer.showEmptyViewFail();
             return;
         }
-        BaseParser parser = getParser(json);
-        if (parser.isSucc()) {
-            mList = parser.list;
-            mPage = Integer.parseInt(parser.page);
-            mTotal = Integer.parseInt(parser.total);
+        if (entity.isSucc()) {
+            mList = entity.list;
+            mTotal = entity.total;
             mSwipeContainer.showSucc();
             getAdapter().setDataList(mList);
             getAdapter().notifyDataSetChanged();
@@ -134,17 +123,15 @@ public abstract class BaseDefaultListFragment extends BaseFragment implements Vi
         mSwipeContainer.showEmptyViewFail();
     }
 
-    public void onLoadMoreSucc(String json) {
-        BaseParser parser = getParser(json);
-        if (parser.isSucc()) {
-            mPage = Integer.parseInt(parser.page);
-            mTotal = Integer.parseInt(parser.total);
-            if (parser.list == null || parser.list.size() == 0) {
+    public void onLoadMoreSucc(BaseResultEntity entity) {
+        if (entity.isSucc()) {
+            mTotal = entity.total;
+            if (entity.list == null || entity.list.size() == 0) {
                 mSwipeContainer.setLoadEnable(false);
                 return;
             }
             int lastPosition = mList.size();
-            mList.addAll(parser.list);
+            mList.addAll(entity.list);
             if (mList != null && mList.size() != 0 && mList.size() < mTotal) {
                 mSwipeContainer.setLoadEnable(true);
             } else {
@@ -162,68 +149,12 @@ public abstract class BaseDefaultListFragment extends BaseFragment implements Vi
         mSwipeContainer.showEmptyViewFail();
     }
 
-    public void onCacheLoaded(String json) {
-        onRefreshSucc(json);
+    public void onCacheLoaded(BaseResultEntity entity) {
+        onRefreshSucc(entity);
     }
 
-    public void reqRefresh() {
+    public abstract void reqRefresh();
 
-        RequestManager.DataLoadListener dataLoadListener = new RequestManager.DataLoadListener() {
-
-
-            @Override
-            public void onSuccess(int statusCode, String content) {
-                L.e(TAG, "onSuccess" + this);
-                onRefreshSucc(content);
-            }
-
-            @Override
-            public void onFailure(Throwable error, String errMsg) {
-                L.e("拉取数据失败!!!,EMPTY_TYPE_ERROR" + this);
-
-                onRefreshFail(errMsg);
-
-            }
-
-            @Override
-            public void onCacheLoaded(String content) {
-                L.e(TAG, "onCacheLoaded," + this);
-                BaseDefaultListFragment.this.onCacheLoaded(content);
-            }
-        };
-        RequestManager.requestData(
-                getRefreshRequest(),
-                RequestManager.CACHE_TYPE_NORMAL, dataLoadListener
-        );
-    }
-
-    public void reqLoadMore() {
-        RequestManager.DataLoadListener dataLoadListener = new RequestManager.DataLoadListener() {
-
-
-            @Override
-            public void onSuccess(int statusCode, String content) {
-                L.e(TAG, "onSuccess" + this);
-                onLoadMoreSucc(content);
-            }
-
-            @Override
-            public void onFailure(Throwable error, String errMsg) {
-                L.e("拉取数据失败!!!,EMPTY_TYPE_ERROR" + this);
-
-                onLoadMoreFail(errMsg);
-            }
-
-            @Override
-            public void onCacheLoaded(String content) {
-                L.e(TAG, "onCacheLoaded," + this);
-                BaseDefaultListFragment.this.onCacheLoaded(content);
-            }
-        };
-        RequestManager.requestData(
-                getLoadMoreRequest(),
-                RequestManager.CACHE_TYPE_NOCACHE, dataLoadListener
-        );
-    }
+    public abstract void reqLoadMore();
 
 }

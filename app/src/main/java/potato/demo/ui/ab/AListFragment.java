@@ -31,8 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import potato.demo.R;
 import potato.demo.chips.base.BaseFragment;
 import potato.demo.data.bean.ABean;
@@ -49,9 +49,9 @@ public class AListFragment extends BaseFragment {
     private PotatoBaseListAdapter mAdapter;
     private View mView;
 
-    @InjectView(R.id.swipe_container)
+    @Bind(R.id.swipe_container)
     PotatoListSwipeLayout swipeContainer;
-    @InjectView(R.id.list)
+    @Bind(R.id.list)
     ListView lv_list;
 
     @Nullable
@@ -63,7 +63,7 @@ public class AListFragment extends BaseFragment {
                 container,
                 false);
 
-        ButterKnife.inject(this, mView);
+        ButterKnife.bind(this, mView);
 
         swipeContainer.setFooterView(getActivity(), lv_list, R.layout.potato_listview_footer);
 

@@ -5,9 +5,10 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 import com.mozillaonline.providers.DownloadManager;
+
+import potato.demo.chips.api.ApiManager;
 import potato.demo.chips.util.ImageLoaderUtil;
 import potato.demo.chips.util.PhoneUtils;
-import com.potato.library.net.RequestManager;
 
 import cn.sharesdk.framework.ShareSDK;
 
@@ -15,7 +16,9 @@ import cn.sharesdk.framework.ShareSDK;
  * Created by zhaobingfeng on 14-12-22.
  */
 public class MainApplication extends Application {
-    /** 获取屏幕的宽和高 */
+    /**
+     * 获取屏幕的宽和高
+     */
     public static int screenHight = 0;
     public static int screenWidth = 0;
     public static DisplayMetrics displayMetrices;
@@ -47,14 +50,14 @@ public class MainApplication extends Application {
         //获取imei
         PhoneUtils.getIMEI(context);
         //请求缓存管理
-        RequestManager.init(context);
+        ApiManager.init(this);
         //请求初始化
 //        RequestConfig.addHttpClientRASHead(instence);
 //        instence.setUserAgent(PhoneUtils.getDeviceUA(context));
         initPicasso();
         initUIL();
         initDownloadManager();
-        
+
     }
 
     private void initDownloadManager() {
@@ -71,7 +74,7 @@ public class MainApplication extends Application {
 //            Picasso.setSingletonInstance(picasso);
     }
 
-    public void initUIL(){
+    public void initUIL() {
         ImageLoaderUtil.init(context);
     }
 

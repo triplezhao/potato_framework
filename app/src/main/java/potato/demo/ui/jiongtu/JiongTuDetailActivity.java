@@ -17,25 +17,30 @@
 package potato.demo.ui.jiongtu;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lzy.okhttputils.cache.CacheMode;
 import com.potato.library.adapter.PotatoBaseListAdapter;
-import com.potato.library.net.RequestManager;
-import com.potato.library.net.RequestWraper;
 
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Request;
+import okhttp3.Response;
 import potato.demo.R;
+import potato.demo.chips.api.BaseResultEntity;
+import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseActivity;
 import potato.demo.data.bean.JiongtuAlbum;
 import potato.demo.data.bean.JiongtuPhoto;
-import potato.demo.data.parser.JiongtuPhotoListParser;
-import potato.demo.data.request.JiongtuRequestBuilder;
+import potato.demo.data.parser.JiongtuPhotoListEntity;
+import potato.demo.data.request.JiongtuApi;
 
 public class JiongTuDetailActivity extends BaseActivity {
 
@@ -57,16 +62,16 @@ public class JiongTuDetailActivity extends BaseActivity {
     private JiongtuAlbum mCurrentAlbum;
     private String mAlbumId;
 
-    @InjectView(R.id.lv_list)
+    @Bind(R.id.lv_list)
     ListView lv_list;
-    @InjectView(R.id.tv_title)
+    @Bind(R.id.tv_title)
     TextView tv_title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jiongtu_detail);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         mCurrentAlbum = (JiongtuAlbum) getIntent().getSerializableExtra(EXTRA_ALBUM);
         if (mCurrentAlbum != null) {// 来自囧图图册列表
             mAlbumId = String.valueOf(mCurrentAlbum.getId());
@@ -85,29 +90,23 @@ public class JiongTuDetailActivity extends BaseActivity {
 
     public void bindData() {
         if (!TextUtils.isEmpty(mAlbumId)) {// 来自囧图图册列表
-            RequestWraper request = JiongtuRequestBuilder.getPhotoListRequest(mAlbumId);
-            RequestManager.requestData(request,
-                    RequestManager.CACHE_TYPE_NORMAL, new RequestManager.DataLoadListener() {
-                        @Override
-                        public void onSuccess(int statusCode, String content) {
-                            onRefreshSucc(content);
-                        }
+            JiongtuApi.getPhotoListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, mAlbumId, new JiongtuCallback<JiongtuPhotoListEntity>() {
+                @Override
+                public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
 
-                        @Override
-                        public void onFailure(Throwable error, String errMsg) {
-                        }
+                }
 
-                        @Override
-                        public void onCacheLoaded(String content) {
-                            onRefreshSucc(content);
-                        }
-                    });// 使用缓存
+                @Override
+                public void onResponse(boolean isFromCache, BaseResultEntity baseResultEntity, Request request, @Nullable Response response) {
+                    onRefreshSucc((JiongtuPhotoListEntity) baseResultEntity);
+                }
+            });
         }
     }
 
 
-    private void onRefreshSucc(String content) {
-        mPhotos = JiongtuPhotoListParser.parseToPhotoList(content);
+    private void onRefreshSucc(JiongtuPhotoListEntity jiongtuPhotoListEntity) {
+        mPhotos = jiongtuPhotoListEntity.list;
         mAdapter.setDataList(mPhotos);
         mAdapter.notifyDataSetChanged();
     }

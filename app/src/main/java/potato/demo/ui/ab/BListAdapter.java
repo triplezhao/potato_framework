@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.util.L;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import potato.demo.R;
 import potato.demo.chips.util.ImageLoaderUtil;
 import potato.demo.data.bean.ABean;
@@ -60,16 +60,16 @@ public class BListAdapter extends PotatoBaseRecyclerViewAdapter {
 
     public static class VH extends RecyclerView.ViewHolder {
 
-        @InjectView(R.id.tv_title)
+        @Bind(R.id.tv_title)
         TextView tv_title;
-        @InjectView(R.id.tv_content)
+        @Bind(R.id.tv_content)
         TextView tv_content;
-        @InjectView(R.id.avatar)
+        @Bind(R.id.avatar)
         ImageView avatar;
 
         public VH(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
