@@ -76,12 +76,15 @@ public class YKActivity extends BaseDefaultListActivity {
         YKApi.videosByUser(CacheMode.REQUEST_FAILED_READ_CACHE, GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", "1", "", "", new YKCallback<YKVideosByUserEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                onRefreshFail(e.getMessage());
+                if (e != null)
+                    onRefreshFail(e.getMessage());
             }
 
             @Override
             public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
                 onRefreshSucc(entity);
+                mPage = ((YKVideosByUserEntity) entity).page;
+
             }
         });
     }
@@ -91,12 +94,14 @@ public class YKActivity extends BaseDefaultListActivity {
         YKApi.videosByUser(CacheMode.DEFAULT, GlobleConstant.youku_client_id, GlobleConstant.youku_def_uid, "", "", mPage + 1 + "", "", "", new YKCallback<YKVideosByUserEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+                if (e != null)
                 onLoadMoreFail(e.getMessage());
             }
 
             @Override
             public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
                 onLoadMoreSucc(entity);
+                mPage = ((YKVideosByUserEntity) entity).page;
             }
         });
     }

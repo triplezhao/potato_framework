@@ -110,7 +110,9 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
         JiongtuApi.getAlbumListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, mSectionId, 0, new JiongtuCallback<JiongtuAlbumListEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                onRefreshFail(e.getMessage());
+
+                if (e != null)
+                    onRefreshFail(e.getMessage());
             }
 
             @Override
@@ -125,7 +127,8 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
         JiongtuApi.getAlbumListRequest(CacheMode.DEFAULT, mSectionId, mEntity.maxPublicDate, new JiongtuCallback<JiongtuAlbumListEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
-                onLoadMoreFail(e.getMessage());
+                if (e != null)
+                    onLoadMoreFail(e.getMessage());
             }
 
             @Override

@@ -58,7 +58,7 @@ public class JiongtuApi implements ApiUrls {
         OkHttpUtils.get(URL_JIONG_SECTION_LIST)//
                 .tag("getSectionListRequest")//
                 .cacheKey(URL_JIONG_SECTION_LIST)//
-                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)//
+                .cacheMode(cacheMode)//
                 .params("platCode", "ANDROID")//
                 .params("pageSize", "-1")
                 .execute(callback);
@@ -71,7 +71,7 @@ public class JiongtuApi implements ApiUrls {
         OkHttpUtils.get(URL_JIONG_PHOTO_LIST)//
                 .tag("getPhotoListRequest")//
                 .cacheKey(URL_JIONG_PHOTO_LIST + albumId)//
-                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)//
+                .cacheMode(cacheMode)//
                 .params("platCode", "ANDROID")//
                 .params("photosID", albumId)
                 .execute(callback);

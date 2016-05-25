@@ -53,7 +53,7 @@ public abstract class JiongtuCallback<T> extends AbsCallback<BaseResultEntity> {
                     Toast.makeText(OkHttpUtils.getContext(), "错误代码：" + entity.code + "，错误信息：" + entity.message, Toast.LENGTH_SHORT).show();
                 }
             });
-            throw new IllegalStateException("错误代码：" + entity.code + "，错误信息：" + entity.message);
+            throw new Exception("错误代码：" + entity.code + "，错误信息：" + entity.message);
         }
 
     }

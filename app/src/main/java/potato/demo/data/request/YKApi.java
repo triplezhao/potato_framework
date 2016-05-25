@@ -23,7 +23,7 @@ public class YKApi implements ApiUrls {
         OkHttpUtils.get(videos_by_user)//
                 .tag("videosByUser")//
                 .cacheKey(videos_by_user + client_id + user_id + user_name + orderby + page + count + last_item)//
-                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)//
+                .cacheMode(cacheMode)//
                 .params("client_id", client_id)
                 .params("user_id", user_id)
                 .params("user_name", user_name)
