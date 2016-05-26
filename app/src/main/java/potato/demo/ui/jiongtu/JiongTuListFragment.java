@@ -36,7 +36,6 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 import potato.demo.R;
-import potato.demo.chips.api.BaseResultEntity;
 import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseDefaultListFragment;
 import potato.demo.data.bean.JiongtuAlbum;
@@ -116,8 +115,8 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
             }
 
             @Override
-            public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
-                onRefreshSucc((JiongtuAlbumListEntity) entity);
+            public void onResponse(boolean isFromCache, JiongtuAlbumListEntity entity, Request request, @Nullable Response response) {
+                onRefreshSucc(entity);
             }
         });
     }
@@ -132,8 +131,8 @@ public class JiongTuListFragment extends BaseDefaultListFragment {
             }
 
             @Override
-            public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
-                onLoadMoreSucc((JiongtuAlbumListEntity) entity);
+            public void onResponse(boolean isFromCache, JiongtuAlbumListEntity entity, Request request, @Nullable Response response) {
+                onLoadMoreSucc(entity);
 
 
             }

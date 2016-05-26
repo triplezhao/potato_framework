@@ -18,7 +18,6 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 import potato.demo.R;
-import potato.demo.chips.api.BaseResultEntity;
 import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseActivity;
 import potato.demo.data.bean.JiongtuSection;
@@ -62,8 +61,8 @@ public class JiongtuActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
         JiongtuApi.getSectionListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, new JiongtuCallback<JiongtuSectionListEntity>() {
             @Override
-            public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
-                updateUI((JiongtuSectionListEntity) entity);
+            public void onResponse(boolean isFromCache, JiongtuSectionListEntity entity, Request request, @Nullable Response response) {
+                updateUI( entity);
             }
 
             @Override

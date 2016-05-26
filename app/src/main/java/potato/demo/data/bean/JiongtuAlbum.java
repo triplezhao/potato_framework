@@ -5,14 +5,14 @@ import android.text.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
+import potato.demo.chips.base.BaseBean;
 
 /**
  * 囧图王-图册
  * 
  * @author zhaobingfeng
  */
-public class JiongtuAlbum implements Serializable {
+public class JiongtuAlbum extends BaseBean {
     private static final long serialVersionUID = -1552323434474377850L;
     public static final String TYPE = "PHOTOS";
 	/** 数据库中ID */

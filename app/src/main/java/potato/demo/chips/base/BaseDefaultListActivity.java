@@ -152,7 +152,8 @@ public abstract class BaseDefaultListActivity extends BaseActivity implements Po
     }
 
     public void onLoadMoreFail(String err) {
-        mSwipeContainer.showEmptyViewFail();
+        mSwipeContainer.setLoadEnable(false);
+        mSwipeContainer.setRefreshing(false);
     }
 
 

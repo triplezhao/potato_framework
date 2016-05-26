@@ -34,7 +34,6 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 import potato.demo.R;
-import potato.demo.chips.api.BaseResultEntity;
 import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseActivity;
 import potato.demo.data.bean.JiongtuAlbum;
@@ -97,8 +96,8 @@ public class JiongTuDetailActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onResponse(boolean isFromCache, BaseResultEntity baseResultEntity, Request request, @Nullable Response response) {
-                    onRefreshSucc((JiongtuPhotoListEntity) baseResultEntity);
+                public void onResponse(boolean isFromCache, JiongtuPhotoListEntity baseResultEntity, Request request, @Nullable Response response) {
+                    onRefreshSucc( baseResultEntity);
                 }
             });
         }

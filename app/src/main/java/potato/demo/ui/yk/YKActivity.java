@@ -16,7 +16,6 @@ import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
 import potato.demo.R;
-import potato.demo.chips.api.BaseResultEntity;
 import potato.demo.chips.api.YKCallback;
 import potato.demo.chips.app.GlobleConstant;
 import potato.demo.chips.base.BaseDefaultListActivity;
@@ -81,9 +80,9 @@ public class YKActivity extends BaseDefaultListActivity {
             }
 
             @Override
-            public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
+            public void onResponse(boolean isFromCache, YKVideosByUserEntity entity, Request request, @Nullable Response response) {
                 onRefreshSucc(entity);
-                mPage = ((YKVideosByUserEntity) entity).page;
+                mPage = (entity).page;
 
             }
         });
@@ -95,13 +94,13 @@ public class YKActivity extends BaseDefaultListActivity {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)
-                onLoadMoreFail(e.getMessage());
+                    onLoadMoreFail(e.getMessage());
             }
 
             @Override
-            public void onResponse(boolean isFromCache, BaseResultEntity entity, Request request, @Nullable Response response) {
+            public void onResponse(boolean isFromCache, YKVideosByUserEntity entity, Request request, @Nullable Response response) {
                 onLoadMoreSucc(entity);
-                mPage = ((YKVideosByUserEntity) entity).page;
+                mPage = (entity).page;
             }
         });
     }

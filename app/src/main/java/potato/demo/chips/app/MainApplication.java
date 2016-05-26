@@ -10,8 +10,6 @@ import potato.demo.chips.api.ApiManager;
 import potato.demo.chips.util.ImageLoaderUtil;
 import potato.demo.chips.util.PhoneUtils;
 
-import cn.sharesdk.framework.ShareSDK;
-
 /**
  * Created by zhaobingfeng on 14-12-22.
  */
@@ -46,7 +44,7 @@ public class MainApplication extends Application {
 
         initDeviceWidthAndHeight();
 
-        ShareSDK.initSDK(context);
+//        ShareSDK.initSDK(context);
         //获取imei
         PhoneUtils.getIMEI(context);
         //请求缓存管理

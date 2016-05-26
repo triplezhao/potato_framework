@@ -19,7 +19,7 @@ import okhttp3.Response;
  * 修订历史：
  * ================================================
  */
-public abstract class JiongtuCallback<T> extends AbsCallback<BaseResultEntity> {
+public abstract class JiongtuCallback<T> extends AbsCallback<T> {
 
     private BaseResultEntity entity;
 
@@ -33,7 +33,7 @@ public abstract class JiongtuCallback<T> extends AbsCallback<BaseResultEntity> {
 
     //该方法是子线程处理，不能做ui相关的工作
     @Override
-    public BaseResultEntity parseNetworkResponse(Response response) throws Exception {
+    public T parseNetworkResponse(Response response) throws Exception {
         String responseData = response.body().string();
         if (TextUtils.isEmpty(responseData)) return null;
 
@@ -44,7 +44,7 @@ public abstract class JiongtuCallback<T> extends AbsCallback<BaseResultEntity> {
         if (entity != null) entity = entity.parse(responseData);
 
         if (entity.isSucc()) {
-            return entity;
+            return (T)entity;
         } else {
             //如果要更新UI，需要使用handler，可以如下方式实现，也可以自己写handler
             OkHttpUtils.getInstance().getDelivery().post(new Runnable() {

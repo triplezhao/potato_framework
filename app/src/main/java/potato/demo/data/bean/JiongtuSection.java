@@ -2,7 +2,9 @@ package potato.demo.data.bean;
 
 import org.json.JSONObject;
 
-public class JiongtuSection {
+import potato.demo.chips.base.BaseBean;
+
+public class JiongtuSection extends BaseBean {
     private long _id = -1;
     /**
      * 栏目ID

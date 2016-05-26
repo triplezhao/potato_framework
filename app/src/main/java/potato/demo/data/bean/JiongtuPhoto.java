@@ -2,14 +2,14 @@ package potato.demo.data.bean;
 
 import org.json.JSONObject;
 
-import java.io.Serializable;
+import potato.demo.chips.base.BaseBean;
 
 /**
  * 囧图王-图片
  *
  * @author zhaobingfeng
  */
-public class JiongtuPhoto implements Serializable {
+public class JiongtuPhoto extends BaseBean {
     private static final long serialVersionUID = 1L;
     private long id;
 

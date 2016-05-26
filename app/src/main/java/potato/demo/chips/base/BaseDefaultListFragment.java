@@ -146,7 +146,8 @@ public abstract class BaseDefaultListFragment extends BaseFragment implements Vi
     }
 
     public void onLoadMoreFail(String err) {
-        mSwipeContainer.showEmptyViewFail();
+        mSwipeContainer.setLoadEnable(false);
+        mSwipeContainer.setRefreshing(false);
     }
 
     public void onCacheLoaded(BaseResultEntity entity) {
