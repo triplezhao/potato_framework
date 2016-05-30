@@ -39,7 +39,7 @@ import potato.demo.R;
 import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseDefaultListFragment;
 import potato.demo.data.bean.JiongtuAlbum;
-import potato.demo.data.parser.JiongtuAlbumListEntity;
+import potato.demo.data.result.JiongtuAlbumListEntity;
 import potato.demo.data.request.JiongtuApi;
 
 public class JiongTuListFragment extends BaseDefaultListFragment {

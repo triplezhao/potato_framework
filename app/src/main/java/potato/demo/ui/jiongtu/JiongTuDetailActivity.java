@@ -38,7 +38,7 @@ import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseActivity;
 import potato.demo.data.bean.JiongtuAlbum;
 import potato.demo.data.bean.JiongtuPhoto;
-import potato.demo.data.parser.JiongtuPhotoListEntity;
+import potato.demo.data.result.JiongtuPhotoListEntity;
 import potato.demo.data.request.JiongtuApi;
 
 public class JiongTuDetailActivity extends BaseActivity {

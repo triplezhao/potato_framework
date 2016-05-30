@@ -6,9 +6,9 @@ import com.lzy.okhttputils.cache.CacheMode;
 
 import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.api.ApiUrls;
-import potato.demo.data.parser.JiongtuAlbumListEntity;
-import potato.demo.data.parser.JiongtuPhotoListEntity;
-import potato.demo.data.parser.JiongtuSectionListEntity;
+import potato.demo.data.result.JiongtuAlbumListEntity;
+import potato.demo.data.result.JiongtuPhotoListEntity;
+import potato.demo.data.result.JiongtuSectionListEntity;
 
 
 public class JiongtuApi implements ApiUrls {

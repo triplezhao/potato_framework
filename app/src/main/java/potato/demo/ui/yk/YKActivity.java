@@ -19,7 +19,7 @@ import potato.demo.R;
 import potato.demo.chips.api.YKCallback;
 import potato.demo.chips.app.GlobleConstant;
 import potato.demo.chips.base.BaseDefaultListActivity;
-import potato.demo.data.parser.YKVideosByUserEntity;
+import potato.demo.data.result.YKVideosByUserEntity;
 import potato.demo.data.request.YKApi;
 
 /**

@@ -21,7 +21,7 @@ import potato.demo.R;
 import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.chips.base.BaseActivity;
 import potato.demo.data.bean.JiongtuSection;
-import potato.demo.data.parser.JiongtuSectionListEntity;
+import potato.demo.data.result.JiongtuSectionListEntity;
 import potato.demo.data.request.JiongtuApi;
 
 /**

@@ -76,7 +76,10 @@ class CacheDao<T> extends DataBaseDao<CacheEntity<T>> {
             }
         }
 
-        long id = database.replace(getTableName(), null, values);
+//        long id = database.update(getTableName(), null, values);
+        //改为，建表时候设置 插入自动替换。text primary key not null UNIQUE ON CONFLICT REPLACE
+        long id = database.insert(getTableName(), null,values);
+
         closeDatabase(database, null);
         return id;
     }
@@ -103,6 +106,7 @@ class CacheDao<T> extends DataBaseDao<CacheEntity<T>> {
         CacheEntity<T> cacheEntity = new CacheEntity<>();
         cacheEntity.setId(cursor.getInt(cursor.getColumnIndex(CacheHelper.ID)));
         cacheEntity.setKey(cursor.getString(cursor.getColumnIndex(CacheHelper.KEY)));
+        cacheEntity.setCacheTime(cursor.getLong(cursor.getColumnIndex(CacheHelper.TIME)));
 
         byte[] headerData = cursor.getBlob(cursor.getColumnIndex(CacheHelper.HEAD));
         ByteArrayInputStream headerBAIS = null;

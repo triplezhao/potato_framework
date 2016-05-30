@@ -5,7 +5,7 @@ import com.lzy.okhttputils.cache.CacheMode;
 
 import potato.demo.chips.api.ApiUrls;
 import potato.demo.chips.api.YKCallback;
-import potato.demo.data.parser.YKVideosByUserEntity;
+import potato.demo.data.result.YKVideosByUserEntity;
 
 public class YKApi implements ApiUrls {
     //获取用户发布的视频. 命名，取api接口的后两位单词

@@ -11,6 +11,15 @@ public class CacheEntity<T> implements Serializable {
     private HttpHeaders responseHeaders;
     private T data;
     private long localExpire;
+    private long cacheTime;
+
+    public long getCacheTime() {
+        return cacheTime;
+    }
+
+    public void setCacheTime(long cacheTime) {
+        this.cacheTime = cacheTime;
+    }
 
     public long getId() {
         return id;

@@ -356,7 +356,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
             } else {
                 sendFailResultCallback(true, call, null, new IllegalStateException("没有获取到缓存！"), mCallback);
             }
-        } else if (cacheMode == CacheMode.FIRST_CACHE_THEN_REQUEST) {
+        } else if (cacheMode == CacheMode.FIRST_CACHE_THEN_REQUEST||cacheMode == CacheMode.CACHE_ONLY) {
             //先使用缓存，不管是否存在，仍然请求网络
             if (cacheEntity != null) {
                 T data = cacheEntity.getData();
@@ -364,6 +364,11 @@ public abstract class BaseRequest<R extends BaseRequest> {
             } else {
                 sendFailResultCallback(true, call, null, new IllegalStateException("没有获取到缓存！"), mCallback);
             }
+            if(cacheMode == CacheMode.CACHE_ONLY){
+                return;//只用cache不请求网络
+            }
+        }else if(cacheMode == CacheMode.NET_ONLY){
+           //只用网络不用缓存
         }
 
         call.enqueue(new Callback() {

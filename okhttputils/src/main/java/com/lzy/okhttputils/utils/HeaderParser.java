@@ -97,6 +97,7 @@ public class HeaderParser {
         cacheEntity.setData(data);
         cacheEntity.setLocalExpire(localExpire);
         cacheEntity.setResponseHeaders(headers);
+        cacheEntity.setCacheTime(System.currentTimeMillis());
         return cacheEntity;
     }
 
@@ -133,10 +134,12 @@ public class HeaderParser {
 
         // 2. 添加 Accept-Language
         String acceptLanguage = HttpHeaders.getAcceptLanguage();
-        if (!TextUtils.isEmpty(acceptLanguage)) request.headers(HttpHeaders.HEAD_KEY_ACCEPT_LANGUAGE, acceptLanguage);
+        if (!TextUtils.isEmpty(acceptLanguage))
+            request.headers(HttpHeaders.HEAD_KEY_ACCEPT_LANGUAGE, acceptLanguage);
 
         // 3. 添加 UserAgent
         String userAgent = HttpHeaders.getUserAgent();
-        if (!TextUtils.isEmpty(userAgent)) request.headers(HttpHeaders.HEAD_KEY_USER_AGENT, userAgent);
+        if (!TextUtils.isEmpty(userAgent))
+            request.headers(HttpHeaders.HEAD_KEY_USER_AGENT, userAgent);
     }
 }

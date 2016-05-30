@@ -16,13 +16,15 @@ class CacheHelper extends SQLiteOpenHelper {
     public static final String KEY = "key";
     public static final String HEAD = "head";
     public static final String DATA = "data";
+    public static final String TIME = "cachetime";
 
     //四条sql语句
     private static final String SQL_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" + //
-            ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +//
-            KEY + " VARCHAR, " +//
+            ID + " INTEGER, " +//
+            KEY + " text primary key not null UNIQUE ON CONFLICT REPLACE, " +//
             HEAD + " BLOB, " +//
-            DATA + " BLOB)";
+            DATA + " BLOB, " +//
+            TIME + " integer)";//
     private static final String SQL_CREATE_UNIQUE_INDEX = "CREATE UNIQUE INDEX cache_unique_index ON " + TABLE_NAME + "(\"key\")";
     private static final String SQL_DELETE_TABLE = "DROP TABLE " + TABLE_NAME;
     private static final String SQL_DELETE_UNIQUE_INDEX = "DROP UNIQUE INDEX cache_unique_index";

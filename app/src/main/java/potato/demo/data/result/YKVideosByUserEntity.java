@@ -1,4 +1,4 @@
-package potato.demo.data.parser;
+package potato.demo.data.result;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
