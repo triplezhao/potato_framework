@@ -25,11 +25,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -39,6 +34,11 @@ import java.io.SyncFailedException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Runs an actual download
@@ -206,9 +206,9 @@ public class DownloadThread extends Thread {
                 wakeLock.release();
                 wakeLock = null;
             }
-            if (mOkHttpClient != null) {
-                mOkHttpClient.cancel(null);
-            }
+            /*if (mOkHttpClient != null) {
+                mOkHttpClient.
+            }*/
             cleanupDestination(state, finalStatus);
             notifyDownloadCompleted(finalStatus, state.mCountRetry,
                     state.mRetryAfter, state.mGotData, state.mFilename,
@@ -510,7 +510,7 @@ public class DownloadThread extends Thread {
             throws StopRequest {
         try {
             return response.body().byteStream();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             logNetworkState();
             throw new StopRequest(getFinalStatusForHttpError(state),
                     "while getting entity: " + ex.toString(), ex);
