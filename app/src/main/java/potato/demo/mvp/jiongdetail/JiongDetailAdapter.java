@@ -1,4 +1,4 @@
-package potato.demo.ui.jiongtu;
+package potato.demo.mvp.jiongdetail;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -19,9 +19,9 @@ import potato.demo.data.bean.JiongtuPhoto;
 /**
  * Created by ztw on 2015/9/21.
  */
-public class JiongTuDetailAdapter extends PotatoBaseListAdapter {
+public class JiongDetailAdapter extends PotatoBaseListAdapter {
 
-    public JiongTuDetailAdapter(Context context) {
+    public JiongDetailAdapter(Context context) {
         super(context);
     }
 
@@ -49,7 +49,6 @@ public class JiongTuDetailAdapter extends PotatoBaseListAdapter {
             }
         });
         ImageLoaderUtil.displayImage(bean.getBigUrl(), vh.iv_pic, R.drawable.def_gray_big);
-
 
     }
 

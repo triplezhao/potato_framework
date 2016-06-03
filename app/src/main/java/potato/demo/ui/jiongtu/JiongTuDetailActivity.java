@@ -40,6 +40,7 @@ import potato.demo.data.bean.JiongtuAlbum;
 import potato.demo.data.bean.JiongtuPhoto;
 import potato.demo.data.result.JiongtuPhotoListEntity;
 import potato.demo.data.request.JiongtuApi;
+import potato.demo.mvp.jiongdetail.JiongDetailAdapter;
 
 public class JiongTuDetailActivity extends BaseActivity {
 
@@ -52,14 +53,14 @@ public class JiongTuDetailActivity extends BaseActivity {
     /**
      * adapters
      */
-    private PotatoBaseListAdapter mAdapter;
+    public PotatoBaseListAdapter mAdapter;
     /** data */
     /**
      * 图片数据集合
      */
-    private ArrayList<JiongtuPhoto> mPhotos;
-    private JiongtuAlbum mCurrentAlbum;
-    private String mAlbumId;
+    public ArrayList<JiongtuPhoto> mPhotos;
+    public JiongtuAlbum mCurrentAlbum;
+    public String mAlbumId;
 
     @Bind(R.id.lv_list)
     ListView lv_list;
@@ -77,7 +78,7 @@ public class JiongTuDetailActivity extends BaseActivity {
             tv_title.setText(mCurrentAlbum.getTitle());
         }
 
-        mAdapter = new JiongTuDetailAdapter(mContext);
+        mAdapter = new JiongDetailAdapter(mContext);
         mPhotos = new ArrayList<>();
         mAdapter.setDataList(mPhotos);
         lv_list.setAdapter(mAdapter);
@@ -97,7 +98,7 @@ public class JiongTuDetailActivity extends BaseActivity {
 
                 @Override
                 public void onResponse(boolean isFromCache, JiongtuPhotoListEntity baseResultEntity, Request request, @Nullable Response response) {
-                    onRefreshSucc( baseResultEntity);
+                    onRefreshSucc(baseResultEntity);
                 }
             });
         }

@@ -94,8 +94,12 @@
 
         <!--jiongtu-->
         <activity android:name=".ui.jiongtu.JiongtuActivity"></activity>
+        <activity android:name=".mvp.jiongtu.JiongHomeActivity"></activity>
         <activity
             android:name=".ui.jiongtu.JiongTuDetailActivity"
+            android:hardwareAccelerated="true"></activity>
+        <activity
+            android:name=".mvp.jiongdetail.JiongDetailActivity"
             android:hardwareAccelerated="true"></activity>
 
         <!--youku-->
