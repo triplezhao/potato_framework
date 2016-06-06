@@ -44,12 +44,13 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jiongtu);
         ButterKnife.bind(this);
-        adapter = new HeaderPageAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
 
         DaggerJiongHome_C.builder().module(new JiongHome.Module(this))
                 .build().inject(this);
+
+        adapter = new HeaderPageAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
         presenter.loadData();
     }
