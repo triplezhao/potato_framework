@@ -78,6 +78,7 @@ class CacheDao<T> extends DataBaseDao<CacheEntity<T>> {
 
 //        long id = database.update(getTableName(), null, values);
         //改为，建表时候设置 插入自动替换。text primary key not null UNIQUE ON CONFLICT REPLACE
+        values.put(CacheHelper.TIME,cacheEntity.getCacheTime());
         long id = database.insert(getTableName(), null,values);
 
         closeDatabase(database, null);
