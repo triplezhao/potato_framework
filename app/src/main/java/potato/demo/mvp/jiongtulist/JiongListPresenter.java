@@ -28,21 +28,19 @@ import okhttp3.Response;
 import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.data.request.JiongtuApi;
 import potato.demo.data.result.JiongtuAlbumListEntity;
-import potato.demo.data.result.JiongtuSectionListEntity;
 
 /**
- * Listens to user actions from the UI ({@link JiongHomeActivity}), retrieves the data and updates
+ * Listens to user actions from the UI ({@link }), retrieves the data and updates
  * the UI as required.
  * <p/>
  * Dagger generated code doesn't require public access to the constructor or class, and
  * therefore, to ensure the developer doesn't instantiate the class manually and bypasses Dagger,
  * it's good practice minimise the visibility of the class/constructor as much as possible.
  */
-final class JiongListPresenter implements JiongListContract.Presenter {
+final class JiongListPresenter implements JiongList.P {
 
 
-    private JiongListContract.View mJiongListView;
-    private long mSectionId;
+    private JiongList.V mJiongListView;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
@@ -50,9 +48,8 @@ final class JiongListPresenter implements JiongListContract.Presenter {
      */
     @Inject
     JiongListPresenter(
-            JiongListContract.View jiongListView, long sectionId) {
+            JiongList.V jiongListView) {
         mJiongListView = jiongListView;
-        mSectionId = sectionId;
     }
 
 
@@ -63,7 +60,7 @@ final class JiongListPresenter implements JiongListContract.Presenter {
 
     @Override
     public void reqRefresh() {
-        JiongtuApi.getAlbumListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, mSectionId, 0, new JiongtuCallback<JiongtuAlbumListEntity>() {
+        JiongtuApi.getAlbumListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, mJiongListView.getSectionId(), 0, new JiongtuCallback<JiongtuAlbumListEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
 
@@ -80,7 +77,7 @@ final class JiongListPresenter implements JiongListContract.Presenter {
 
     @Override
     public void reqLoadMore(long maxPublicDate) {
-        JiongtuApi.getAlbumListRequest(CacheMode.DEFAULT, mSectionId, maxPublicDate, new JiongtuCallback<JiongtuAlbumListEntity>() {
+        JiongtuApi.getAlbumListRequest(CacheMode.DEFAULT, mJiongListView.getSectionId(), maxPublicDate, new JiongtuCallback<JiongtuAlbumListEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)

@@ -17,7 +17,7 @@
             android:layout_centerInParent="true"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Shop"
+            android:text="Mimi"
             android:textColor="@color/potato_white"
             android:textSize="@dimen/txt_max" />
 
@@ -30,7 +30,8 @@
             android:layout_centerVertical="true"
             android:onClick="onClick"
             android:padding="10dip"
-            android:src="@drawable/icon_close" />
+            android:src="@drawable/icon_close"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>

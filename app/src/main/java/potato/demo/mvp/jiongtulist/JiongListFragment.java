@@ -50,7 +50,7 @@ import potato.demo.chips.util.ImageLoaderUtil;
 import potato.demo.data.bean.JiongtuAlbum;
 import potato.demo.data.result.JiongtuAlbumListEntity;
 
-public class JiongListFragment extends BaseFragment implements JiongListContract.View {
+public class JiongListFragment extends BaseFragment implements JiongList.V {
     private static final String TAG = "ListFragmentJiongtu";
     /**
      * extrars
@@ -84,15 +84,10 @@ public class JiongListFragment extends BaseFragment implements JiongListContract
         mSectionId = getArguments() == null ? 0 : getArguments().getLong(EXTRARS_SECTION_ID);
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
 
-        mView = inflater.inflate(
-                R.layout.fragment_jiongtu_list,
-                container,
-                false);
+        mView = inflater.inflate(R.layout.fragment_jiongtu_list, container, false);
 
         ButterKnife.bind(this, mView);
-        DaggerJiongListComponent.builder().jiongListPresenterModule(new JiongListPresenterModule(this, mSectionId))
-                .build().inject(this);
-
+        DaggerJiongList_C.builder().module(new JiongList.Module(this)).build().inject(this);
         mAdapter = new JiongTuListAdapter(mContext);
         mEntity = new JiongtuAlbumListEntity();
 
@@ -220,6 +215,11 @@ public class JiongListFragment extends BaseFragment implements JiongListContract
 
     }
 
+    @Override
+    public long getSectionId() {
+        return mSectionId;
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -261,7 +261,7 @@ public class JiongListFragment extends BaseFragment implements JiongListContract
         }
 
 
-          class VH extends PotatoBaseViewHolder {
+        class VH extends PotatoBaseViewHolder {
 
             @Bind(R.id.iv_pic)
             ImageView iv_pic;

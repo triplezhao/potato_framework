@@ -19,14 +19,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-import potato.demo.R;
-import potato.demo.chips.util.PhoneUtils;
-import potato.demo.chips.util.UIUtils;
 import com.potato.library.util.L;
 import com.potato.library.util.NetUtil;
 import com.potato.library.view.NormalEmptyView;
 
 import java.util.Timer;
+
+import potato.demo.R;
+import potato.demo.chips.util.PhoneUtils;
+import potato.demo.chips.util.UIUtils;
 
 /**
  * 内置浏览器页面
@@ -75,11 +76,9 @@ public class WebViewActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // VMRuntime.getRuntime().setTargetHeapUtilization(TARGET_HEAP_UTILIZATION);
         mContext = this;
         String url = getIntent().getStringExtra(URL_ADDRESS);
         if (TextUtils.isEmpty(url_Address)) url_Address = defaultURL;
-        // "http://10.6.212.211/app3.0/app3.0_activity/downTest.html";
         // 启动默认活动页面的时候后面加上apptoken
         setContentView(R.layout.activity_webview);
         initViews();

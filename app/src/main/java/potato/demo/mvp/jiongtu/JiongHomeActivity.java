@@ -29,12 +29,9 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
 
     public static final String TAG = JiongHomeActivity.class.getSimpleName();
 
-    @Bind(R.id.viewpager)
-    ViewPager viewPager;
-    @Bind(R.id.tabs)
-    TabLayout tabLayout;
-    @Inject
-    JiongHomePresenter presenter;
+    @Bind(R.id.viewpager) ViewPager viewPager;
+    @Bind(R.id.tabs) TabLayout tabLayout;
+    @Inject JiongHomePresenter presenter;
 
     private HeaderPageAdapter adapter;
     private List<JiongtuSection> mList = new ArrayList<JiongtuSection>();
@@ -45,26 +42,19 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
         setContentView(R.layout.activity_jiongtu);
         ButterKnife.bind(this);
 
-        DaggerJiongHome_C.builder().module(new JiongHome.Module(this))
-                .build().inject(this);
-
+        DaggerJiongHome_C.builder().module(new JiongHome.Module(this)).build().inject(this);
         adapter = new HeaderPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-
         presenter.loadData();
     }
 
     @Override
     public void updateListView(JiongtuSectionListEntity entity) {
-        if (entity == null) {
-            return;
-        }
+        if (entity == null) return;
         List<JiongtuSection> list = entity.list;
         if (list != null && list.size() > 0) {
-            mList.clear();
-            mList.addAll(list);
-            adapter.notifyDataSetChanged();
+            mList.clear(); mList.addAll(list); adapter.notifyDataSetChanged();
             tabLayout.setTabsFromPagerAdapter(adapter);
         }
     }
