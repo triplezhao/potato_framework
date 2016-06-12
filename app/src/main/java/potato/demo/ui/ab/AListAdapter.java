@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.potato.library.adapter.PotatoBaseListAdapter;
-import com.potato.library.adapter.PotatoBaseViewHolder;
 import com.potato.library.util.L;
 
 import butterknife.Bind;
@@ -21,7 +20,7 @@ import potato.demo.data.bean.ABean;
 /**
  * Created by ztw on 2015/9/21.
  */
-public class AListAdapter extends PotatoBaseListAdapter {
+public class AListAdapter extends PotatoBaseListAdapter<AListAdapter.VH> {
 
 
     public AListAdapter(Context context) {
@@ -41,10 +40,9 @@ public class AListAdapter extends PotatoBaseListAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        VH vh = ((VH) holder);
+    public void onBindViewHolder(VH vh, int position) {
         final ABean bean = (ABean) mData.get(position);
-        vh.view.setOnClickListener(new View.OnClickListener() {
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
@@ -58,7 +56,7 @@ public class AListAdapter extends PotatoBaseListAdapter {
         ImageLoaderUtil.displayImage(bean.getIcon(), vh.avatar, R.drawable.def_gray_small);
     }
 
-    public static class VH extends PotatoBaseViewHolder {
+    public static class VH extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_title)
         TextView tv_title;
         @Bind(R.id.tv_content)
@@ -68,7 +66,7 @@ public class AListAdapter extends PotatoBaseListAdapter {
 
         public VH(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
 
     }

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.adapter.PotatoBaseViewHolder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,14 +21,14 @@ import potato.demo.data.bean.YKVideo;
 /**
  * Created by ztw on 2015/9/21.
  */
-public class YKVideoAdapter extends PotatoBaseRecyclerViewAdapter {
+public class YKVideoAdapter extends PotatoBaseRecyclerViewAdapter<YKVideoAdapter.VH>{
 
     public YKVideoAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = mInflater.inflate(
                 R.layout.item_yk_video,
@@ -41,12 +40,11 @@ public class YKVideoAdapter extends PotatoBaseRecyclerViewAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final VH vh = ((VH) holder);
+    public void onBindViewHolder(final VH vh, int position) {
         final YKVideo bean = (YKVideo) mData.get(position);
         vh.tv_title.setText(bean.getTitle());
         ImageLoaderUtil.displayImage(bean.getThumbnail(), vh.iv_pic, R.drawable.def_gray_big);
-        vh.view.setOnClickListener(new View.OnClickListener() {
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -56,7 +54,7 @@ public class YKVideoAdapter extends PotatoBaseRecyclerViewAdapter {
                 intent.setData(content_url);
 //                binding.getRoot().getContext().startActivity(intent);
 
-                PageCtrl.start2WebViewActivity(vh.view.getContext(), "https://shop108703695.taobao.com");
+                PageCtrl.start2WebViewActivity(vh.itemView.getContext(), "https://shop108703695.taobao.com");
 //                PageCtrl.start2SchemaPage(content_url);
 //                https://shop108703695.taobao.com
             }
@@ -64,7 +62,7 @@ public class YKVideoAdapter extends PotatoBaseRecyclerViewAdapter {
     }
 
 
-    public static class VH extends PotatoBaseViewHolder {
+    public static class VH extends RecyclerView.ViewHolder {
 
         @Bind(R.id.iv_pic)
         ImageView iv_pic;

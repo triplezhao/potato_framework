@@ -6,8 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.potato.library.util.L;
+import com.potato.library.view.NormalEmptyView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
 
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) TabLayout tabLayout;
+    @Bind(R.id.empty_view) NormalEmptyView emptyView;
     @Inject JiongHomePresenter presenter;
 
     private HeaderPageAdapter adapter;
@@ -46,12 +49,23 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
         adapter = new HeaderPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        emptyView.setEmptyType(NormalEmptyView.EMPTY_TYPE_LOADING);
+        tabLayout.setVisibility(View.GONE);
+        viewPager.setVisibility(View.GONE);
         presenter.loadData();
     }
 
     @Override
     public void updateListView(JiongtuSectionListEntity entity) {
-        if (entity == null) return;
+        if (entity == null) {
+            emptyView.setEmptyType(NormalEmptyView.EMPTY_TYPE_NOCONTENT);
+            return;
+        }
+        tabLayout.setVisibility(View.VISIBLE);
+        viewPager.setVisibility(View.VISIBLE);
+        emptyView.setEmptyType(NormalEmptyView.EMPTY_TYPE_GONE);
+
         List<JiongtuSection> list = entity.list;
         if (list != null && list.size() > 0) {
             mList.clear(); mList.addAll(list); adapter.notifyDataSetChanged();

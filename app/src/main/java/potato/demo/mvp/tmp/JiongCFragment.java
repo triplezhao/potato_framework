@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
 import potato.demo.R;
 import potato.demo.chips.base.BaseFragment;
 

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.potato.library.adapter.PotatoBaseListAdapter;
-import com.potato.library.adapter.PotatoBaseViewHolder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,7 +18,7 @@ import potato.demo.data.bean.JiongtuPhoto;
 /**
  * Created by ztw on 2015/9/21.
  */
-public class JiongDetailAdapter extends PotatoBaseListAdapter {
+public class JiongDetailAdapter extends PotatoBaseListAdapter<JiongDetailAdapter.VH> {
 
     public JiongDetailAdapter(Context context) {
         super(context);
@@ -38,11 +37,10 @@ public class JiongDetailAdapter extends PotatoBaseListAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        VH vh = ((VH) holder);
+    public void onBindViewHolder(VH vh, int position) {
         final JiongtuPhoto bean = (JiongtuPhoto) mData.get(position);
 //        L.i("Picasso", "URL," + bean.getBigUrl());
-        vh.view.setOnClickListener(new View.OnClickListener() {
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ShareUtil.shareImage(view.getContext(), bean.getBigUrl());
@@ -52,7 +50,7 @@ public class JiongDetailAdapter extends PotatoBaseListAdapter {
 
     }
 
-    public static class VH extends PotatoBaseViewHolder {
+    public static class VH extends RecyclerView.ViewHolder {
 
         @Bind(R.id.iv_pic)
         ImageView iv_pic;

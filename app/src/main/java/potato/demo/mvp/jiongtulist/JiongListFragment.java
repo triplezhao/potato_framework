@@ -32,7 +32,6 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.adapter.PotatoBaseViewHolder;
 import com.potato.library.view.NormalEmptyView;
 import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
@@ -226,14 +225,14 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
 
     }
 
-    public static class JiongTuListAdapter extends PotatoBaseRecyclerViewAdapter {
+    public static class JiongTuListAdapter extends PotatoBaseRecyclerViewAdapter<JiongTuListAdapter.VH> {
 
         public JiongTuListAdapter(Context context) {
             super(context);
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public VH onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = mInflater.inflate(
                     R.layout.item_jiongtu_list,
                     parent,
@@ -244,12 +243,11 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            VH vh = ((VH) holder);
+        public void onBindViewHolder(VH vh, int position) {
             final JiongtuAlbum bean = (JiongtuAlbum) mData.get(position);
 
             vh.tv_title.setText(bean.getTitle());
-            vh.view.setOnClickListener(new View.OnClickListener() {
+            vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
@@ -261,7 +259,7 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
         }
 
 
-        class VH extends PotatoBaseViewHolder {
+        static class VH extends RecyclerView.ViewHolder {
 
             @Bind(R.id.iv_pic)
             ImageView iv_pic;

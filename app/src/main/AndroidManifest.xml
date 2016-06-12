@@ -127,6 +127,20 @@
 
         <activity android:name=".mvp.tmp.JiongCActivity">
         </activity>
+        <activity android:name=".mvp.tmp.xxxActivity">
+        </activity>
+        <activity android:name=".mvp.tmp.yyyActivity">
+        </activity>
+        <activity android:name=".mvp.tmp.xxx3Activity">
+        </activity>
+        <activity android:name=".mvp.tmp.xxx7Activity">
+        </activity>
+        <activity android:name=".mvp.tmp.yActivity">
+        </activity>
+        <activity android:name=".mvp.tmp.xxx11Activity">
+        </activity>
+        <activity android:name=".mvp.tmp.xxx2222Activity">
+        </activity>
     </application>
 
 </manifest>

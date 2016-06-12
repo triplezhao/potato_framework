@@ -7,14 +7,11 @@ import android.view.LayoutInflater;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PotatoBaseRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class PotatoBaseRecyclerViewAdapter<VH> extends RecyclerView.Adapter {
 
     public Context mContext;
-
     public List mData = new ArrayList();
-    ;
     public LayoutInflater mInflater;
-
 
     public PotatoBaseRecyclerViewAdapter(Context context) {
         this.mContext = context;
@@ -30,11 +27,18 @@ public abstract class PotatoBaseRecyclerViewAdapter extends RecyclerView.Adapter
         mData.addAll(data);
     }
 
-   /* //返回 inflate出 每个元素的 layout，可以根据type给不同的布局
+    /*//返回 inflate出 每个元素的 layout，可以根据type给不同的布局
     protected abstract VH onCreateViewHolder(int position, int type);
 
     //将数据设置到itemView上
     protected abstract void onBindViewHolder(VH holder, final Object object, int position, int type);*/
+
+    public abstract void onBindViewHolder(VH holder, int position);
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        onBindViewHolder((VH) holder, position);
+    }
 
     @Override
     public int getItemCount() {

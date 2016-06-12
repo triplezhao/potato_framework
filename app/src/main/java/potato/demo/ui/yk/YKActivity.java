@@ -29,7 +29,7 @@ public class YKActivity extends BaseDefaultListActivity {
 
     public static final String TAG = YKActivity.class.getSimpleName();
 
-    private PotatoBaseRecyclerViewAdapter mAdapter;
+    private PotatoBaseRecyclerViewAdapter  mAdapter;
 
     @Bind(R.id.include_a)
     LinearLayout include_a;

@@ -22,14 +22,15 @@ import potato.demo.data.bean.AppBean;
 /**
  * Created by ztw on 2015/9/21.
  */
-public class AppListAdapter extends PotatoBaseRecyclerViewAdapter {
+public class AppListAdapter extends PotatoBaseRecyclerViewAdapter<AppListAdapter.VH> {
 
     public AppListAdapter(Context context) {
         super(context);
     }
 
+
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = mInflater.inflate(
                 R.layout.item_app_list,
@@ -41,8 +42,7 @@ public class AppListAdapter extends PotatoBaseRecyclerViewAdapter {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        VH vh = ((VH) holder);
+    public void onBindViewHolder(VH vh, int position) {
         final AppBean bean = (AppBean) mData.get(position);
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

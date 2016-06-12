@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PotatoBaseListAdapter extends BaseAdapter {
+public abstract class PotatoBaseListAdapter<VH extends RecyclerView.ViewHolder> extends BaseAdapter {
 
     public Context mContext;
 
@@ -61,21 +61,19 @@ public abstract class PotatoBaseListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //item控件
-        RecyclerView.ViewHolder vh;
+        VH vh = null;
         if (convertView == null) {
             //findview  clumn
-            vh = onCreateViewHolder(parent,getItemViewType(position));
+            vh = onCreateViewHolder(parent, getItemViewType(position));
             convertView = vh.itemView;
-        } else {
-            vh =(RecyclerView.ViewHolder)convertView.getTag();
         }
-        onBindViewHolder(vh,position);
+        onBindViewHolder(vh, position);
         return convertView;
     }
 
     //返回 inflate出 每个元素的 layout，可以根据type给不同的布局
-    public abstract RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType);
+    public abstract VH onCreateViewHolder(ViewGroup parent, int viewType);
 
     //将数据设置到itemView上 @Override
-    public abstract void onBindViewHolder(RecyclerView.ViewHolder holder, int position);
+    public abstract void onBindViewHolder(VH vh, int position);
 }

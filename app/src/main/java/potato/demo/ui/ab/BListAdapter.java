@@ -3,7 +3,6 @@ package potato.demo.ui.ab;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,14 +20,14 @@ import potato.demo.data.bean.ABean;
 /**
  * Created by ztw on 2015/9/21.
  */
-public class BListAdapter extends PotatoBaseRecyclerViewAdapter {
+public class BListAdapter extends PotatoBaseRecyclerViewAdapter<BListAdapter.VH> {
 
     public BListAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = mInflater.inflate(
                 R.layout.item_a,
@@ -40,8 +39,7 @@ public class BListAdapter extends PotatoBaseRecyclerViewAdapter {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        VH vh = ((VH) holder);
+    public void onBindViewHolder(VH vh, int position) {
         final ABean bean = (ABean) mData.get(position);
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
