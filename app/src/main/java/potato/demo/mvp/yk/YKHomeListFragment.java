@@ -1,24 +1,10 @@
-/*
- * Copyright (C) 2015 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package potato.demo.mvp.jiongtulist;
+package potato.demo.mvp.yk;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,23 +32,20 @@ import potato.demo.R;
 import potato.demo.chips.base.BaseFragment;
 import potato.demo.chips.common.PageCtrl;
 import potato.demo.chips.util.ImageLoaderUtil;
-import potato.demo.data.bean.JiongtuAlbum;
-import potato.demo.data.result.JiongtuAlbumListEntity;
+import potato.demo.data.bean.YKVideo;
+import potato.demo.data.result.YKVideosByCategoryEntity;
 
-public class JiongListFragment extends BaseFragment implements JiongList.V {
-    private static final String TAG = "ListFragmentJiongtu";
-    /**
-     * extrars
-     */
-    public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
+public class YKHomeListFragment extends BaseFragment implements YKHomeList.V {
+
+    public static final String TAG = YKHomeListFragment.class.getSimpleName();
+
+    public static final String EXTRARS_CATEGORY = "EXTRARS_CATEGORY";
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
-    public long mSectionId;
+    public String mCategory;
     public String mTitle;
-    public int mTotal = 0;
-    public int mPage = 0;
-    public ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
+    public ArrayList<Object> mList = new ArrayList<Object>();
     public PotatoBaseRecyclerViewAdapter mAdapter;
-    public JiongtuAlbumListEntity mEntity;
+    public YKVideosByCategoryEntity mEntity;
 
     @Bind(R.id.swipe_container)
     PotatoRecyclerSwipeLayout mSwipeContainer;
@@ -72,27 +55,37 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
     NormalEmptyView mNormalEmptyView;
     @Bind(R.id.include_a)
     LinearLayout include_a;
+    @Inject YKHomeListPresenter presenter;
 
-    @Inject
-    JiongListPresenter presenter;
 
-    @Nullable
+    public static YKHomeListFragment instance(Context context, String category, String title) {
+        Bundle args = new Bundle();
+        args.putString(YKHomeListFragment.EXTRARS_CATEGORY, category);
+        args.putString(YKHomeListFragment.EXTRARS_TITLE, title);
+        YKHomeListFragment pageFragement = (YKHomeListFragment) Fragment.instantiate(context, YKHomeListFragment.class.getName(), args);
+        return pageFragement;
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mSectionId = getArguments() == null ? 0 : getArguments().getLong(EXTRARS_SECTION_ID);
-        mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
 
-        View view = inflater.inflate(R.layout.fragment_jiongtu_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_ykhome_list, container, false);
 
         ButterKnife.bind(this, view);
-        DaggerJiongList_C.builder().module(new JiongList.Module(this)).build().inject(this);
-        mAdapter = new JiongTuListAdapter(mContext);
-        mEntity = new JiongtuAlbumListEntity();
+
+        DaggerYKHomeList_C.builder().module(new YKHomeList.Module(this)).build().inject(this);
+
+        mCategory = getArguments() == null ? "" : getArguments().getString(EXTRARS_CATEGORY);
+        mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
+
+        mAdapter = new YKHomeListAdapter(mContext);
+        mEntity = new YKVideosByCategoryEntity();
 
         initListView();
 
         mSwipeContainer.showProgress();
-        presenter.reqRefresh();
+        presenter.reqRefresh(mCategory);
 
         return view;
     }
@@ -130,13 +123,13 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
         mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.reqRefresh();
+                presenter.reqRefresh(mCategory);
             }
         });
         mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                presenter.reqLoadMore(mEntity.maxPublicDate);
+                presenter.reqLoadMore(mCategory, mEntity.page + "");
             }
         });
 
@@ -145,7 +138,7 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
             @Override
             public void onClick(View view) {
                 mSwipeContainer.showProgress();
-                presenter.reqRefresh();
+                presenter.reqRefresh(mCategory);
             }
         });
 
@@ -155,8 +148,6 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
             public int getSpanSize(int position) {
                 boolean isHeaderOrFooter = adapter.isHeader(position) || adapter.isFooter(position);
                 if (isHeaderOrFooter) {
-                    return mSpanSize;
-                } else if (position % 3 == 0) {
                     return mSpanSize;
                 } else {
                     return 1;
@@ -169,7 +160,7 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
 
 
     @Override
-    public void onRefreshSucc(JiongtuAlbumListEntity entity) {
+    public void onRefreshSucc(YKVideosByCategoryEntity entity) {
         mEntity = entity;
         mSwipeContainer.showSucc();
         mList = entity.list;
@@ -189,10 +180,10 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
     }
 
     @Override
-    public void onLoadMoreSucc(JiongtuAlbumListEntity entity) {
+    public void onLoadMoreSucc(YKVideosByCategoryEntity entity) {
         mEntity = entity;
         mSwipeContainer.setLoading(false);
-        ArrayList<JiongtuAlbum> moreData = entity.list;
+        ArrayList<Object> moreData = entity.list;
         if (moreData == null || moreData.size() == 0) {
             mSwipeContainer.setLoadEnable(false);
             return;
@@ -209,31 +200,25 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
     }
 
     @Override
-    public void onCacheLoaded(JiongtuAlbumListEntity entity) {
+    public void onCacheLoaded(YKVideosByCategoryEntity entity) {
 
     }
-
-    @Override
-    public long getSectionId() {
-        return mSectionId;
-    }
-
 
     @Override
     public void onClick(View v) {
 
     }
 
-    public static class JiongTuListAdapter extends PotatoBaseRecyclerViewAdapter<JiongTuListAdapter.VH> {
+    public static class YKHomeListAdapter extends PotatoBaseRecyclerViewAdapter<YKHomeListAdapter.VH> {
 
-        public JiongTuListAdapter(Context context) {
+        public YKHomeListAdapter(Context context) {
             super(context);
         }
 
         @Override
         public VH onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = mInflater.inflate(
-                    R.layout.item_jiongtu_list,
+                    R.layout.item_yk_video,
                     parent,
                     false);
             VH holder = new VH(view);
@@ -242,18 +227,25 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
         }
 
         @Override
-        public void onBindViewHolder(VH vh, int position) {
-            final JiongtuAlbum bean = (JiongtuAlbum) mData.get(position);
-
+        public void onBindViewHolder(final VH vh, int position) {
+            final YKVideo bean = (YKVideo) mData.get(position);
             vh.tv_title.setText(bean.getTitle());
+            ImageLoaderUtil.displayImage(bean.getThumbnail(), vh.iv_pic, R.drawable.def_gray_big);
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    PageCtrl.startJiongTuDetailActivity(context, bean);
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+//                Uri content_url = Uri.parse(bean.getLink());
+                    Uri content_url = Uri.parse("https://shop108703695.taobao.com");
+                    intent.setData(content_url);
+//                binding.getRoot().getContext().startActivity(intent);
+
+                    PageCtrl.start2WebViewActivity(vh.itemView.getContext(), "https://shop108703695.taobao.com");
+//                PageCtrl.start2SchemaPage(content_url);
+//                https://shop108703695.taobao.com
                 }
             });
-            ImageLoaderUtil.displayImage(bean.getBigCover(), vh.iv_pic, R.drawable.def_gray_big);
 
         }
 
@@ -271,4 +263,5 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
             }
         }
     }
+
 }

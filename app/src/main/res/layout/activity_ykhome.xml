@@ -19,7 +19,7 @@
             android:layout_marginLeft="20dp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Image"
+            android:text="Youku"
             android:textColor="@color/potato_white"
             android:textSize="@dimen/txt_max"/>
 
@@ -87,4 +87,3 @@
         android:background="@drawable/bottom_shadow_bg"/>
 
 </RelativeLayout>
-

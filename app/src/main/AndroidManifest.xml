@@ -102,9 +102,9 @@
             android:hardwareAccelerated="true"/>
 
         <!-- youku -->
-        <activity android:name=".ui.yk.YKActivity"/>
         <activity android:name=".chips.app.WebViewActivity"/>
-
+        <activity android:name=".mvp.yk.YKHomeActivity">
+        </activity>
         <!-- download -->
         <activity android:name=".ui.appstore.AppStoreActivity"/>
         <activity android:name="com.mozillaonline.providers.downloads.ui.DownloadListActivity"/>
@@ -125,22 +125,6 @@
         </receiver>
         <!-- downloadend -->
 
-        <activity android:name=".mvp.tmp.JiongCActivity">
-        </activity>
-        <activity android:name=".mvp.tmp.xxxActivity">
-        </activity>
-        <activity android:name=".mvp.tmp.yyyActivity">
-        </activity>
-        <activity android:name=".mvp.tmp.xxx3Activity">
-        </activity>
-        <activity android:name=".mvp.tmp.xxx7Activity">
-        </activity>
-        <activity android:name=".mvp.tmp.yActivity">
-        </activity>
-        <activity android:name=".mvp.tmp.xxx11Activity">
-        </activity>
-        <activity android:name=".mvp.tmp.xxx2222Activity">
-        </activity>
     </application>
 
 </manifest>

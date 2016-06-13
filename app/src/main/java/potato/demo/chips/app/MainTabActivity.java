@@ -8,9 +8,9 @@ import android.widget.ImageView;
 import potato.demo.R;
 import potato.demo.chips.base.BaseTabHostActivity;
 import potato.demo.mvp.jiongtu.JiongHomeActivity;
+import potato.demo.mvp.yk.YKHomeActivity;
 import potato.demo.ui.ab.BActivity;
 import potato.demo.ui.appstore.AppStoreActivity;
-import potato.demo.ui.yk.YKActivity;
 
 public class MainTabActivity extends BaseTabHostActivity {
 
@@ -39,7 +39,7 @@ public class MainTabActivity extends BaseTabHostActivity {
                 iv_icon.setImageResource(R.drawable.selector_nav_explore);
                 tabItem.setTitle("" + position);
                 tabItem.setView(tabItemView);
-                tabItem.setIntent(new Intent(getApplication(), YKActivity.class));
+                tabItem.setIntent(new Intent(getApplication(), YKHomeActivity.class));
                 break;
             case 2:
 

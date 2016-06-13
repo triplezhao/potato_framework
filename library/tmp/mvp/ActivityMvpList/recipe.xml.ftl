@@ -11,7 +11,7 @@
               to="${escapeXmlAttribute(resOut)}/layout/${layoutActivityName}.xml" />
 	<!-- item layout -->		  
 	<instantiate from="res/layout/item_simple.xml.ftl"
-              to="${escapeXmlAttribute(resOut)}/layout/item_${mvpClass}.xml" />
+              to="${escapeXmlAttribute(resOut)}/layout/item_${classToResource(mvpClass).xml" />
 
     <!-- Decide which activity code to add -->
     <instantiate from="src/app_package/SimpleActivity.java.ftl"

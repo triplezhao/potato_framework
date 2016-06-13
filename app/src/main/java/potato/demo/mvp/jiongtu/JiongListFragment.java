@@ -1,26 +1,69 @@
-package ${packageName};
+/*
+ * Copyright (C) 2015 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-<#if applicationPackage??>import ${applicationPackage}.R;</#if>
-import javax.inject.Inject;
-import android.support.v4.app.Fragment;
+package potato.demo.mvp.jiongtu;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragmentMvpClass}.V {
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
+import com.potato.library.view.NormalEmptyView;
+import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
+import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
 
-    public static final String TAG = ${fragmentMvpClass}Fragment.class.getSimpleName();
-    
-	public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import potato.demo.R;
+import potato.demo.chips.base.BaseFragment;
+import potato.demo.chips.common.PageCtrl;
+import potato.demo.chips.util.ImageLoaderUtil;
+import potato.demo.data.bean.JiongtuAlbum;
+import potato.demo.data.result.JiongtuAlbumListEntity;
+import potato.demo.mvp.jiongtulist.DaggerJiongList_C;
+
+public class JiongListFragment extends BaseFragment implements JiongList.V {
+    private static final String TAG = "ListFragmentJiongtu";
+    /**
+     * extrars
+     */
+    public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
     public long mSectionId;
     public String mTitle;
     public int mTotal = 0;
     public int mPage = 0;
-    public ArrayList<Object> mList = new ArrayList<Object>();
+    public ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
     public PotatoBaseRecyclerViewAdapter mAdapter;
-    public Object mEntity;
+    public JiongtuAlbumListEntity mEntity;
 
     @Bind(R.id.swipe_container)
     PotatoRecyclerSwipeLayout mSwipeContainer;
@@ -30,43 +73,32 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
     NormalEmptyView mNormalEmptyView;
     @Bind(R.id.include_a)
     LinearLayout include_a;
-    @Inject ${fragmentMvpClass}Presenter presenter;
 
+    @Inject
+    JiongListPresenter presenter;
 
-	
-	 public static ${fragmentClass} instance(Context context,long sectionId, String title){
-        Bundle args = new Bundle();
-        args.putLong(${fragmentClass}.EXTRARS_SECTION_ID, sectionId);
-        args.putString(${fragmentClass}.EXTRARS_TITLE, title);
-        ${fragmentClass} pageFragement = (${fragmentClass})Fragment.instantiate(context, ${fragmentClass}.class.getName(), args);
-		return pageFragement;
-    }
-	
-	
-     @Override
+    @Nullable
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view  = inflater.inflate(R.layout.${layoutFragmentName}, container, false);
-
-        ButterKnife.bind(this, view);
-                       
-        Dagger${fragmentMvpClass}_C.builder().module(new ${fragmentMvpClass}.Module(this)).build().inject(this);
-       
         mSectionId = getArguments() == null ? 0 : getArguments().getLong(EXTRARS_SECTION_ID);
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
-      
-        mAdapter = new ${fragmentMvpClass}Adapter(mContext);
-        mEntity = new Object();
+
+        View view = inflater.inflate(R.layout.fragment_jiongtu_list, container, false);
+
+        ButterKnife.bind(this, view);
+        DaggerJiongList_C.builder().module(new JiongList.Module(this)).build().inject(this);
+        mAdapter = new JiongTuListAdapter(mContext);
+        mEntity = new JiongtuAlbumListEntity();
 
         initListView();
 
         mSwipeContainer.showProgress();
         presenter.reqRefresh();
-     	
-		return view;
+
+        return view;
     }
 
-   public void initListView() {
+    public void initListView() {
 
         mSwipeContainer.setRecyclerView(listview, mAdapter);
         mSwipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
@@ -138,7 +170,7 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
 
 
     @Override
-    public void onRefreshSucc(Object entity) {
+    public void onRefreshSucc(JiongtuAlbumListEntity entity) {
         mEntity = entity;
         mSwipeContainer.showSucc();
         mList = entity.list;
@@ -158,10 +190,10 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
     }
 
     @Override
-    public void onLoadMoreSucc(Object entity) {
+    public void onLoadMoreSucc(JiongtuAlbumListEntity entity) {
         mEntity = entity;
         mSwipeContainer.setLoading(false);
-        ArrayList<Object> moreData = entity.list;
+        ArrayList<JiongtuAlbum> moreData = entity.list;
         if (moreData == null || moreData.size() == 0) {
             mSwipeContainer.setLoadEnable(false);
             return;
@@ -178,18 +210,24 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
     }
 
     @Override
-    public void onCacheLoaded(Object entity) {
+    public void onCacheLoaded(JiongtuAlbumListEntity entity) {
 
     }
+
+    @Override
+    public long getSectionId() {
+        return mSectionId;
+    }
+
 
     @Override
     public void onClick(View v) {
 
     }
 
-    public static class ${fragmentMvpClass}Adapter extends PotatoBaseRecyclerViewAdapter<${fragmentMvpClass}Adapter.VH> {
+    public static class JiongTuListAdapter extends PotatoBaseRecyclerViewAdapter<JiongTuListAdapter.VH> {
 
-        public ${fragmentMvpClass}Adapter(Context context) {
+        public JiongTuListAdapter(Context context) {
             super(context);
         }
 
@@ -205,8 +243,8 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
         }
 
         @Override
-        public void onBindViewHolder(final VH vh, int position) {
-            final Object bean = (Object) mData.get(position);
+        public void onBindViewHolder(VH vh, int position) {
+            final JiongtuAlbum bean = (JiongtuAlbum) mData.get(position);
 
             vh.tv_title.setText(bean.getTitle());
             vh.itemView.setOnClickListener(new View.OnClickListener() {
@@ -234,5 +272,4 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
             }
         }
     }
-	
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package potato.demo.mvp.jiongtulist;
+package potato.demo.mvp.jiongtu;
 
 import android.support.annotation.Nullable;
 

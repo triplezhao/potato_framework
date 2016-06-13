@@ -30,7 +30,7 @@
               to="${escapeXmlAttribute(resOut)}/layout/${layoutFragmentName}.xml" />		  
 	<!-- item layout -->		  
 	<instantiate from="res/layout/item_simple.xml.ftl"
-              to="${escapeXmlAttribute(resOut)}/layout/item_${fragmentMvpClass}.xml" />
+              to="${escapeXmlAttribute(resOut)}/layout/item_${classToResource(fragmentMvpClass)}.xml" />
 			  
 	<instantiate from="src/app_package/SimpleFragment.java.ftl"
                        to="${escapeXmlAttribute(srcOut)}/${fragmentClass}.java" />

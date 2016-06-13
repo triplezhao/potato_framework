@@ -72,7 +72,7 @@ public class ${mvpClass}Activity extends BaseActivity implements ${mvpClass}.V {
             xxxSection obj = mList.get(position);
             L.d("In ViewPager#getItem, header: " + obj.getTitle() + ", position: "
                     + position);
-            ${fragmentClass} pageFragement = ${fragmentClass}.instance(mContext,long obj.getSectionId(), obj.getTitle();
+            ${fragmentClass} pageFragement = ${fragmentClass}.instance(mContext,obj.getSectionId(), obj.getTitle();
             return pageFragement;
         }
 		

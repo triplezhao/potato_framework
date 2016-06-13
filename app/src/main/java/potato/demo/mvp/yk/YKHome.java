@@ -1,23 +1,18 @@
-package potato.demo.mvp.jiongtulist;
+package potato.demo.mvp.yk;
+
+/**
+ * This is a Dagger module. We use this to pass in the View dependency to the
+ * {@link YKHomePresenter}.
+ */
 
 import dagger.Component;
 import dagger.Provides;
-import potato.demo.data.result.JiongtuAlbumListEntity;
+import potato.demo.data.result.YKVideoCategoryEntity;
+import potato.demo.mvp.util.ActivityScoped;
 import potato.demo.mvp.util.BasePresenter;
 import potato.demo.mvp.util.BaseView;
-import potato.demo.mvp.util.FragmentScoped;
 
-/**
- * 注入方法：
- * DaggerJiongList_C.builder().module(new JiongList.Module(this)).build().inject(this);
- * This is a Dagger module. We use this to pass in the View dependency to the
- * {@link JiongHomePresenter}.
- */
-
-/**
- * Created by ztw on 2016/6/7.
- */
-interface JiongList {
+interface YKHome {
 
 
     /**
@@ -25,11 +20,11 @@ interface JiongList {
      * 2.依赖modules，或者也可以依赖其他component
      * 3.不需要自己实现，dragger会自动生成实现类DraggerXXXComponent类。 activity或者fragment中调用生成的类进行注入。
      */
-    @FragmentScoped
+    @ActivityScoped
     @Component(modules = Module.class)
     interface C {
 
-        void inject(JiongListFragment fm);
+        void inject(YKHomeActivity act);
     }
 
     /**
@@ -38,17 +33,7 @@ interface JiongList {
      */
     interface V extends BaseView {
 
-        void onRefreshSucc(JiongtuAlbumListEntity entity);
-
-        void onRefreshFail(String err);
-
-        void onLoadMoreSucc(JiongtuAlbumListEntity entity);
-
-        void onLoadMoreFail(String err);
-
-        void onCacheLoaded(JiongtuAlbumListEntity entity);
-
-        long getSectionId();
+        void render(YKVideoCategoryEntity obj);
 
     }
 
@@ -57,9 +42,7 @@ interface JiongList {
      * 2.需要单独写类实现这个接口。
      */
     interface P extends BasePresenter {
-        void reqRefresh();
-
-        void reqLoadMore(long maxPublicDate);
+        void loadData();
     }
 
     /**

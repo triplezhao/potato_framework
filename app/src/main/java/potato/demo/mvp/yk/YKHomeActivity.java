@@ -1,4 +1,4 @@
-package potato.demo.mvp.jiongtu;
+package potato.demo.mvp.yk;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -20,31 +20,28 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import potato.demo.R;
 import potato.demo.chips.base.BaseActivity;
-import potato.demo.data.bean.JiongtuSection;
-import potato.demo.data.result.JiongtuSectionListEntity;
+import potato.demo.data.bean.YKCategoryBean;
+import potato.demo.data.result.YKVideoCategoryEntity;
 
-/**
- * Created by ztw on 2015/7/3.
- */
-public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
+public class YKHomeActivity extends BaseActivity implements YKHome.V {
 
-    public static final String TAG = JiongHomeActivity.class.getSimpleName();
+    public static final String TAG = YKHomeActivity.class.getSimpleName();
 
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) TabLayout tabLayout;
     @Bind(R.id.empty_view) NormalEmptyView emptyView;
-    @Inject JiongHomePresenter presenter;
-
+    @Inject YKHomePresenter presenter;
     private HeaderPageAdapter adapter;
-    private List<JiongtuSection> mList = new ArrayList<JiongtuSection>();
+    private List<YKCategoryBean> mList = new ArrayList<YKCategoryBean>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jiongtu);
+        setContentView(R.layout.activity_ykhome);
         ButterKnife.bind(this);
 
-        DaggerJiongHome_C.builder().module(new JiongHome.Module(this)).build().inject(this);
+        DaggerYKHome_C.builder().module(new YKHome.Module(this)).build().inject(this);
+
         adapter = new HeaderPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -56,7 +53,7 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
     }
 
     @Override
-    public void updateListView(JiongtuSectionListEntity entity) {
+    public void render(YKVideoCategoryEntity entity) {
         if (entity == null) {
             emptyView.setEmptyType(NormalEmptyView.EMPTY_TYPE_NOCONTENT);
             return;
@@ -65,11 +62,19 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
         viewPager.setVisibility(View.VISIBLE);
         emptyView.setEmptyType(NormalEmptyView.EMPTY_TYPE_GONE);
 
-        List<JiongtuSection> list = entity.list;
+        List<YKCategoryBean> list = entity.list;
         if (list != null && list.size() > 0) {
-            mList.clear(); mList.addAll(list); adapter.notifyDataSetChanged();
+            mList.clear();
+            mList.addAll(list);
+            adapter.notifyDataSetChanged();
             tabLayout.setTabsFromPagerAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
     }
 
     private class HeaderPageAdapter extends FragmentStatePagerAdapter {
@@ -80,13 +85,10 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
 
         @Override
         public Fragment getItem(int position) {
-            JiongtuSection obj = mList.get(position);
-            L.d("In ViewPager#getItem, header: " + obj.getTitle() + ", position: "
+            YKCategoryBean obj = mList.get(position);
+            L.d("In ViewPager#getItem, header: " + obj.getLabel() + ", position: "
                     + position);
-            Bundle args = new Bundle();
-            args.putLong(JiongListFragment.EXTRARS_SECTION_ID, obj.getSectionId());
-            args.putString(JiongListFragment.EXTRARS_TITLE, obj.getTitle());
-            JiongListFragment pageFragement = (JiongListFragment) Fragment.instantiate(mContext, JiongListFragment.class.getName(), args);
+            YKHomeListFragment pageFragement = YKHomeListFragment.instance(mContext, obj.getLabel(), obj.getLabel());
             return pageFragement;
         }
 
@@ -97,7 +99,8 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mList.get(position).getTitle();
+            return mList.get(position).getLabel();
         }
     }
+
 }
