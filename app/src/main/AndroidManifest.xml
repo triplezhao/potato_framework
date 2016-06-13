@@ -125,6 +125,8 @@
         </receiver>
         <!-- downloadend -->
 
+        <activity android:name=".mvp.baidu.BaiduHomeActivity">
+        </activity>
     </application>
 
 </manifest>

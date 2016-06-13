@@ -10,6 +10,8 @@ public interface ApiUrls {
 	// //测试地址-新闻、视频等
 	public static String BaseJIONGURL = "http://a.17173.com"; // 正式地址-囧图
 	// //测试地址-新闻、视频等
-	public static String BaseYoukuURL = "https://openapi.youku.com/v2"; // 正式地址-囧图
+	public static String BaseYoukuURL = "https://openapi.youku.com/v2"; // 优酷
+
+	public static String BaseBaiduURL = "http://image.baidu.com/data/imgs"; // 百度
 
 }

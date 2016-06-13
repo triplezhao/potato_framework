@@ -48,7 +48,6 @@ import potato.demo.chips.common.PageCtrl;
 import potato.demo.chips.util.ImageLoaderUtil;
 import potato.demo.data.bean.JiongtuAlbum;
 import potato.demo.data.result.JiongtuAlbumListEntity;
-import potato.demo.mvp.jiongtulist.DaggerJiongList_C;
 
 public class JiongListFragment extends BaseFragment implements JiongList.V {
     private static final String TAG = "ListFragmentJiongtu";

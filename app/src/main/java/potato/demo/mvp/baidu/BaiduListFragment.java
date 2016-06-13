@@ -1,26 +1,48 @@
-package ${packageName};
+package potato.demo.mvp.baidu;
 
-<#if applicationPackage??>import ${applicationPackage}.R;</#if>
-import javax.inject.Inject;
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragmentMvpClass}.V {
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
+import com.potato.library.view.NormalEmptyView;
+import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
+import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
 
-    public static final String TAG = ${fragmentMvpClass}Fragment.class.getSimpleName();
-    
-	public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import potato.demo.R;
+import potato.demo.chips.base.BaseFragment;
+import potato.demo.chips.util.ImageLoaderUtil;
+import potato.demo.data.bean.BaiduImageBean;
+import potato.demo.data.result.BaiduImageListByCategoryEntity;
+
+public class BaiduListFragment extends BaseFragment implements BaiduList.V {
+
+    public static final String TAG = BaiduListFragment.class.getSimpleName();
+
+    public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
-    public long mSectionId;
+    public String mId;
     public String mTitle;
-    public int mTotal = 0;
-    public int mPage = 0;
-    public ArrayList<Object> mList = new ArrayList<Object>();
+    public ArrayList<BaiduImageBean> mList = new ArrayList<BaiduImageBean>();
     public PotatoBaseRecyclerViewAdapter mAdapter;
-    public Object mEntity;
+    public BaiduImageListByCategoryEntity mEntity;
 
     @Bind(R.id.swipe_container)
     PotatoRecyclerSwipeLayout mSwipeContainer;
@@ -30,43 +52,42 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
     NormalEmptyView mNormalEmptyView;
     @Bind(R.id.include_a)
     LinearLayout include_a;
-    @Inject ${fragmentMvpClass}Presenter presenter;
+    @Inject BaiduListPresenter presenter;
 
 
-	
-	 public static ${fragmentClass} instance(Context context,long sectionId, String title){
+    public static BaiduListFragment instance(Context context, String id, String title) {
         Bundle args = new Bundle();
-        args.putLong(${fragmentClass}.EXTRARS_SECTION_ID, sectionId);
-        args.putString(${fragmentClass}.EXTRARS_TITLE, title);
-        ${fragmentClass} pageFragement = (${fragmentClass})Fragment.instantiate(context, ${fragmentClass}.class.getName(), args);
-		return pageFragement;
+        args.putString(BaiduListFragment.EXTRARS_SECTION_ID, id);
+        args.putString(BaiduListFragment.EXTRARS_TITLE, title);
+        BaiduListFragment pageFragement = (BaiduListFragment) Fragment.instantiate(context, BaiduListFragment.class.getName(), args);
+        return pageFragement;
     }
-	
-	
-     @Override
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view  = inflater.inflate(R.layout.${layoutFragmentName}, container, false);
+        View view = inflater.inflate(R.layout.fragment_baidu_list, container, false);
 
         ButterKnife.bind(this, view);
-                       
-        Dagger${fragmentMvpClass}_C.builder().module(new ${fragmentMvpClass}.Module(this)).build().inject(this);
-       
-        mSectionId = getArguments() == null ? 0 : getArguments().getLong(EXTRARS_SECTION_ID);
+
+        DaggerBaiduList_C.builder().module(new BaiduList.Module(this)).build().inject(this);
+
+        mId = getArguments() == null ? "" : getArguments().getString(EXTRARS_SECTION_ID);
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
-      
-        mAdapter = new ${fragmentMvpClass}Adapter(mContext);
-        mEntity = new Object();
+
+        mAdapter = new BaiduListAdapter(mContext);
+        mEntity = new BaiduImageListByCategoryEntity();
 
         initListView();
 
         mSwipeContainer.showProgress();
-        presenter.reqRefresh();
-     	
-		return view;
+        presenter.reqRefresh(mId, "1", "20");
+
+        return view;
     }
 
-   public void initListView() {
+    public void initListView() {
 
         mSwipeContainer.setRecyclerView(listview, mAdapter);
         mSwipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
@@ -99,13 +120,13 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
         mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.reqRefresh();
+                presenter.reqRefresh(mId, "1", "20");
             }
         });
         mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                presenter.reqLoadMore(mEntity.maxPublicDate);
+                presenter.reqLoadMore(mId, mEntity.startIndex + mEntity.returnNumber + "", "20");
             }
         });
 
@@ -114,7 +135,7 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
             @Override
             public void onClick(View view) {
                 mSwipeContainer.showProgress();
-                presenter.reqRefresh();
+                presenter.reqRefresh(mId, "1", "20");
             }
         });
 
@@ -138,7 +159,7 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
 
 
     @Override
-    public void onRefreshSucc(Object entity) {
+    public void onRefreshSucc(BaiduImageListByCategoryEntity entity) {
         mEntity = entity;
         mSwipeContainer.showSucc();
         mList = entity.list;
@@ -158,10 +179,10 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
     }
 
     @Override
-    public void onLoadMoreSucc(Object entity) {
+    public void onLoadMoreSucc(BaiduImageListByCategoryEntity entity) {
         mEntity = entity;
         mSwipeContainer.setLoading(false);
-        ArrayList<Object> moreData = entity.list;
+        ArrayList<BaiduImageBean> moreData = entity.list;
         if (moreData == null || moreData.size() == 0) {
             mSwipeContainer.setLoadEnable(false);
             return;
@@ -178,7 +199,7 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
     }
 
     @Override
-    public void onCacheLoaded(Object entity) {
+    public void onCacheLoaded(BaiduImageListByCategoryEntity entity) {
 
     }
 
@@ -187,16 +208,16 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
 
     }
 
-    public static class ${fragmentMvpClass}Adapter extends PotatoBaseRecyclerViewAdapter<${fragmentMvpClass}Adapter.VH> {
+    public static class BaiduListAdapter extends PotatoBaseRecyclerViewAdapter<BaiduListAdapter.VH> {
 
-        public ${fragmentMvpClass}Adapter(Context context) {
+        public BaiduListAdapter(Context context) {
             super(context);
         }
 
         @Override
         public VH onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = mInflater.inflate(
-                    R.layout.item_${classToResource(fragmentMvpClass)},
+                    R.layout.item_jiongtu_list,
                     parent,
                     false);
             VH holder = new VH(view);
@@ -206,17 +227,17 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
 
         @Override
         public void onBindViewHolder(final VH vh, int position) {
-            final Object bean = (Object) mData.get(position);
+            final BaiduImageBean bean = (BaiduImageBean) mData.get(position);
 
             vh.tv_title.setText(bean.getTitle());
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    PageCtrl.startJiongTuDetailActivity(context, bean);
+//                    PageCtrl.startJiongTuDetailActivity(context, bean);
                 }
             });
-            ImageLoaderUtil.displayImage(bean.getBigCover(), vh.iv_pic, R.drawable.def_gray_big);
+            ImageLoaderUtil.displayImage(bean.getImageUrl(), vh.iv_pic, R.drawable.def_gray_big);
 
         }
 
@@ -234,5 +255,5 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
             }
         }
     }
-	
+
 }
