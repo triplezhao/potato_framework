@@ -56,14 +56,13 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
      */
     public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
-    private long mSectionId;
-    private String mTitle;
+    public long mSectionId;
+    public String mTitle;
     public int mTotal = 0;
     public int mPage = 0;
-    private ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
-    private PotatoBaseRecyclerViewAdapter mAdapter;
-    private JiongtuAlbumListEntity mEntity;
-    private View mView;
+    public ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
+    public PotatoBaseRecyclerViewAdapter mAdapter;
+    public JiongtuAlbumListEntity mEntity;
 
     @Bind(R.id.swipe_container)
     PotatoRecyclerSwipeLayout mSwipeContainer;
@@ -83,9 +82,9 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
         mSectionId = getArguments() == null ? 0 : getArguments().getLong(EXTRARS_SECTION_ID);
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
 
-        mView = inflater.inflate(R.layout.fragment_jiongtu_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_jiongtu_list, container, false);
 
-        ButterKnife.bind(this, mView);
+        ButterKnife.bind(this, view);
         DaggerJiongList_C.builder().module(new JiongList.Module(this)).build().inject(this);
         mAdapter = new JiongTuListAdapter(mContext);
         mEntity = new JiongtuAlbumListEntity();
@@ -95,7 +94,7 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
         mSwipeContainer.showProgress();
         presenter.reqRefresh();
 
-        return mView;
+        return view;
     }
 
     public void initListView() {
