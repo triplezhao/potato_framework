@@ -1,3 +1,4 @@
+
 package ${packageName};
 
 <#if applicationPackage??>import ${applicationPackage}.R;</#if>
@@ -9,8 +10,7 @@ public class ${mvpClass}Activity extends BaseActivity implements ${mvpClass}.V {
     
     @Inject ${mvpClass}Presenter presenter;
 
-
-    @Override
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.${layoutActivityName});
@@ -29,6 +29,8 @@ public class ${mvpClass}Activity extends BaseActivity implements ${mvpClass}.V {
 	@Override
     public void onClick(View v) {
 
+		
+	
     }
 	
 }

@@ -2,7 +2,7 @@
 <template
     format="3"
     revision="1"
-    name="mvp + Activity"
+    name="mvp + Activity+list"
     minApi="7"
     minBuildApi="17"
     description="Creates a new Activity and mvp interface">
@@ -58,8 +58,6 @@
         type="string"
         constraints="package"		
         default="com.mycompany.myapp" />
-
-  
 
    
     <!-- 128x128 thumbnails relative to template.xml -->
