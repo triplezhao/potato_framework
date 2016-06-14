@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.potato.library.util.L;
@@ -30,6 +31,7 @@ public class YKHomeActivity extends BaseActivity implements YKHome.V {
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) TabLayout tabLayout;
     @Bind(R.id.empty_view) NormalEmptyView emptyView;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Inject YKHomePresenter presenter;
     private HeaderPageAdapter adapter;
     private List<YKCategoryBean> mList = new ArrayList<YKCategoryBean>();
@@ -39,6 +41,7 @@ public class YKHomeActivity extends BaseActivity implements YKHome.V {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ykhome);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
         DaggerYKHome_C.builder().module(new YKHome.Module(this)).build().inject(this);
 

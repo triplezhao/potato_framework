@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.potato.library.util.L;
@@ -33,6 +34,7 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) TabLayout tabLayout;
     @Bind(R.id.empty_view) NormalEmptyView emptyView;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Inject JiongHomePresenter presenter;
 
     private HeaderPageAdapter adapter;
@@ -43,6 +45,7 @@ public class JiongHomeActivity extends BaseActivity implements JiongHome.V {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jiongtu);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
         DaggerJiongHome_C.builder().module(new JiongHome.Module(this)).build().inject(this);
         adapter = new HeaderPageAdapter(getSupportFragmentManager());

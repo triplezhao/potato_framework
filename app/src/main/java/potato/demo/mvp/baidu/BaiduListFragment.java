@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.view.NormalEmptyView;
-import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
 import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
 
 import java.util.ArrayList;
@@ -139,7 +137,7 @@ public class BaiduListFragment extends BaseFragment implements BaiduList.V {
             }
         });
 
-        GridLayoutManager manager = new GridLayoutManager(mContext, 2);
+        /*GridLayoutManager manager = new GridLayoutManager(mContext, 2);
         manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup(mSwipeContainer.getHFAdapter(), manager.getSpanCount()) {
             @Override
             public int getSpanSize(int position) {
@@ -152,8 +150,8 @@ public class BaiduListFragment extends BaseFragment implements BaiduList.V {
                     return 1;
                 }
             }
-        });
-        mSwipeContainer.setLayoutManager(manager);
+        });*/
+//        mSwipeContainer.setLayoutManager(manager);
 
     }
 

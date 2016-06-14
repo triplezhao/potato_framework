@@ -66,6 +66,9 @@ public abstract class PotatoBaseListAdapter<VH extends RecyclerView.ViewHolder> 
             //findview  clumn
             vh = onCreateViewHolder(parent, getItemViewType(position));
             convertView = vh.itemView;
+            convertView.setTag(vh);
+        } else {
+            vh = (VH) convertView.getTag();
         }
         onBindViewHolder(vh, position);
         return convertView;

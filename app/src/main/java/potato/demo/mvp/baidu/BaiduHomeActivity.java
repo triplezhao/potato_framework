@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.potato.library.util.L;
@@ -29,6 +30,7 @@ public class BaiduHomeActivity extends BaseActivity implements BaiduHome.V {
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) TabLayout tabLayout;
     @Bind(R.id.empty_view) NormalEmptyView emptyView;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Inject BaiduHomePresenter presenter;
     private HeaderPageAdapter adapter;
     private List<BaiduCategory> mList = new ArrayList<BaiduCategory>();
@@ -38,7 +40,7 @@ public class BaiduHomeActivity extends BaseActivity implements BaiduHome.V {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baidu_home);
         ButterKnife.bind(this);
-
+        setSupportActionBar(toolbar);
         DaggerBaiduHome_C.builder().module(new BaiduHome.Module(this)).build().inject(this);
 
         adapter = new HeaderPageAdapter(getSupportFragmentManager());
