@@ -26,6 +26,9 @@ public class LCApi implements ApiUrls {
                 .params("rn", pageSize)
                 .params("from", "1")
                 .execute(callback);
+
+
+
     }
 
 }
