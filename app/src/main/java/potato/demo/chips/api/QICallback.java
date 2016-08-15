@@ -19,7 +19,7 @@ import okhttp3.Response;
  * 修订历史：
  * ================================================
  */
-public abstract class ICCallback<T> extends AbsCallback<T> {
+public abstract class QICallback<T> extends AbsCallback<T> {
 
     private BaseResultEntity entity;
 
@@ -70,7 +70,7 @@ public abstract class ICCallback<T> extends AbsCallback<T> {
     /**
      * @author ztw 这个类只提供基础的解析方法，每个接口对应的解析方法在.parse.api包下面。
      */
-    public static abstract class ICResultEntity extends BaseResultEntity {
+    public static abstract class QIResultEntity extends BaseResultEntity {
         @Override
         public boolean isSucc() {
             return code == 10000;

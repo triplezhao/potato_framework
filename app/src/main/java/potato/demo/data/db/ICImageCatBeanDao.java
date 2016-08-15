@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import potato.demo.chips.common.DatabaseHelper;
-import potato.demo.data.bean.ICImageCatBean;
+import potato.demo.data.bean.QIImageCatBean;
 
 
 /**
@@ -55,9 +55,9 @@ public class ICImageCatBeanDao {
                 + ");");
     }
 
-    public long insert(ICImageCatBean bean) {
+    public long insert(QIImageCatBean bean) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        ContentValues values = ICImageCatBean.bean2CV(bean);
+        ContentValues values = QIImageCatBean.bean2CV(bean);
         long id = db.insert(TABLE_NAME, null, values);
         db.close();
         return id;
@@ -71,9 +71,9 @@ public class ICImageCatBeanDao {
         db.close();
     }
 
-    public void update(String columnsName, ICImageCatBean bean) {
+    public void update(String columnsName, QIImageCatBean bean) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        ContentValues values = ICImageCatBean.bean2CV(bean);
+        ContentValues values = QIImageCatBean.bean2CV(bean);
         String selection = columnsName + " = ?";
         String[] selectionArgs = {"id"};
 
@@ -81,8 +81,8 @@ public class ICImageCatBeanDao {
         db.close();
     }
 
-    public ICImageCatBean getICImageCatBeanByKey(String columnsName, String key) {
-        ICImageCatBean bean = null;
+    public QIImageCatBean getICImageCatBeanByKey(String columnsName, String key) {
+        QIImageCatBean bean = null;
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         String selection = columnsName + " = ?";
         String[] selectionArgs = {key};
@@ -90,7 +90,7 @@ public class ICImageCatBeanDao {
                 TABLE_NAME, allkeyjection, selection, selectionArgs, null, null, null);
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                bean = ICImageCatBean.cursor2Bean(c);
+                bean = QIImageCatBean.cursor2Bean(c);
                 break;
             }
         }
@@ -101,15 +101,15 @@ public class ICImageCatBeanDao {
         return bean;
     }
 
-    public List<ICImageCatBean> getICImageCatBeanList() {
-        List<ICImageCatBean> list = new ArrayList<ICImageCatBean>();
+    public List<QIImageCatBean> getICImageCatBeanList() {
+        List<QIImageCatBean> list = new ArrayList<QIImageCatBean>();
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         Cursor c = db.query(
                 TABLE_NAME, allkeyjection, null, null, null, null, null);
         if (c != null && c.getCount() > 0) {
-            ICImageCatBean bean = null;
+            QIImageCatBean bean = null;
             while (c.moveToNext()) {
-                bean = ICImageCatBean.cursor2Bean(c);
+                bean = QIImageCatBean.cursor2Bean(c);
                 list.add(bean);
             }
         }

@@ -13,31 +13,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import potato.demo.chips.common.DatabaseHelper;
-import potato.demo.data.bean.QIImageBean;
+import potato.demo.data.bean.QIRingBean;
 
 
 /**
  * create by freemaker
  */
-public class ICImageBeanDao {
-    public static final String TAG = "ICImageBeanDao";
-    public static final String TABLE_NAME = "ICImageBeanTB";
+public class QIRingBeanDao {
+    public static final String TAG = "QIRingBeanDao";
+    public static final String TABLE_NAME = "QIRingBeanTB";
     public SQLiteOpenHelper mOpenHelper;
     public String[] allkeyjection = new String[]{
             Columns._ID,
-            Columns.image_id,
-            Columns.image_cid,
-            Columns.image_name,
-            Columns.image_pic,
-            Columns.image_url,
-            Columns.image_des,
-            Columns.image_content,
-            Columns.image_status,
-            Columns.listorder
+            Columns.ring_id,
+            Columns.ring_cid,
+            Columns.ring_name,
+            Columns.ring_pic,
+            Columns.ring_url,
+            Columns.ring_des,
+            Columns.ring_content,
+            Columns.ring_status,
+            Columns.listorder,
+            Columns.ring_playcnt,
+            Columns.ring_artist,
+            Columns.ring_duration
 
     };
 
-    public ICImageBeanDao(Context context) {
+    public QIRingBeanDao(Context context) {
         mOpenHelper = DatabaseHelper.getInstance(context);
         L.d(TAG, "In onCreate method, create the keyvider: " + this
                 + ", and DatabaseHelper: " + mOpenHelper);
@@ -51,21 +54,24 @@ public class ICImageBeanDao {
      */
     public static void createTable(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + "(" + Columns._ID + " integer primary key autoincrement, "
-                + Columns.image_id + " text, "
-                + Columns.image_cid + " text, "
-                + Columns.image_name + " text, "
-                + Columns.image_pic + " text, "
-                + Columns.image_url + " text, "
-                + Columns.image_des + " text, "
-                + Columns.image_content + " text, "
-                + Columns.image_status + " text, "
-                + Columns.listorder + " text "
+                + Columns.ring_id + " text, "
+                + Columns.ring_cid + " text, "
+                + Columns.ring_name + " text, "
+                + Columns.ring_pic + " text, "
+                + Columns.ring_url + " text, "
+                + Columns.ring_des + " text, "
+                + Columns.ring_content + " text, "
+                + Columns.ring_status + " text, "
+                + Columns.listorder + " text, "
+                + Columns.ring_playcnt + " text, "
+                + Columns.ring_artist + " text, "
+                + Columns.ring_duration + " text "
                 + ");");
     }
 
-    public long insert(QIImageBean bean) {
+    public long insert(QIRingBean bean) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        ContentValues values = QIImageBean.bean2CV(bean);
+        ContentValues values = QIRingBean.bean2CV(bean);
         long id = db.insert(TABLE_NAME, null, values);
         db.close();
         return id;
@@ -79,9 +85,9 @@ public class ICImageBeanDao {
         db.close();
     }
 
-    public void update(String columnsName, QIImageBean bean) {
+    public void update(String columnsName, QIRingBean bean) {
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        ContentValues values = QIImageBean.bean2CV(bean);
+        ContentValues values = QIRingBean.bean2CV(bean);
         String selection = columnsName + " = ?";
         String[] selectionArgs = {"id"};
 
@@ -89,8 +95,8 @@ public class ICImageBeanDao {
         db.close();
     }
 
-    public QIImageBean getICImageBeanByKey(String columnsName, String key) {
-        QIImageBean bean = null;
+    public QIRingBean getQIRingBeanByKey(String columnsName, String key) {
+        QIRingBean bean = null;
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         String selection = columnsName + " = ?";
         String[] selectionArgs = {key};
@@ -98,7 +104,7 @@ public class ICImageBeanDao {
                 TABLE_NAME, allkeyjection, selection, selectionArgs, null, null, null);
         if (c != null && c.getCount() > 0) {
             while (c.moveToNext()) {
-                bean = QIImageBean.cursor2Bean(c);
+                bean = QIRingBean.cursor2Bean(c);
                 break;
             }
         }
@@ -109,15 +115,15 @@ public class ICImageBeanDao {
         return bean;
     }
 
-    public List<QIImageBean> getICImageBeanList() {
-        List<QIImageBean> list = new ArrayList<QIImageBean>();
+    public List<QIRingBean> getQIRingBeanList() {
+        List<QIRingBean> list = new ArrayList<QIRingBean>();
         SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         Cursor c = db.query(
                 TABLE_NAME, allkeyjection, null, null, null, null, null);
         if (c != null && c.getCount() > 0) {
-            QIImageBean bean = null;
+            QIRingBean bean = null;
             while (c.moveToNext()) {
-                bean = QIImageBean.cursor2Bean(c);
+                bean = QIRingBean.cursor2Bean(c);
                 list.add(bean);
             }
         }
@@ -129,15 +135,18 @@ public class ICImageBeanDao {
     }
 
     public static class Columns implements BaseColumns {
-        public static final String image_id = "image_id";
-        public static final String image_cid = "image_cid";
-        public static final String image_name = "image_name";
-        public static final String image_pic = "image_pic";
-        public static final String image_url = "image_url";
-        public static final String image_des = "image_des";
-        public static final String image_content = "image_content";
-        public static final String image_status = "image_status";
+        public static final String ring_id = "ring_id";
+        public static final String ring_cid = "ring_cid";
+        public static final String ring_name = "ring_name";
+        public static final String ring_pic = "ring_pic";
+        public static final String ring_url = "ring_url";
+        public static final String ring_des = "ring_des";
+        public static final String ring_content = "ring_content";
+        public static final String ring_status = "ring_status";
         public static final String listorder = "listorder";
+        public static final String ring_playcnt = "ring_playcnt";
+        public static final String ring_artist = "ring_artist";
+        public static final String ring_duration = "ring_duration";
     }
 
 }

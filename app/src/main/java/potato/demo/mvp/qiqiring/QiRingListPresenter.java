@@ -1,4 +1,4 @@
-package potato.demo.mvp.icimage;
+package potato.demo.mvp.qiqiring;
 
 import android.support.annotation.Nullable;
 
@@ -9,22 +9,22 @@ import javax.inject.Inject;
 import okhttp3.Call;
 import okhttp3.Request;
 import okhttp3.Response;
-import potato.demo.chips.api.ICCallback;
-import potato.demo.data.request.ICApi;
-import potato.demo.data.result.ICImageEntity;
+import potato.demo.chips.api.QICallback;
+import potato.demo.data.request.QIApi;
+import potato.demo.data.result.QIRingEntity;
 
-final class ICImageListPresenter implements ICImageList.P {
+final class QiRingListPresenter implements QiRingList.P {
 
 
-    private ICImageList.V view;
+    private QiRingList.V view;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
      * with {@code @Nullable} values.
      */
     @Inject
-    ICImageListPresenter(
-            ICImageList.V view) {
+    QiRingListPresenter(
+            QiRingList.V view) {
         this.view = view;
     }
 
@@ -37,7 +37,7 @@ final class ICImageListPresenter implements ICImageList.P {
 
     @Override
     public void reqRefresh() {
-        ICApi.getImages(CacheMode.REQUEST_FAILED_READ_CACHE,view.getSectionId()+"","1","2" ,new ICCallback<ICImageEntity>() {
+        QIApi.getRings(CacheMode.REQUEST_FAILED_READ_CACHE,view.getCid()+"","1","20" ,new QICallback<QIRingEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)
@@ -45,8 +45,8 @@ final class ICImageListPresenter implements ICImageList.P {
             }
 
             @Override
-            public void onResponse(boolean isFromCache, ICImageEntity icImageCatEntity, Request request, @Nullable Response response) {
-                view.onRefreshSucc(icImageCatEntity);
+            public void onResponse(boolean isFromCache, QIRingEntity icRingCatEntity, Request request, @Nullable Response response) {
+                view.onRefreshSucc(icRingCatEntity);
             }
         });
     }
@@ -54,7 +54,7 @@ final class ICImageListPresenter implements ICImageList.P {
     @Override
     public void reqLoadMore(int page) {
 
-        ICApi.getImages(CacheMode.REQUEST_FAILED_READ_CACHE,view.getSectionId()+"",page+"","2" ,new ICCallback<ICImageEntity>() {
+        QIApi.getRings(CacheMode.REQUEST_FAILED_READ_CACHE,view.getCid()+"",page+"","20" ,new QICallback<QIRingEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)
@@ -62,8 +62,8 @@ final class ICImageListPresenter implements ICImageList.P {
             }
 
             @Override
-            public void onResponse(boolean isFromCache, ICImageEntity icImageCatEntity, Request request, @Nullable Response response) {
-                view.onLoadMoreSucc(icImageCatEntity);
+            public void onResponse(boolean isFromCache, QIRingEntity icRingCatEntity, Request request, @Nullable Response response) {
+                view.onLoadMoreSucc(icRingCatEntity);
             }
         });
 

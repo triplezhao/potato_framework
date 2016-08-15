@@ -127,10 +127,12 @@
 
         <activity android:name=".mvp.baidu.BaiduHomeActivity">
         </activity>
-        <activity android:name=".mvp.tmp.xxxActivity">
+        <activity android:name=".mvp.qiqiimage.QIImageActivity">
         </activity>
-        <activity android:name=".mvp.icimage.ICImageActivity">
+        <activity android:name=".mvp.qiqiring.QiRingActivity">
         </activity>
+        <service android:name=".mvp.qiqiring.MusicService">
+        </service>
     </application>
 
 </manifest>

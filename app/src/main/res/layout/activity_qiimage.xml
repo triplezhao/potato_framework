@@ -19,7 +19,7 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:logo="@drawable/ic_fav"
-            app:title="Baidu"/>
+            app:title="壁纸"/>
 
 
         <android.support.design.widget.TabLayout

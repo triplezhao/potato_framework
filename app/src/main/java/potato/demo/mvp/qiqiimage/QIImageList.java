@@ -1,18 +1,18 @@
-package potato.demo.mvp.icimage;
+package potato.demo.mvp.qiqiimage;
 
 /**
  * This is a Dagger module. We use this to pass in the View dependency to the
- * {@link ICImagePresenter}.
+ * {@link ICImageListPresenter}.
  */
 
 import dagger.Component;
 import dagger.Provides;
-import potato.demo.data.result.ICImageCatEntity;
-import potato.demo.mvp.util.ActivityScoped;
+import potato.demo.data.result.QIImageEntity;
 import potato.demo.mvp.util.BasePresenter;
 import potato.demo.mvp.util.BaseView;
+import potato.demo.mvp.util.FragmentScoped;
 
-interface ICImage {
+interface QIImageList {
 
 
     /**
@@ -20,11 +20,11 @@ interface ICImage {
      * 2.依赖modules，或者也可以依赖其他component
      * 3.不需要自己实现，dragger会自动生成实现类DraggerXXXComponent类。 activity或者fragment中调用生成的类进行注入。
      */
-    @ActivityScoped
+    @FragmentScoped
     @Component(modules = Module.class)
     interface C {
 
-        void inject(ICImageActivity act);
+        void inject(QIImageListFragment fm);
     }
 
     /**
@@ -33,16 +33,28 @@ interface ICImage {
      */
     interface V extends BaseView {
 
-        void render(ICImageCatEntity obj);
+        void onRefreshSucc(QIImageEntity entity);
 
+        void onRefreshFail(String err);
+
+        void onLoadMoreSucc(QIImageEntity entity);
+
+        void onLoadMoreFail(String err);
+
+        void onCacheLoaded(QIImageEntity entity);
+
+        String getCid();
     }
+
 
     /**
      * 1.业务逻辑方法集合，比如网络加载数据，读取数据库等，通过调用v接口，来调用activity的方法
      * 2.需要单独写类实现这个接口。
      */
     interface P extends BasePresenter {
-        void loadData();
+        void reqRefresh();
+
+        void reqLoadMore(int page);
     }
 
     /**

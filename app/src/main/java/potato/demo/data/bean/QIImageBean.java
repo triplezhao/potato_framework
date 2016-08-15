@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import potato.demo.chips.base.BaseBean;
 import potato.demo.data.db.ICImageBeanDao;
 
-public class ICImageBean extends BaseBean implements Serializable {
+public class QIImageBean extends BaseBean implements Serializable {
 
     //keypslist
     private String image_id;
@@ -30,9 +30,9 @@ public class ICImageBean extends BaseBean implements Serializable {
 
     //other
     //createFromCursor
-    public static ICImageBean cursor2Bean(Cursor cursor) {
+    public static QIImageBean cursor2Bean(Cursor cursor) {
         if (cursor == null) return null;
-        ICImageBean bean = new ICImageBean();
+        QIImageBean bean = new QIImageBean();
         bean.setImage_id(cursor.getString(cursor.getColumnIndex(ICImageBeanDao.Columns.image_id)));
         bean.setImage_cid(cursor.getString(cursor.getColumnIndex(ICImageBeanDao.Columns.image_cid)));
         bean.setImage_name(cursor.getString(cursor.getColumnIndex(ICImageBeanDao.Columns.image_name)));
@@ -46,9 +46,9 @@ public class ICImageBean extends BaseBean implements Serializable {
     }
 
     //createFromJSON
-    public static ICImageBean json2Bean(JSONObject json) throws JSONException {
+    public static QIImageBean json2Bean(JSONObject json) throws JSONException {
         if (json == null) return null;
-        ICImageBean bean = new ICImageBean();
+        QIImageBean bean = new QIImageBean();
         bean.setImage_id(json.optString("image_id"));
         bean.setImage_cid(json.optString("image_cid"));
         bean.setImage_name(json.optString("image_name"));
@@ -62,16 +62,16 @@ public class ICImageBean extends BaseBean implements Serializable {
     }
 
     //createFromJSONArray
-    public static ArrayList<ICImageBean> jsonArray2BeanList(JSONArray jsonArray) throws JSONException {
+    public static ArrayList<QIImageBean> jsonArray2BeanList(JSONArray jsonArray) throws JSONException {
 
         if (jsonArray == null) return null;
 
-        ArrayList<ICImageBean> list = new ArrayList<ICImageBean>();
+        ArrayList<QIImageBean> list = new ArrayList<QIImageBean>();
 
         int count = jsonArray.length();
         for (int i = 0; i < count; i++) {
             JSONObject jsonObj = jsonArray.optJSONObject(i);
-            ICImageBean entity = ICImageBean.json2Bean(jsonObj);
+            QIImageBean entity = QIImageBean.json2Bean(jsonObj);
             list.add(entity);
         }
         return list;
@@ -79,10 +79,10 @@ public class ICImageBean extends BaseBean implements Serializable {
 
     //buildContentValues
     public static ContentValues bean2CV(BaseBean baseBean) {
-        ICImageBean bean = new ICImageBean();
+        QIImageBean bean = new QIImageBean();
 
         if (baseBean != null) {
-            bean = (ICImageBean) baseBean;
+            bean = (QIImageBean) baseBean;
         }
         ContentValues values = new ContentValues();
         values.put(ICImageBeanDao.Columns.image_id, bean.getImage_id());

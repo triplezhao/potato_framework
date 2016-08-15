@@ -3,15 +3,15 @@ package potato.demo.data.result;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import potato.demo.chips.api.ICCallback;
-import potato.demo.data.bean.ICImageBean;
+import potato.demo.chips.api.QICallback;
+import potato.demo.data.bean.QIRingBean;
 
-public class ICImageEntity extends ICCallback.ICResultEntity {
+public class QIRingEntity extends QICallback.QIResultEntity {
 
     public int nowpage = 1;
 
     @Override
-    public ICCallback.ICResultEntity parse(String json) {
+    public QICallback.QIResultEntity parse(String json) {
         try {
             JSONObject root = new JSONObject(json);
 
@@ -23,7 +23,7 @@ public class ICImageEntity extends ICCallback.ICResultEntity {
                 total = data.optInt("total");
                 nowpage = data.optInt("nowpage");
                 JSONArray array = data.getJSONArray("list");
-                list = ICImageBean.jsonArray2BeanList(array);
+                list = QIRingBean.jsonArray2BeanList(array);
             }
 
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package potato.demo.mvp.icimage;
+package potato.demo.mvp.qiqiimage;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -20,27 +20,27 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import potato.demo.R;
 import potato.demo.chips.base.BaseActivity;
-import potato.demo.data.bean.ICImageCatBean;
-import potato.demo.data.result.ICImageCatEntity;
+import potato.demo.data.bean.QIImageCatBean;
+import potato.demo.data.result.QIImageCatEntity;
 
-public class ICImageActivity extends BaseActivity implements ICImage.V {
+public class QIImageActivity extends BaseActivity implements QIImage.V {
 
-    public static final String TAG = ICImageActivity.class.getSimpleName();
+    public static final String TAG = QIImageActivity.class.getSimpleName();
 
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) TabLayout tabLayout;
     @Bind(R.id.empty_view) NormalEmptyView emptyView;
-    @Inject ICImagePresenter presenter;
+    @Inject QIImagePresenter presenter;
     private HeaderPageAdapter adapter;
-    private List<ICImageCatBean> mList = new ArrayList<ICImageCatBean>();
+    private List<QIImageCatBean> mList = new ArrayList<QIImageCatBean>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_icimage);
+        setContentView(R.layout.activity_qiimage);
         ButterKnife.bind(this);
 
-        DaggerICImage_C.builder().module(new ICImage.Module(this)).build().inject(this);
+        DaggerQIImage_C.builder().module(new QIImage.Module(this)).build().inject(this);
 
         adapter = new HeaderPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
@@ -53,7 +53,7 @@ public class ICImageActivity extends BaseActivity implements ICImage.V {
     }
 
     @Override
-    public void render(ICImageCatEntity entity) {
+    public void render(QIImageCatEntity entity) {
         if (entity == null) {
             emptyView.setEmptyType(NormalEmptyView.EMPTY_TYPE_NOCONTENT);
             return;
@@ -62,7 +62,7 @@ public class ICImageActivity extends BaseActivity implements ICImage.V {
         viewPager.setVisibility(View.VISIBLE);
         emptyView.setEmptyType(NormalEmptyView.EMPTY_TYPE_GONE);
 
-        List<ICImageCatBean> list = entity.list;
+        List<QIImageCatBean> list = entity.list;
         if (list != null && list.size() > 0) {
             mList.clear();
             mList.addAll(list);
@@ -85,10 +85,10 @@ public class ICImageActivity extends BaseActivity implements ICImage.V {
 
         @Override
         public Fragment getItem(int position) {
-            ICImageCatBean obj = mList.get(position);
+            QIImageCatBean obj = mList.get(position);
             L.d("In ViewPager#getItem, header: " + obj.getCat_name() + ", position: "
                     + position);
-            ICImageListFragment pageFragement = ICImageListFragment.instance(mContext, obj.getCid(), obj.getCat_name());
+            QIImageListFragment pageFragement = QIImageListFragment.instance(mContext, obj.getCid(), obj.getCat_name());
             return pageFragement;
         }
 
