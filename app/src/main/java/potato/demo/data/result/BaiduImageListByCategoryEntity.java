@@ -3,16 +3,16 @@ package potato.demo.data.result;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import potato.demo.chips.api.YKResultEntity;
+import potato.demo.chips.api.BaiduCallback;
 import potato.demo.data.bean.BaiduImageBean;
 
-public class BaiduImageListByCategoryEntity extends YKResultEntity {
+public class BaiduImageListByCategoryEntity extends BaiduCallback.BaiduResultEntity {
 
     public int startIndex;
     public int returnNumber;
 
     @Override
-    public YKResultEntity parse(String json) {
+    public BaiduCallback.BaiduResultEntity parse(String json) {
         try {
             JSONObject root = new JSONObject(json);
 

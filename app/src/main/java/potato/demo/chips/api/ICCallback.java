@@ -19,7 +19,7 @@ import okhttp3.Response;
  * 修订历史：
  * ================================================
  */
-public abstract class JiongtuCallback<T> extends AbsCallback<T> {
+public abstract class ICCallback<T> extends AbsCallback<T> {
 
     private BaseResultEntity entity;
 
@@ -27,7 +27,7 @@ public abstract class JiongtuCallback<T> extends AbsCallback<T> {
         return entity;
     }
 
-    public void setEntity(JiongtuResultEntity entity) {
+    public void setEntity(BaseResultEntity entity) {
         this.entity = entity;
     }
 
@@ -41,10 +41,14 @@ public abstract class JiongtuCallback<T> extends AbsCallback<T> {
          * 一般来说，服务器返回的响应码都包含 code，msg，data 三部分，在此根据自己的业务需要完成相应的逻辑判断
          * 以下只是一个示例，具体业务具体实现
          */
-        if (entity != null) entity = entity.parse(responseData);
+        if (entity == null) {
+            return null;
+        } else {
+            entity = entity.parse(responseData);
+        }
 
         if (entity.isSucc()) {
-            return (T)entity;
+            return (T) entity;
         } else {
             //如果要更新UI，需要使用handler，可以如下方式实现，也可以自己写handler
             OkHttpUtils.getInstance().getDelivery().post(new Runnable() {
@@ -55,7 +59,6 @@ public abstract class JiongtuCallback<T> extends AbsCallback<T> {
             });
             throw new Exception("错误代码：" + entity.code + "，错误信息：" + entity.message);
         }
-
     }
 
     /**
@@ -67,13 +70,11 @@ public abstract class JiongtuCallback<T> extends AbsCallback<T> {
     /**
      * @author ztw 这个类只提供基础的解析方法，每个接口对应的解析方法在.parse.api包下面。
      */
-    public static abstract class JiongtuResultEntity extends BaseResultEntity {
-
+    public static abstract class ICResultEntity extends BaseResultEntity {
         @Override
         public boolean isSucc() {
-            return code == 0;
+            return code == 10000;
         }
-
         @Override
         public String getMsg() {
             return message;

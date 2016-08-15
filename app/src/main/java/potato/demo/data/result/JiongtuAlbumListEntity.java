@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import potato.demo.chips.api.BaseResultEntity;
-import potato.demo.chips.api.JiongtuResultEntity;
+import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.data.bean.JiongtuAlbum;
 
 /**
@@ -15,7 +15,7 @@ import potato.demo.data.bean.JiongtuAlbum;
  *
  * @author zhaobingfeng
  */
-public class JiongtuAlbumListEntity extends JiongtuResultEntity {
+public class JiongtuAlbumListEntity extends JiongtuCallback.JiongtuResultEntity {
 
     public long minPublicDate;//最近的时间
     //	public long maxPublicDate=System.currentTimeMillis();//最远的时间

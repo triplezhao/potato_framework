@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import potato.demo.chips.api.JiongtuResultEntity;
+import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.data.bean.JiongtuSection;
 
 /**
@@ -14,7 +14,7 @@ import potato.demo.data.bean.JiongtuSection;
  *
  * @author zhaobingfeng
  */
-public class JiongtuSectionListEntity extends JiongtuResultEntity {
+public class JiongtuSectionListEntity extends JiongtuCallback.JiongtuResultEntity {
 
 
     public  JiongtuSectionListEntity parse(String jsonStr) {

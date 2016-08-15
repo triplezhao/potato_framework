@@ -3,10 +3,10 @@ package potato.demo.data.result;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import potato.demo.chips.api.YKResultEntity;
+import potato.demo.chips.api.YKCallback;
 import potato.demo.data.bean.YKVideo;
 
-public class YKVideosByCategoryEntity extends YKResultEntity {
+public class YKVideosByCategoryEntity extends YKCallback.YKResultEntity {
 
     public String last_item;
     public int page;

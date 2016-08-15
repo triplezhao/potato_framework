@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import potato.demo.chips.api.JiongtuResultEntity;
+import potato.demo.chips.api.JiongtuCallback;
 import potato.demo.data.bean.JiongtuPhoto;
 
 /**
@@ -14,7 +14,7 @@ import potato.demo.data.bean.JiongtuPhoto;
  *
  * @author zhaobingfeng
  */
-public class JiongtuPhotoListEntity extends JiongtuResultEntity {
+public class JiongtuPhotoListEntity extends JiongtuCallback.JiongtuResultEntity {
 
     public long total;
     public ArrayList<String> picUrls = new ArrayList<String>();

@@ -3,17 +3,17 @@ package potato.demo.data.result;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import potato.demo.chips.api.YKResultEntity;
+import potato.demo.chips.api.YKCallback;
 import potato.demo.data.bean.YKVideo;
 
-public class YKVideosByUserEntity extends YKResultEntity {
+public class YKVideosByUserEntity extends YKCallback.YKResultEntity {
 
     public String last_item;
     public int page;
     public int count;
 
     @Override
-    public YKResultEntity parse(String json) {
+    public YKCallback.YKResultEntity parse(String json) {
         try {
             JSONObject root = new JSONObject(json);
 

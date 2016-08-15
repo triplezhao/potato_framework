@@ -17,13 +17,13 @@ public abstract class BaseResultEntity implements Serializable {
     public String message;
 
     /**
-     * 列表数据
-     */
-    public ArrayList list = new ArrayList();
-    /**
      * 返回总个数
      */
     public int total;
+    /**
+     * 列表数据
+     */
+    public ArrayList list = new ArrayList();
 
 
     public abstract boolean isSucc();

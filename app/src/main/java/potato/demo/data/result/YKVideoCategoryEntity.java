@@ -3,10 +3,10 @@ package potato.demo.data.result;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import potato.demo.chips.api.YKResultEntity;
+import potato.demo.chips.api.YKCallback;
 import potato.demo.data.bean.YKCategoryBean;
 
-public class YKVideoCategoryEntity extends YKResultEntity {
+public class YKVideoCategoryEntity extends YKCallback.YKResultEntity {
 
 
     @Override
