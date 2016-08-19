@@ -27,9 +27,6 @@ public class GuideActivity extends AppIntro {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//
         super.onCreate(savedInstanceState);
 
-
-
-        // Add your slide's fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
        /* addSlide(first_fragment);
         addSlide(second_fragment);
