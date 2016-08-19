@@ -11,6 +11,8 @@ public class GlobleConstant {
     public static final String youku_def_uname = "superhebefans";
     public static final String youku_def_uid = "UNjM3ODczNjA=";
 
+
+    public static final String sp_isfirst = "sp_isfirst";
 }
 
 

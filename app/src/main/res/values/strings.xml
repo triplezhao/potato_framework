@@ -21,4 +21,7 @@
     <string name="str_tab_my">我的</string>
     <string name="str_download">下载</string>
 
+    <string name="splash_copyright">Copyright &#169; 2015 Ifsee All Rights Reserved\nPowered by Obsessive and Chris</string>
+    <string name="splash_slogan">Go through the every bit of life</string>
+
 </resources>

@@ -9,9 +9,11 @@ import android.text.TextUtils;
 
 import com.potato.library.util.L;
 
+import potato.demo.chips.app.MainTabActivity;
 import potato.demo.chips.app.WebViewActivity;
 import potato.demo.data.bean.JiongtuAlbum;
 import potato.demo.mvp.jiongdetail.JiongDetailActivity;
+import potato.demo.ui.GuideActivity;
 
 
 /**
@@ -112,6 +114,13 @@ public class PageCtrl {
         Bundle bundle = new Bundle();
         bundle.putSerializable(JiongDetailActivity.EXTRA_ALBUM, album);
         start(context, JiongDetailActivity.class, false, "", bundle);
+    }
+
+    public static void start2GuideActivity(Context context) {
+        start(context, GuideActivity.class, true, "", null);
+    }
+    public static void start2MainActivity(Context context) {
+        start(context, MainTabActivity.class, true, "", null);
     }
 
 }

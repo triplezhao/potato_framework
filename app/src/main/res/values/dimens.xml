@@ -22,4 +22,10 @@
     <dimen name="header_title_text_size">23sp</dimen>
     <!-- 游戏模块dimension资源 start -->
 
+    <dimen name="splash_bottom_padding">10dp</dimen>
+    <dimen name="splash_middle_top_margin">10dp</dimen>
+    <dimen name="splash_bottom_margin">40dp</dimen>
+    <dimen name="splash_top_margin">130dp</dimen>
+
+
 </resources>

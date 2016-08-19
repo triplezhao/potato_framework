@@ -15,6 +15,7 @@ public interface ApiUrls {
 
     public static String BaseLCURL = "https://api.leancloud.cn/1.1"; // LearnCloudy
 
-    public static String BaseICURL= "http://qiqibox.com"; // LearnCloudy
+//    public static String BaseICURL= "http://qiqibox.com"; // LearnCloudy
+    public static String BaseICURL= "http://api.platform.ifsee.cn"; // LearnCloudy
 
 }

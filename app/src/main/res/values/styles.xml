@@ -4,13 +4,14 @@
     <style name="Theme.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Main theme colors -->
         <!--   your app branding color for the app bar -->
-        <item name="colorPrimary">#673AB7</item>
+        <item name="colorPrimary">@color/google_blue</item>
         <!--   darker variant for the status bar and contextual app bars -->
-        <item name="colorPrimaryDark">#673AB7</item>
+        <item name="colorPrimaryDark">@color/google_blue</item>
         <!--   theme UI controls like checkboxes and text fields -->
-        <item name="colorAccent">#673AB7</item>
-        <item name="android:windowBackground">@color/app_bg</item>
-        <item name="android:windowContentOverlay">@color/app_bg</item>
+        <item name="colorAccent">@color/google_blue</item>
+        <item name="android:windowBackground">@color/potato_white</item>
+        <item name="android:windowContentOverlay">@color/potato_white</item>
+
 
     </style>
 
@@ -21,4 +22,11 @@
         <item name="android:paddingBottom">24dp</item>
         <item name="android:orientation">vertical</item>
     </style>
+
+    <style name="Theme.AppThemeTrans" parent="Theme.AppTheme">
+        <item name="android:windowBackground">@color/potato_trans</item>
+        <item name="android:windowContentOverlay">@color/potato_trans</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

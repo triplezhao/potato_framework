@@ -80,8 +80,9 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.AppTheme">
         <activity
-            android:name=".chips.app.MainTabActivity"
-            android:label="@string/app_name">
+            android:name=".mvp.splash.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppThemeTrans">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -94,6 +95,8 @@
         <activity android:name=".ui.ab.BActivity"/>
         <activity android:name=".ui.ab.ADetailActivity"/>
         <activity android:name=".chips.app.MainActivity"/>
+        <activity android:name=".chips.app.MainTabActivity"/>
+        <activity android:name=".ui.GuideActivity"/>
 
         <!-- jiongtu -->
         <activity android:name=".mvp.jiongtu.JiongHomeActivity"/>
