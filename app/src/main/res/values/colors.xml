@@ -6,6 +6,7 @@
 
     <color name="app_bg">#ECECEC</color>
     <color name="sticker_blue">#1D6EC4</color>
-
+    <color name="ifsee_blue">#009fe0</color>
+    <color name="ifsee_logout">#e84c4c</color>
 
 </resources>

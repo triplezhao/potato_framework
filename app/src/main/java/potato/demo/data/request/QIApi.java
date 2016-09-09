@@ -2,6 +2,7 @@ package potato.demo.data.request;
 
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheMode;
+import com.lzy.okhttputils.callback.StringCallback;
 
 import potato.demo.chips.api.ApiUrls;
 import potato.demo.chips.api.QICallback;
@@ -13,7 +14,8 @@ import potato.demo.data.result.QIRingEntity;
 public class QIApi implements ApiUrls {
     //获取用户发布的视频. 命名，取api接口的后两位单词
     public static final String URL_IMAGECATS = BaseICURL;
-
+    //版本更新
+    public static final String url_version = "http://api.fir.im/apps/latest/";
     /**
      * 分類
      * http://localhost/think/index.php?g=api&m=apiImage&a=getImageCats
@@ -118,5 +120,18 @@ public class QIApi implements ApiUrls {
                 .params("m", "apiRing")
                 .execute(callback);
 
+    }
+
+
+    //57bfe2d2959d697acf000e43?api_token=ec98c72cd81b87a9d62d095a3b1f10f6&type=android
+    public static void checkVersion(CacheMode cacheMode, String id, String api_token, StringCallback callback) {
+
+        OkHttpUtils.get(url_version+id)//
+                .tag("url_version")//
+                .cacheKey(url_version + id + api_token)//
+                .cacheMode(cacheMode)//
+                .params("api_token", api_token)
+                .params("type", "android")
+                .execute(callback);
     }
 }

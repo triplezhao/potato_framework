@@ -1,4 +1,5 @@
 include ':app'
-include ':protato_lib'
+include ':potato_lib'
+project(':potato_lib').projectDir = new File('../library')
 include ':okhttputils'
-project(':protato_lib').projectDir = new File('../potato_framework/library')
+project(':okhttputils').projectDir = new File('../okhttputils')

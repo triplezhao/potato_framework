@@ -5,6 +5,9 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 
 import com.mozillaonline.providers.DownloadManager;
+import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.Logger;
+import com.potato.library.util.L;
 
 import potato.demo.chips.api.ApiManager;
 import potato.demo.chips.util.ImageLoaderUtil;
@@ -41,7 +44,7 @@ public class MainApplication extends Application {
      */
     private void init() {
         context = getApplicationContext();
-
+        initLog();
         initDeviceWidthAndHeight();
 
 //        ShareSDK.initSDK(context);
@@ -57,7 +60,16 @@ public class MainApplication extends Application {
         initDownloadManager();
 
     }
-
+    private void initLog() {
+        if (GlobleConstant.isDebug) {
+//            Stetho.initializeWithDefaults(this);  // 开启 Stetho 调试模式
+            L.openLog();
+            Logger.init("=aiyouyun=").logLevel(LogLevel.FULL).methodOffset(1);
+        } else {
+            L.closeLog();
+            Logger.init().logLevel(LogLevel.NONE);
+        }
+    }
     private void initDownloadManager() {
         mDownloadManager = new DownloadManager(getContentResolver(),
                 getPackageName());
