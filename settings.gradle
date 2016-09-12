@@ -1,5 +1,5 @@
 include ':app'
 include ':potato_lib'
-project(':potato_lib').projectDir = new File('../library')
+project(':potato_lib').projectDir = new File('library')
 include ':okhttputils'
-project(':okhttputils').projectDir = new File('../okhttputils')
+project(':okhttputils').projectDir = new File('okhttputils')
