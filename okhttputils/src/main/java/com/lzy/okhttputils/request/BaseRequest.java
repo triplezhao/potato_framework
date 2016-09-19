@@ -393,7 +393,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
                 }
                 //响应失败，一般为服务器内部错误，或者找不到页面等
                 if (responseCode >= 400 && responseCode <= 599) {
-                    sendFailResultCallback(false, call, response, null, mCallback);
+                    sendFailResultCallback(false, call, response, new Exception("code:"+response.code()+"msg:"+response.message()), mCallback);
                     return;
                 }
 
