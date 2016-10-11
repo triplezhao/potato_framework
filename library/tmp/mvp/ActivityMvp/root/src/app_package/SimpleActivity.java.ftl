@@ -28,12 +28,10 @@ public class ${mvpClass}Activity extends BaseActivity implements ${mvpClass}.V {
 	
 	@Override
     public void onClick(View v) {
-
-		 switch (v.getId()) {
+         switch (v.getId()) {
                     case 1:
                         break;
                 }
-	
-    }
+     }
 	
 }

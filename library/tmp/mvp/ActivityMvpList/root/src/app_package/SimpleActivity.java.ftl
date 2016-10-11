@@ -9,21 +9,18 @@ import javax.inject.Inject;
 public class ${mvpClass}Activity extends BaseActivity implements ${mvpClass}.V {
 
     public static final String TAG = ${mvpClass}Activity.class.getSimpleName();
-    
-    @Bind(R.id.include_a) 
-	LinearLayout include_a;
-    @Bind(R.id.toolbar) 
-	Toolbar toolbar;
+    public static final String EXTRA_ID = "EXTRA_ID";
+
+    @Bind(R.id.include_a) 	LinearLayout include_a;
+    @Bind(R.id.toolbar) 	Toolbar toolbar;
 	
-	@Bind(R.id.swipe_container)
-    PotatoRecyclerSwipeLayout mSwipeContainer;
-    @Bind(R.id.list)
-    RecyclerView listview;
-    @Bind(R.id.empty_view)
-    NormalEmptyView mNormalEmptyView;
+	@Bind(R.id.swipe_container)    PotatoRecyclerSwipeLayout mSwipeContainer;
+    @Bind(R.id.list)    RecyclerView listview;
+    @Bind(R.id.empty_view)    NormalEmptyView mNormalEmptyView;
 
     int mTotal = 0;
     int mPage = 0;
+    public String mId;
     ArrayList mList = new ArrayList();
 	PotatoBaseRecyclerViewAdapter mAdapter;
 	${mvpClass}ListEntity mEntity;
@@ -37,6 +34,7 @@ public class ${mvpClass}Activity extends BaseActivity implements ${mvpClass}.V {
         ButterKnife.bind(this);
 
         Dagger${mvpClass}_C.builder().module(new ${mvpClass}.Module(this)).build().inject(this);
+        mId = getIntent() == null ? "" : getIntent().getStringExtra(EXTRA_ID);
         mAdapter = new ${mvpClass}ListAdapter(mContext);
         mEntity = new ${mvpClass}ListEntity();
 
@@ -162,10 +160,11 @@ public class ${mvpClass}Activity extends BaseActivity implements ${mvpClass}.V {
 	
 	@Override
     public void onClick(View v) {
-
-		
-	
-    }
+         switch (v.getId()) {
+                    case 1:
+                        break;
+                }
+     }
 	
 	public static class ${mvpClass}Adapter extends PotatoBaseRecyclerViewAdapter<${mvpClass}Adapter.VH> {
 
