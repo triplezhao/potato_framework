@@ -6,7 +6,8 @@ import javax.inject.Inject;
 public class ${mvpClass}Fragment extends BaseFragment implements ${mvpClass}.V {
 
     public static final String TAG = ${mvpClass}Fragment.class.getSimpleName();
-    
+    public static final String EXTRA_ID = "EXTRA_ID";
+    public String mId;
     @Inject ${mvpClass}Presenter presenter;
 
 
@@ -18,7 +19,7 @@ public class ${mvpClass}Fragment extends BaseFragment implements ${mvpClass}.V {
         ButterKnife.bind(this, view);
                        
         Dagger${mvpClass}_C.builder().module(new ${mvpClass}.Module(this)).build().inject(this);
-       
+        mId = getArguments() == null ? "" : getArguments().getString(EXTRARS__ID);
         presenter.start();
 		
 		return view;
@@ -31,7 +32,10 @@ public class ${mvpClass}Fragment extends BaseFragment implements ${mvpClass}.V {
 	
 	@Override
     public void onClick(View v) {
-
+         switch (v.getId()) {
+                    case 1:
+                        break;
+                }
     }
 	
 }

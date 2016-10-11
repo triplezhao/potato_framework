@@ -6,17 +6,18 @@ allprojects {
 
 ext {
     //Android
-    androidBuildToolsVersion = "23.0.1"
+    //Android
+    androidBuildToolsVersion = "24.0.1"
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 23
-    androidCompileSdkVersion = 23
+    androidTargetSdkVersion = 24
+    androidCompileSdkVersion = 24
 
     //Libraries
 
     rxJavaVersion = '1.0.14'
     rxAndroidVersion = '1.0.1'
     gsonVersion = '2.5'
-    supportLibraryVersion = '23.4.0'
+    supportLibraryVersion = '24.1.0'
     okHttpVersion = '3.2.0'
     roundedimageviewVersion = '2.2.0'
     eventsbus ='3.0.0'
