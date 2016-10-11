@@ -57,6 +57,4 @@ final class ${presenterClass} implements ${mvpClass}.P {
         });
     }
 
-   
-
 }
