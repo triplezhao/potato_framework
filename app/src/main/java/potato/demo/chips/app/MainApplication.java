@@ -23,6 +23,7 @@ public class MainApplication extends Application {
     public static int screenHight = 0;
     public static int screenWidth = 0;
     public static DisplayMetrics displayMetrices;
+//    public static PushAgent mPushAgent;
     /**
      * 设备的 IMEI
      */
@@ -96,4 +97,5 @@ public class MainApplication extends Application {
         screenHight = displayMetrices.heightPixels;
         screenWidth = displayMetrices.widthPixels;
     }
+
 }

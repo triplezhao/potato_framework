@@ -5,30 +5,38 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.potato.library.R;
 import com.potato.library.util.L;
 
 
-public class NormalEmptyView extends RelativeLayout {
+public class NormalEmptyView extends RelativeLayout implements EmptyViewInterface{
     public static final int EMPTY_TYPE_LOADING = 1;
     public static final int EMPTY_TYPE_ERROR = 2;
     public static final int EMPTY_TYPE_NOCONTENT = 3;
     public static final int EMPTY_TYPE_GONE = 4;
-    public TextView tv_empty_text;
-    private View pb_empty_loading;
-    private View pb_empty_fail;
-    private ImageView iv_empty_nocontent;
+    public static final int EMPTY_SHOW = 5;
 
-    private int mEmptyRes = R.string.potato_content_empty;
-    private int mLoadingRes = R.string.potato_loading;
-    private int mErrorRes = R.string.potato_network_error;
-    private int mEmptyDrawableRes = R.drawable.empty_nocontent;
-    private int mErrorDrawableRes = R.drawable.empty_nocontent;
-    private int mEmptyType = EMPTY_TYPE_GONE;
+    public LinearLayout ll_empty;
+    public TextView tv_text;
+    public View pb_loading;
+    public ImageView iv_pic;
 
-    private Context mContext;
+    public String mEmptyTxt = "内容暂时为空，敬请等待~";
+    public String mLoadingTxt = "内容获取中...";
+    public String mErrorTxt = "数据加载异常，请稍后重试";
+
+    public int mEmptyDrawableRes = R.drawable.empty_nocontent;
+    public int mErrorDrawableRes = R.drawable.empty_nocontent;
+
+    public int mEmptyType = EMPTY_TYPE_GONE;
+
+    public String mTxt = mEmptyTxt;
+    public int mPic = mEmptyDrawableRes;
+
+    public Context mContext;
 
     public NormalEmptyView(Context context) {
         super(context);
@@ -38,18 +46,58 @@ public class NormalEmptyView extends RelativeLayout {
         super(context, attrs);
         mContext = context;
         LayoutInflater.from(context).inflate(R.layout.potato_normal_empty, this);
-        tv_empty_text = (TextView) findViewById(R.id.tv_empty_text);
-        pb_empty_loading = (View) findViewById(R.id.pb_empty_loading);
-        pb_empty_fail = (View) findViewById(R.id.pb_empty_fail);
-        iv_empty_nocontent = (ImageView) findViewById(R.id.iv_empty_nocontent);
-
-        setBackgroundResource(R.color.potato_trans);
-
-        setEmptyRes(R.string.potato_content_empty);
-
-        setEmptyType(mEmptyType);
-
+        ll_empty = (LinearLayout) findViewById(R.id.ll_empty);
+        tv_text = (TextView) findViewById(R.id.tv_text);
+        pb_loading = (View) findViewById(R.id.pb_loading);
+        iv_pic = (ImageView) findViewById(R.id.iv_pic);
+        iv_pic.setImageResource(mEmptyDrawableRes);
         L.i("NormalEmptyView", "NormalEmptyView()");
+    }
+
+    public void showError() {
+        mTxt = mErrorTxt;
+        mPic = mErrorDrawableRes;
+
+        iv_pic.setVisibility(View.VISIBLE);
+        pb_loading.setVisibility(View.GONE);
+        setClickable(true);
+        mEmptyType = EMPTY_TYPE_ERROR;
+        show();
+    }
+
+    public void showEmpty() {
+        mTxt = mEmptyTxt;
+        mPic = mEmptyDrawableRes;
+
+        iv_pic.setVisibility(View.VISIBLE);
+        pb_loading.setVisibility(View.GONE);
+        setClickable(false);
+        mEmptyType = EMPTY_TYPE_NOCONTENT;
+        show();
+
+    }
+
+    public void showLoading() {
+        mTxt = mLoadingTxt;
+
+        tv_text.setText(mLoadingTxt);
+        pb_loading.setVisibility(View.VISIBLE);
+        iv_pic.setVisibility(View.GONE);
+        setClickable(false);
+        mEmptyType = EMPTY_TYPE_LOADING;
+        show();
+    }
+
+    public void hide() {
+        this.setVisibility(View.GONE);
+        mEmptyType = EMPTY_TYPE_GONE;
+    }
+
+    public void show() {
+        this.setVisibility(View.VISIBLE);
+        mEmptyType = EMPTY_SHOW;
+        tv_text.setText(mTxt);
+        iv_pic.setImageResource(mPic);
     }
 
     public void setEmptyType(int type) {
@@ -58,88 +106,58 @@ public class NormalEmptyView extends RelativeLayout {
 
         switch (type) {
             case EMPTY_TYPE_ERROR:
-                tv_empty_text.setText(getErrorRes());
-                pb_empty_fail.setVisibility(View.VISIBLE);
-                pb_empty_loading.setVisibility(View.GONE);
-                iv_empty_nocontent.setVisibility(View.GONE);
-                setClickable(true);
-                break;
-            case EMPTY_TYPE_LOADING:
-                tv_empty_text.setText(getLoadingRes());
-                pb_empty_loading.setVisibility(View.VISIBLE);
-                pb_empty_fail.setVisibility(View.GONE);
-                iv_empty_nocontent.setVisibility(View.GONE);
-                setClickable(false);
+                showError();
                 break;
             case EMPTY_TYPE_NOCONTENT:
-                tv_empty_text.setText(getEmptyRes());
-                iv_empty_nocontent.setVisibility(View.VISIBLE);
-                pb_empty_fail.setVisibility(View.GONE);
-                pb_empty_loading.setVisibility(View.GONE);
-                setClickable(false);
+                showEmpty();
+                break;
+            case EMPTY_TYPE_LOADING:
+                showLoading();
                 break;
             case EMPTY_TYPE_GONE:
-                this.setVisibility(View.GONE);
+                hide();
                 break;
         }
         mEmptyType = type;
     }
 
-
-    public int getEmptyType() {
-        return mEmptyType;
+    public String getmEmptyTxt() {
+        return mEmptyTxt;
     }
 
-    public void setEmptyRes(int res) {
-        mEmptyRes = res;
+    public void setmEmptyTxt(String mEmptyTxt) {
+        this.mEmptyTxt = mEmptyTxt;
     }
 
-    public int getEmptyRes() {
-        return mEmptyRes;
+    public String getmLoadingTxt() {
+        return mLoadingTxt;
     }
 
-    public int getLoadingRes() {
-        return mLoadingRes;
+    public void setmLoadingTxt(String mLoadingTxt) {
+        this.mLoadingTxt = mLoadingTxt;
     }
 
-    public void setLoadingRes(int loadingRes) {
-        this.mLoadingRes = loadingRes;
-    }
-
-    public int getErrorRes() {
-        return mErrorRes;
-    }
-
-    public void setErrorRes(int errorRes) {
-        this.mErrorRes = errorRes;
-    }
-
-    /**
-     * @return the mEmptyDrawableRes
-     */
     public int getmEmptyDrawableRes() {
         return mEmptyDrawableRes;
     }
 
-    /**
-     * @param mEmptyDrawableRes the mEmptyDrawableRes to set
-     */
     public void setmEmptyDrawableRes(int mEmptyDrawableRes) {
         this.mEmptyDrawableRes = mEmptyDrawableRes;
     }
 
-    /**
-     * @return the mErrorDrawableRes
-     */
     public int getmErrorDrawableRes() {
         return mErrorDrawableRes;
     }
 
-    /**
-     * @param mErrorDrawableRes the mErrorDrawableRes to set
-     */
     public void setmErrorDrawableRes(int mErrorDrawableRes) {
         this.mErrorDrawableRes = mErrorDrawableRes;
     }
 
+    public String getmErrorTxt() {
+        return mErrorTxt;
+    }
+
+    public void setmErrorTxt(String mErrorTxt) {
+        this.mErrorTxt = mErrorTxt;
+    }
 }

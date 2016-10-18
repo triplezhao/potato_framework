@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 
 import com.potato.library.util.L;
+import com.potato.library.view.EmptyViewInterface;
 import com.potato.library.view.NormalEmptyView;
 
 public class PotatoBaseSwipeLayout extends SwipeRefreshLayout {
@@ -45,7 +46,7 @@ public class PotatoBaseSwipeLayout extends SwipeRefreshLayout {
     }
 
 
-    private NormalEmptyView mEmptyview;
+    private EmptyViewInterface mEmptyview;
 
 
 

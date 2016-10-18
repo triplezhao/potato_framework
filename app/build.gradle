@@ -31,5 +31,6 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.google.dagger:dagger:2.2'
     compile 'com.github.paolorotolo:appintro:4.0.0'
+    compile 'org.lzh.nonview.updateplugin:UpdatePlugin:0.7.1'
     compile project(':potato_lib')
 }

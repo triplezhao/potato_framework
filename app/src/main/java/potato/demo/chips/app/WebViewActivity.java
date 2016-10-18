@@ -173,7 +173,6 @@ public class WebViewActivity extends Activity implements OnClickListener {
 //        ToastUtil.showMessageText(this,
 //                getResources().getString(R.string.no_net));
         not_app.setVisibility(View.VISIBLE);
-        not_app.setErrorRes(R.string.potato_loading);
         not_app.setEmptyType(NormalEmptyView.EMPTY_TYPE_ERROR);
     }
 
