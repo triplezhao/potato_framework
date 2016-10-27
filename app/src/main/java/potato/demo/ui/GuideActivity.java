@@ -31,6 +31,9 @@ public class GuideActivity extends AppIntro {
         addSlide(second_fragment);
         addSlide(third_fragment);
         addSlide(fourth_fragment);*/
+    /*    addSlide(fourth_fragment);*//*
+        addSlide(fourth_fragment);*//*
+        addSlide(fourth_fragment);*/
 
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
