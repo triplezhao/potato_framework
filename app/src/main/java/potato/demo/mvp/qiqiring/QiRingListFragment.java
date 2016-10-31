@@ -91,7 +91,7 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
 
         DaggerQiRingList_C.builder().module(new QiRingList.Module(this)).build().inject(this);
 
-        mSectionId = getArguments() ==  null ? "" : getArguments().getString(EXTRARS_SECTION_ID);
+        mSectionId = getArguments() == null ? "" : getArguments().getString(EXTRARS_SECTION_ID);
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
 
         mAdapter = new QiRingListAdapter(mContext);
@@ -122,7 +122,6 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
         mRecyclerView.setLayoutManager(manager);
        * */
-        mSwipeContainer.setFooterView(listview, com.potato.library.R.layout.potato_listview_footer);
 
         mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
             @Override
@@ -144,7 +143,7 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
         mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                presenter.reqLoadMore(mEntity.nowpage+1);
+                presenter.reqLoadMore(mEntity.nowpage + 1);
             }
         });
 
@@ -177,37 +176,40 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
 
 
     @Override
-    public void onRefreshSucc(QIRingEntity entity) {
-        mEntity = entity;
-        mSwipeContainer.showSucc();
-        mList = entity.list;
-        mAdapter.setDataList(mList);
-        mAdapter.notifyDataSetChanged();
-        mSwipeContainer.setRefreshing(false);
-        if (mList != null && mList.size() != 0) {
-            mSwipeContainer.setLoadEnable(true);
-        }
-
+    public void onRefreshSucc(final QIRingEntity entity) {
+        mSwipeContainer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mEntity = entity;
+                mSwipeContainer.showSucc();
+                mList = entity.list;
+                mAdapter.setDataList(mList);
+                mAdapter.notifyDataSetChanged();
+                mSwipeContainer.autoShowByTotal(mEntity.total);
+            }
+        }, 2000);
     }
 
     @Override
     public void onRefreshFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
-        mSwipeContainer.setRefreshing(false);
+        mSwipeContainer.showEmptyViewFail();
     }
 
     @Override
-    public void onLoadMoreSucc(QIRingEntity entity) {
-        mEntity = entity;
-        mSwipeContainer.setLoading(false);
-        ArrayList<QIRingEntity> moreData = entity.list;
-        if (moreData == null || moreData.size() == 0) {
-            mSwipeContainer.setLoadEnable(false);
-            return;
-        }
-        mList.addAll(moreData);
-        mAdapter.setDataList(mList);
-        mAdapter.notifyItemInserted(mList.size() - 1);
+    public void onLoadMoreSucc(final QIRingEntity entity) {
+        mSwipeContainer.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mEntity = entity;
+                ArrayList<QIRingEntity> moreData = entity.list;
+                mList.addAll(moreData);
+                mAdapter.setDataList(mList);
+                mAdapter.notifyDataSetChanged();
+                mSwipeContainer.autoShowByTotal(mEntity.total);
+
+            }
+        }, 2000);
+
     }
 
     @Override
@@ -261,7 +263,7 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
             vh.tv_title.setText(bean.getRing_name());
 
             vh.iv_pic.setImageResource(R.drawable.playbar_btn_play);
-            if(bean.getRing_pic().equals(MusicService.mPlayingUrl)){
+            if (bean.getRing_pic().equals(MusicService.mPlayingUrl)) {
                 vh.iv_pic.setImageResource(R.drawable.playbar_btn_pause);
                 vh.iv_pic.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -269,23 +271,23 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
                    /* Context context = v.getContext();
                     PageCtrl.startJiongTuDetailActivity(context, bean);*/
 
-                        Intent musicSer = new Intent(mContext,MusicService.class);
-                        musicSer.putExtra("action",3);
-                        musicSer.putExtra("url",bean.getRing_pic());
+                        Intent musicSer = new Intent(mContext, MusicService.class);
+                        musicSer.putExtra("action", 3);
+                        musicSer.putExtra("url", bean.getRing_pic());
 //                    musicSer.putExtra("url","http://125.39.66.163/files/7099000002B49876/file.kuyinyun.com/group1/M00/65/02/rBBGdFWiomGECilcAAAAABqIEBk213.mp3");
                         mContext.startService(musicSer);
                     }
                 });
-            }else{
+            } else {
                 vh.iv_pic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                    /* Context context = v.getContext();
                     PageCtrl.startJiongTuDetailActivity(context, bean);*/
 
-                        Intent musicSer = new Intent(mContext,MusicService.class);
-                        musicSer.putExtra("action",0);
-                        musicSer.putExtra("url",bean.getRing_pic());
+                        Intent musicSer = new Intent(mContext, MusicService.class);
+                        musicSer.putExtra("action", 0);
+                        musicSer.putExtra("url", bean.getRing_pic());
 //                    musicSer.putExtra("url","http://125.39.66.163/files/7099000002B49876/file.kuyinyun.com/group1/M00/65/02/rBBGdFWiomGECilcAAAAABqIEBk213.mp3");
                         mContext.startService(musicSer);
                     }

@@ -106,7 +106,9 @@ public class QIImageListFragment extends BaseFragment implements QIImageList.V {
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
         mRecyclerView.setLayoutManager(manager);
        * */
-        mSwipeContainer.setFooterView(listview, com.potato.library.R.layout.potato_listview_footer);
+        mSwipeContainer.addLoadMoreView(listview, com.potato.library.R.layout.potato_listview_footer);
+        mSwipeContainer.addEndView(listview, com.potato.library.R.layout.potato_listview_footer_end);
+        mSwipeContainer.addTipsView(listview, com.potato.library.R.layout.potato_listview_footer_tips);
 
         mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
             @Override
@@ -128,7 +130,7 @@ public class QIImageListFragment extends BaseFragment implements QIImageList.V {
         mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                presenter.reqLoadMore(mEntity.nowpage+1);
+                presenter.reqLoadMore(mEntity.nowpage + 1);
             }
         });
 
@@ -168,8 +170,10 @@ public class QIImageListFragment extends BaseFragment implements QIImageList.V {
         mAdapter.setDataList(mList);
         mAdapter.notifyDataSetChanged();
         mSwipeContainer.setRefreshing(false);
-        if (mList != null && mList.size() != 0&&mList.size()<mEntity.total) {
+        if (mList != null && mList.size() != 0 && mList.size() < mEntity.total) {
             mSwipeContainer.setLoadEnable(true);
+        } else {
+            mSwipeContainer.setLoadEnable(false);
         }
 
     }
@@ -183,7 +187,7 @@ public class QIImageListFragment extends BaseFragment implements QIImageList.V {
     @Override
     public void onLoadMoreSucc(QIImageEntity entity) {
         mEntity = entity;
-        mSwipeContainer.setLoading(false);
+        mSwipeContainer.showLoadMoreView(false);
         ArrayList<Object> moreData = entity.list;
         if (moreData == null || moreData.size() == 0) {
             mSwipeContainer.setLoadEnable(false);

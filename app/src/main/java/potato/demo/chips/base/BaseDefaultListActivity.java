@@ -57,7 +57,7 @@ public abstract class BaseDefaultListActivity extends BaseActivity implements Po
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
         mRecyclerView.setLayoutManager(manager);
        * */
-        mSwipeContainer.setFooterView(listview, com.potato.library.R.layout.potato_listview_footer);
+        mSwipeContainer.addLoadMoreView(listview, com.potato.library.R.layout.potato_listview_footer);
 
         mSwipeContainer.setColorSchemeResources(com.potato.library.R.color.google_blue,
                 com.potato.library.R.color.google_green,

@@ -72,7 +72,7 @@ public class PotatoListSwipeLayout extends PotatoBaseSwipeLayout implements AbsL
 
             case MotionEvent.ACTION_UP:
 //                if (canLoad()) {
-//                    loadData();
+//                    loadMoreData();
 //                }
                 break;
             default:

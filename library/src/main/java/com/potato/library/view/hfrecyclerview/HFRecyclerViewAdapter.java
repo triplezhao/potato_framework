@@ -22,8 +22,8 @@ public class HFRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
      */
     private RecyclerView.Adapter<RecyclerView.ViewHolder> mInnerAdapter;
 
-    private ArrayList<View> mHeaderViews = new ArrayList<>();
-    private ArrayList<View> mFooterViews = new ArrayList<>();
+    public ArrayList<View> mHeaderViews = new ArrayList<>();
+    public ArrayList<View> mFooterViews = new ArrayList<>();
 
     private RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
 
@@ -68,6 +68,7 @@ public class HFRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     /**
      * 设置adapter
+     *
      * @param adapter
      */
     public void setAdapter(RecyclerView.Adapter<RecyclerView.ViewHolder> adapter) {
@@ -113,18 +114,20 @@ public class HFRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     /**
      * 返回第一个FoView
+     *
      * @return
      */
     public View getFooterView() {
-        return  getFooterViewsCount()>0 ? mFooterViews.get(0) : null;
+        return getFooterViewsCount() > 0 ? mFooterViews.get(0) : null;
     }
 
     /**
      * 返回第一个HeaderView
+     *
      * @return
      */
     public View getHeaderView() {
-        return  getHeaderViewsCount()>0 ? mHeaderViews.get(0) : null;
+        return getHeaderViewsCount() > 0 ? mHeaderViews.get(0) : null;
     }
 
     public void removeHeaderView(View view) {
@@ -150,8 +153,9 @@ public class HFRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public boolean isFooter(int position) {
-        int lastPosition = getItemCount() - 1;
-        return getFooterViewsCount() > 0 && position == lastPosition;
+     /*   int lastPosition = getItemCount() - 1;
+        return getFooterViewsCount() > 0 && position == lastPosition;*/
+        return getFooterViewsCount() > 0 && position >= getHeaderViewsCount() + getInnerAdapter().getItemCount();
     }
 
     @Override
@@ -173,7 +177,7 @@ public class HFRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             mInnerAdapter.onBindViewHolder(holder, position - headerViewsCountCount);
         } else {
             ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
-            if(layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
+            if (layoutParams instanceof StaggeredGridLayoutManager.LayoutParams) {
                 ((StaggeredGridLayoutManager.LayoutParams) layoutParams).setFullSpan(true);
             }
         }
@@ -193,7 +197,7 @@ public class HFRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         } else if (headerViewsCountCount <= position && position < headerViewsCountCount + innerCount) {
 
             int innerItemViewType = mInnerAdapter.getItemViewType(position - headerViewsCountCount);
-            if(innerItemViewType >= Integer.MAX_VALUE / 2) {
+            if (innerItemViewType >= Integer.MAX_VALUE / 2) {
                 throw new IllegalArgumentException("your adapter's return value of getViewTypeCount() must < Integer.MAX_VALUE / 2");
             }
             return innerItemViewType + Integer.MAX_VALUE / 2;

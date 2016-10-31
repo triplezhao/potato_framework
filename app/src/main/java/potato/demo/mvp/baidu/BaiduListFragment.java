@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.view.NormalEmptyView;
+import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
+import com.potato.library.view.hfrecyclerview.HFRecyclerViewAdapter;
 import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
 
 import java.util.ArrayList;
@@ -80,7 +83,7 @@ public class BaiduListFragment extends BaseFragment implements BaiduList.V {
         initListView();
 
         mSwipeContainer.showProgress();
-        presenter.reqRefresh(mId, "1", "20");
+        presenter.reqRefresh(mId, "1", "1");
 
         return view;
     }
@@ -96,13 +99,15 @@ public class BaiduListFragment extends BaseFragment implements BaiduList.V {
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
         mSwipeContainer.setLayoutManager(manager);
 
-       网格
+       网格 * */
         //setLayoutManager
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mRecyclerView.setLayoutManager(manager);
-       * */
-        mSwipeContainer.setFooterView(listview, com.potato.library.R.layout.potato_listview_footer);
+        GridLayoutManager manager = new GridLayoutManager(mContext, 2);
+        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup((HFRecyclerViewAdapter) mSwipeContainer.getHFAdapter(), manager.getSpanCount()));
+        mSwipeContainer.setLayoutManager(manager);
+
+       /* mSwipeContainer.addLoadMoreView(listview, com.potato.library.R.layout.potato_listview_footer);
+        mSwipeContainer.addEndView(listview, com.potato.library.R.layout.potato_listview_footer_end);
+        mSwipeContainer.addTipsView(listview, com.potato.library.R.layout.potato_listview_footer_tips);*/
 
         mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
             @Override
@@ -118,13 +123,13 @@ public class BaiduListFragment extends BaseFragment implements BaiduList.V {
         mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.reqRefresh(mId, "1", "20");
+                presenter.reqRefresh(mId, "1", "1");
             }
         });
         mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                presenter.reqLoadMore(mId, mEntity.startIndex + mEntity.returnNumber + "", "20");
+                presenter.reqLoadMore(mId, mEntity.startIndex + mEntity.returnNumber + "", "1");
             }
         });
 
@@ -133,7 +138,7 @@ public class BaiduListFragment extends BaseFragment implements BaiduList.V {
             @Override
             public void onClick(View view) {
                 mSwipeContainer.showProgress();
-                presenter.reqRefresh(mId, "1", "20");
+                presenter.reqRefresh(mId, "1", "1");
             }
         });
 
@@ -158,36 +163,29 @@ public class BaiduListFragment extends BaseFragment implements BaiduList.V {
 
     @Override
     public void onRefreshSucc(BaiduImageListByCategoryEntity entity) {
-        mEntity = entity;
+        entity.list.remove(entity.list.size() - 1);
         mSwipeContainer.showSucc();
+        mEntity = entity;
         mList = entity.list;
         mAdapter.setDataList(mList);
         mAdapter.notifyDataSetChanged();
-        mSwipeContainer.setRefreshing(false);
-        if (mList != null && mList.size() != 0) {
-            mSwipeContainer.setLoadEnable(true);
-        }
-
+        mSwipeContainer.autoShowByTotal(mEntity.total);
     }
 
     @Override
     public void onRefreshFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
-        mSwipeContainer.setRefreshing(false);
+        mSwipeContainer.showEmptyViewFail();
     }
 
     @Override
     public void onLoadMoreSucc(BaiduImageListByCategoryEntity entity) {
+        entity.list.remove(entity.list.size() - 1);
         mEntity = entity;
-        mSwipeContainer.setLoading(false);
         ArrayList<BaiduImageBean> moreData = entity.list;
-        if (moreData == null || moreData.size() == 0) {
-            mSwipeContainer.setLoadEnable(false);
-            return;
-        }
         mList.addAll(moreData);
         mAdapter.setDataList(mList);
-        mAdapter.notifyItemInserted(mList.size() - 1);
+        mAdapter.notifyDataSetChanged();
+        mSwipeContainer.autoShowByTotal(mEntity.total);
     }
 
     @Override

@@ -37,7 +37,7 @@ final class QiRingListPresenter implements QiRingList.P {
 
     @Override
     public void reqRefresh() {
-        QIApi.getRings(CacheMode.REQUEST_FAILED_READ_CACHE,view.getCid()+"","1","20" ,new QICallback<QIRingEntity>() {
+        QIApi.getRings(CacheMode.NET_ONLY, view.getCid() + "", "1", "2", new QICallback<QIRingEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)
@@ -54,7 +54,7 @@ final class QiRingListPresenter implements QiRingList.P {
     @Override
     public void reqLoadMore(int page) {
 
-        QIApi.getRings(CacheMode.REQUEST_FAILED_READ_CACHE,view.getCid()+"",page+"","20" ,new QICallback<QIRingEntity>() {
+        QIApi.getRings(CacheMode.NET_ONLY, view.getCid() + "", page + "", "2", new QICallback<QIRingEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)

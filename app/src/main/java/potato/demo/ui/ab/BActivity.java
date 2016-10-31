@@ -38,7 +38,7 @@ public class BActivity extends BaseActivity {
 
         swipeContainer.setRecyclerView(lv_list, mAdapter);
         swipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
-        swipeContainer.setFooterView(lv_list, R.layout.potato_listview_footer);
+        swipeContainer.addLoadMoreView(lv_list, R.layout.potato_listview_footer);
 
         swipeContainer.setColorSchemeResources(R.color.google_blue,
                 R.color.google_green,
@@ -70,7 +70,7 @@ public class BActivity extends BaseActivity {
                         mAdapter.setDataList(mValues);
 //                        mAdapter.notifyDataSetChanged();
                         mAdapter.notifyItemInserted(lastCount);
-                        swipeContainer.setLoading(false);
+                        swipeContainer.showLoadMoreView(false);
                     }
                 }, 300);
 

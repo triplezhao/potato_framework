@@ -107,7 +107,7 @@ public class YKHomeListFragment extends BaseFragment implements YKHomeList.V {
         manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
         mRecyclerView.setLayoutManager(manager);
        * */
-        mSwipeContainer.setFooterView(listview, com.potato.library.R.layout.potato_listview_footer);
+        mSwipeContainer.addLoadMoreView(listview, com.potato.library.R.layout.potato_listview_footer);
 
         mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
             @Override
@@ -182,7 +182,7 @@ public class YKHomeListFragment extends BaseFragment implements YKHomeList.V {
     @Override
     public void onLoadMoreSucc(YKVideosByCategoryEntity entity) {
         mEntity = entity;
-        mSwipeContainer.setLoading(false);
+        mSwipeContainer.showLoadMoreView(false);
         ArrayList<Object> moreData = entity.list;
         if (moreData == null || moreData.size() == 0) {
             mSwipeContainer.setLoadEnable(false);

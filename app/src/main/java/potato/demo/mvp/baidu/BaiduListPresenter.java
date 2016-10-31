@@ -37,7 +37,7 @@ final class BaiduListPresenter implements BaiduList.P {
 
     @Override
     public void reqRefresh(String col, String startIndex, String pageSize) {
-        BaiduApi.imageList(CacheMode.REQUEST_FAILED_READ_CACHE, col, startIndex, pageSize, new BaiduCallback<BaiduImageListByCategoryEntity>() {
+        BaiduApi.imageList(CacheMode.NET_ONLY, col, startIndex, pageSize, new BaiduCallback<BaiduImageListByCategoryEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
 
@@ -54,7 +54,7 @@ final class BaiduListPresenter implements BaiduList.P {
 
     @Override
     public void reqLoadMore(String col, String startIndex, String pageSize) {
-        BaiduApi.imageList(CacheMode.REQUEST_FAILED_READ_CACHE, col, startIndex, pageSize, new BaiduCallback<BaiduImageListByCategoryEntity>() {
+        BaiduApi.imageList(CacheMode.NET_ONLY, col, startIndex, pageSize, new BaiduCallback<BaiduImageListByCategoryEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)
