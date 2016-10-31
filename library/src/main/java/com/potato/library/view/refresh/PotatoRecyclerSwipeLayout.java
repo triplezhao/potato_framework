@@ -22,6 +22,7 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
     private boolean isLoading = false;
 
     private boolean mEnableLoad = true;
+    private boolean mLoadMoreNever = true;
 
     private static final int CIRCLE_DIAMETER_LARGE = 56;
     private View mListViewFooter;
@@ -355,6 +356,14 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
         }
     }
 
+    public boolean ismLoadMoreNever() {
+        return mLoadMoreNever;
+    }
+
+    public void setmLoadMoreNever(boolean mLoadMoreNever) {
+        this.mLoadMoreNever = mLoadMoreNever;
+    }
+
     @Override
     public void setLoadEnable(boolean canLoadMore) {
         RecyclerView.Adapter outerAdapter = mRecyclerView.getAdapter();
@@ -515,7 +524,7 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
 
     public void autoShowByTotal(int total) {
         //如果设置了不支持下拉刷新，则直接全部隐藏
-        if (!mEnableLoad) {
+        if (mLoadMoreNever) {
             showEndView(false);
             showLoadMoreView(false);
             showTipsView(false);
