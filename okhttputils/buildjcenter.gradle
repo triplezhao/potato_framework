@@ -8,7 +8,7 @@ ext {
 
     libraryDescription = ''
 
-    libraryVersion = '1.3.3'
+    libraryVersion = "$rootProject.ext.potatoLib"
     siteUrl = 'https://www.baidu.com'
     gitUrl = 'https://www.baidu.com'
 
@@ -126,3 +126,5 @@ bintray {
         }
     }
 }
+// gradlew install
+// gradlew bintrayUpload

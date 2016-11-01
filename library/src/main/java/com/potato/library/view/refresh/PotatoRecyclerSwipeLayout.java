@@ -22,7 +22,7 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
     private boolean isLoading = false;
 
     private boolean mEnableLoad = true;
-    private boolean mLoadMoreNever = true;
+    private boolean mLoadMoreNever = false;
 
     private static final int CIRCLE_DIAMETER_LARGE = 56;
     private View mListViewFooter;
@@ -412,10 +412,15 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
         }
         HFRecyclerViewAdapter headerAndFooterAdapter = (HFRecyclerViewAdapter) outerAdapter;
 
+        //先把之前的删除，再添加新的
+        if (mListViewFooter != null && headerAndFooterAdapter.mFooterViews.contains(mListViewFooter)) {
+            headerAndFooterAdapter.mFooterViews.remove(mListViewFooter);
+        }
         //如果没有则增加上去
-        if (!headerAndFooterAdapter.mFooterViews.contains(mListViewFooter)) {
+        if (!headerAndFooterAdapter.mFooterViews.contains(view)) {
             headerAndFooterAdapter.addFooterView(view);
             mListViewFooter = view;
+            L.i(mListViewFooter.toString());
         }
     }
 
@@ -427,8 +432,13 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
             return;
         }
         HFRecyclerViewAdapter headerAndFooterAdapter = (HFRecyclerViewAdapter) outerAdapter;
+
+        //先把之前的删除，再添加新的
+        if (mListViewEnder != null && headerAndFooterAdapter.mFooterViews.contains(mListViewEnder)) {
+            headerAndFooterAdapter.mFooterViews.remove(mListViewEnder);
+        }
         //如果没有则增加上去
-        if (!headerAndFooterAdapter.mFooterViews.contains(mListViewEnder)) {
+        if (!headerAndFooterAdapter.mFooterViews.contains(view)) {
             headerAndFooterAdapter.addFooterView(view);
             mListViewEnder = view;
             L.i(mListViewEnder.toString());
@@ -443,8 +453,13 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
             return;
         }
         HFRecyclerViewAdapter headerAndFooterAdapter = (HFRecyclerViewAdapter) outerAdapter;
+
+        //先把之前的删除，再添加新的
+        if (mListViewTips != null && headerAndFooterAdapter.mFooterViews.contains(mListViewTips)) {
+            headerAndFooterAdapter.mFooterViews.remove(mListViewTips);
+        }
         //如果没有则增加上去
-        if (!headerAndFooterAdapter.mFooterViews.contains(mListViewTips)) {
+        if (!headerAndFooterAdapter.mFooterViews.contains(view)) {
             headerAndFooterAdapter.addFooterView(view);
             mListViewTips = view;
             L.i(mListViewTips.toString());
