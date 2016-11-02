@@ -28,17 +28,7 @@ interface ${fragmentMvpClass} {
      * 1.视图接口，定义ui层的一些方法，比如刷新列表等。presenter中会调用这些方法
      * 2.activity会实现这个接口
      */
-    interface V extends BaseView {
-
-        void onRefreshSucc(Object entity);
-
-        void onRefreshFail(String err);
-
-        void onLoadMoreSucc(Object entity);
-
-        void onLoadMoreFail(String err);
-
-        void onCacheLoaded(Object entity);
+    interface V extends BaseListView {
 
 
     }
@@ -49,9 +39,10 @@ interface ${fragmentMvpClass} {
      * 2.需要单独写类实现这个接口。
      */
     interface P extends BasePresenter {
-        void reqRefresh();
 
-        void reqLoadMore(int page);
+        void reqRefresh(String id, String page, String pageSize);
+
+        void reqLoadMore(String id, String page, String pageSize);
     }
 
     /**

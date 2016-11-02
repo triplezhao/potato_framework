@@ -6,64 +6,75 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
 import com.potato.library.view.NormalEmptyView;
 import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
-import com.potato.library.view.refresh.PotatoRefreshImpl;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import butterknife.Bind;
+import potato.demo.R;
+import potato.demo.chips.api.BaiduCallback;
 import potato.demo.chips.api.BaseResultEntity;
+import potato.demo.mvp.util.BaseListView;
 
-public abstract class BaseDefaultListActivity extends BaseActivity implements PotatoRefreshImpl<BaseResultEntity> {
+public abstract class BaseDefaultListActivity extends BaseActivity implements BaseListView {
 
     public static final String TAG = BaseDefaultListActivity.class.getSimpleName();
 
-    public PotatoRecyclerSwipeLayout mSwipeContainer;
-    public RecyclerView listview;
-    public NormalEmptyView mNormalEmptyView;
-
-    public int mTotal = 0;
+    @Bind(R.id.include_a) public LinearLayout include_a;
+    @Bind(R.id.swipe_container) public PotatoRecyclerSwipeLayout mSwipeContainer;
+    @Bind(R.id.list) public RecyclerView listview;
+    @Bind(R.id.empty_view) public NormalEmptyView mNormalEmptyView;
+    public String mId = "美女";
     public int mPage = 0;
-    public ArrayList mList = new ArrayList();
+    public String pageSize = "5";
+    public List mList = new ArrayList();
+    public PotatoBaseRecyclerViewAdapter mAdapter;
+    public BaseResultEntity mEntity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
     }
 
-    public void initListView(View view) {
+    public abstract PotatoBaseRecyclerViewAdapter getAdapter();
 
-        mSwipeContainer = (PotatoRecyclerSwipeLayout) view.findViewById(com.potato.library.R.id.swipe_container);
-        listview = (RecyclerView) mSwipeContainer.findViewById(com.potato.library.R.id.list);
-        mNormalEmptyView = (NormalEmptyView) view.findViewById(com.potato.library.R.id.empty_view);
-        mSwipeContainer.setRecyclerView(listview, getAdapter());
-        mSwipeContainer.setLayoutManager(new LinearLayoutManager(view.getContext()));
-       /*
-       瀑布流
-       * //setLayoutManager
-        ExStaggeredGridLayoutManager manager = new ExStaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
+    public abstract void reqRefresh();
+
+    public abstract void reqLoadMore();
+
+    @Override
+    public void initListView() {
+        mAdapter = getAdapter();
+        mEntity = new BaiduCallback.BaiduResultEntity() {
+            @Override
+            public BaseResultEntity parse(String json) {
+                return null;
+            }
+        };
+        mSwipeContainer.setRecyclerView(listview, mAdapter);
+        LinearLayoutManager manager = new LinearLayoutManager(mContext);
+        //  瀑布流
+        //setLayoutManager
+        /*ExStaggeredGridLayoutManager manager = new ExStaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup((HFRecyclerViewAdapter) listview.getAdapter(), manager.getSpanCount()));
+        mSwipeContainer.setLayoutManager(manager);*/
+
+        // 网格
+        //setLayoutManager
+//        GridLayoutManager manager = new GridLayoutManager(this, 2);
+//        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup((HFRecyclerViewAdapter) listview.getAdapter(), manager.getSpanCount()));
         mSwipeContainer.setLayoutManager(manager);
 
-       网格
-        //setLayoutManager
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mRecyclerView.setLayoutManager(manager);
-       * */
-        mSwipeContainer.addLoadMoreView(listview, com.potato.library.R.layout.potato_listview_footer);
+        /*View headerview = getLayoutInflater().inflate(R.layout.header_bshop_home, null);
+        mSwipeContainer.setHeaderView(listview, headerview);*/
 
-        mSwipeContainer.setColorSchemeResources(com.potato.library.R.color.google_blue,
-                com.potato.library.R.color.google_green,
-                com.potato.library.R.color.google_red,
-                com.potato.library.R.color.google_yellow);
-
+        mSwipeContainer.setColorSchemeResources(R.color.google_red, R.color.google_red, R.color.google_red, R.color.google_red);
         mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
             @Override
             public void pause() {
@@ -87,78 +98,67 @@ public abstract class BaseDefaultListActivity extends BaseActivity implements Po
                 reqLoadMore();
             }
         });
-
         mSwipeContainer.setEmptyView(mNormalEmptyView);
         mNormalEmptyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mSwipeContainer.showProgress();
                 reqRefresh();
             }
         });
 
     }
 
-    public abstract PotatoBaseRecyclerViewAdapter getAdapter();
-
+    @Override
     public void onRefreshSucc(BaseResultEntity entity) {
-
-        if (entity == null) {
-            Toast.makeText(mContext, "token fail", Toast.LENGTH_SHORT).show();
+        if (!entity.isSucc()) {
             mSwipeContainer.showEmptyViewFail();
             return;
         }
-        if (entity.isSucc()) {
-            mList = entity.list;
-            mTotal = entity.total;
-            mSwipeContainer.showSucc();
-            getAdapter().setDataList(mList);
-            getAdapter().notifyDataSetChanged();
-            if (mList != null && mList.size() != 0 && mList.size() < mTotal) {
-                mSwipeContainer.setLoadEnable(true);
-            } else {
-                mSwipeContainer.setLoadEnable(false);
-            }
-        } else {
-            mSwipeContainer.showEmptyViewFail();
+        if (entity.list == null || entity.list.size() == 0) {
+            mSwipeContainer.showEmptyViewNoContent();
+            return;
         }
-
+        mEntity = entity;
+        mList = entity.list;
+        mSwipeContainer.showSucc();
+        mAdapter.setDataList(mList);
+        mAdapter.notifyDataSetChanged();
+        mSwipeContainer.autoShowByTotal(mEntity.total);
     }
 
+    @Override
     public void onRefreshFail(String err) {
         mSwipeContainer.showEmptyViewFail();
     }
 
+    @Override
     public void onLoadMoreSucc(BaseResultEntity entity) {
-        if (entity.isSucc()) {
-            mTotal = entity.total;
-            if (entity.list == null || entity.list.size() == 0) {
-                mSwipeContainer.setLoadEnable(false);
-                return;
-            }
-            int lastPosition = mList.size();
-            mList.addAll(entity.list);
-            if (mList != null && mList.size() != 0 && mList.size() < mTotal) {
-                mSwipeContainer.setLoadEnable(true);
-            } else {
-                mSwipeContainer.setLoadEnable(false);
-            }
-            getAdapter().setDataList(mList);
-            getAdapter().notifyItemInserted(lastPosition);
-        } else {
-
+        if (!entity.isSucc()) {
+            mSwipeContainer.autoShowByTotal(mEntity.total);
+            return;
         }
-
+        if (entity.list == null || entity.list.size() == 0) {
+            mSwipeContainer.autoShowByTotal(mEntity.total);
+            return;
+        }
+        mPage = mPage + 1;
+        mEntity = entity;
+        mList.addAll(entity.list);
+        mAdapter.setDataList(mList);
+        mAdapter.notifyDataSetChanged();
+        mSwipeContainer.autoShowByTotal(mEntity.total);
     }
 
+    @Override
     public void onLoadMoreFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
         mSwipeContainer.setRefreshing(false);
+        mSwipeContainer.autoShowByTotal(mEntity.total);
     }
 
+    @Override
+    public void onCacheLoaded(BaseResultEntity entity) {
 
-    public abstract void reqRefresh();
+    }
 
-    public abstract void reqLoadMore();
 
 }

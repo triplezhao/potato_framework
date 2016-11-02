@@ -8,32 +8,15 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragmentMvpClass}.V {
+public class ${fragmentMvpClass}Fragment extends BaseDefaultListFragment implements ${fragmentMvpClass}.V {
 
     public static final String TAG = ${fragmentMvpClass}Fragment.class.getSimpleName();
     
 	public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
-    public long mSectionId;
-    public String mTitle;
-    public int mTotal = 0;
-    public int mPage = 0;
-    public ArrayList<Object> mList = new ArrayList<Object>();
-    public PotatoBaseRecyclerViewAdapter mAdapter;
-    public Object mEntity;
 
-    @Bind(R.id.swipe_container)
-    PotatoRecyclerSwipeLayout mSwipeContainer;
-    @Bind(R.id.list)
-    RecyclerView listview;
-    @Bind(R.id.empty_view)
-    NormalEmptyView mNormalEmptyView;
-    @Bind(R.id.include_a)
-    LinearLayout include_a;
     @Inject ${fragmentMvpClass}Presenter presenter;
 
-
-	
 	 public static ${fragmentClass} instance(Context context,long sectionId, String title){
         Bundle args = new Bundle();
         args.putLong(${fragmentClass}.EXTRARS_SECTION_ID, sectionId);
@@ -54,132 +37,28 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
        
         mSectionId = getArguments() == null ? 0 : getArguments().getLong(EXTRARS_SECTION_ID);
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
-      
-        mAdapter = new ${fragmentMvpClass}Adapter(mContext);
-        mEntity = new Object();
 
         initListView();
-
-        mSwipeContainer.showProgress();
-        presenter.reqRefresh();
-     	
+        reqRefresh();
 		return view;
     }
 
-   public void initListView() {
-
-        mSwipeContainer.setRecyclerView(listview, mAdapter);
-        mSwipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
-       /*
-       瀑布流
-       * //setLayoutManager
-        ExStaggeredGridLayoutManager manager = new ExStaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mSwipeContainer.setLayoutManager(manager);
-
-       网格
-        //setLayoutManager
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mRecyclerView.setLayoutManager(manager);
-       * */
-        mSwipeContainer.setFooterView(listview, com.potato.library.R.layout.potato_listview_footer);
-
-        mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
-            @Override
-            public void pause() {
-                ImageLoader.getInstance().pause();
-            }
-
-            @Override
-            public void resume() {
-                ImageLoader.getInstance().resume();
-            }
-        });
-        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.reqRefresh();
-            }
-        });
-        mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
-            @Override
-            public void onLoad() {
-                presenter.reqLoadMore(mEntity.maxPublicDate);
-            }
-        });
-
-        mSwipeContainer.setEmptyView(mNormalEmptyView);
-        mNormalEmptyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSwipeContainer.showProgress();
-                presenter.reqRefresh();
-            }
-        });
-
-        GridLayoutManager manager = new GridLayoutManager(mContext, 2);
-        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup(mSwipeContainer.getHFAdapter(), manager.getSpanCount()) {
-            @Override
-            public int getSpanSize(int position) {
-                boolean isHeaderOrFooter = adapter.isHeader(position) || adapter.isFooter(position);
-                if (isHeaderOrFooter) {
-                    return mSpanSize;
-                } else if (position % 3 == 0) {
-                    return mSpanSize;
-                } else {
-                    return 1;
-                }
-            }
-        });
-        mSwipeContainer.setLayoutManager(manager);
-
-    }
-
 
     @Override
-    public void onRefreshSucc(Object entity) {
-        mEntity = entity;
-        mSwipeContainer.showSucc();
-        mList = entity.list;
-        mAdapter.setDataList(mList);
-        mAdapter.notifyDataSetChanged();
-        mSwipeContainer.setRefreshing(false);
-        if (mList != null && mList.size() != 0) {
-            mSwipeContainer.setLoadEnable(true);
-        }
-
+    public PotatoBaseRecyclerViewAdapter getAdapter() {
+        return mAdapter = new AAdapter(mContext);
     }
 
     @Override
-    public void onRefreshFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
-        mSwipeContainer.setRefreshing(false);
+    public void reqRefresh() {
+        mSwipeContainer.showProgress();
+        mPage = 1;
+        presenter.reqRefresh("", "1", pageSize);
     }
 
     @Override
-    public void onLoadMoreSucc(Object entity) {
-        mEntity = entity;
-        mSwipeContainer.setLoading(false);
-        ArrayList<Object> moreData = entity.list;
-        if (moreData == null || moreData.size() == 0) {
-            mSwipeContainer.setLoadEnable(false);
-            return;
-        }
-        mList.addAll(moreData);
-        mAdapter.setDataList(mList);
-        mAdapter.notifyItemInserted(mList.size() - 1);
-    }
-
-    @Override
-    public void onLoadMoreFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
-        mSwipeContainer.setRefreshing(false);
-    }
-
-    @Override
-    public void onCacheLoaded(Object entity) {
-
+    public void reqLoadMore() {
+        presenter.reqLoadMore("", mPage + 1 + "", pageSize);
     }
 
     @Override
@@ -187,9 +66,9 @@ public class ${fragmentMvpClass}Fragment extends BaseFragment implements ${fragm
 
     }
 
-    public static class ${fragmentMvpClass}Adapter extends PotatoBaseRecyclerViewAdapter<${fragmentMvpClass}Adapter.VH> {
+    public static class ${fragmentMvpClass}Adapter extends PotatoBaseRecyclerViewAdapter<AAdapter.VH> {
 
-        public ${fragmentMvpClass}Adapter(Context context) {
+        public AAdapter(Context context) {
             super(context);
         }
 

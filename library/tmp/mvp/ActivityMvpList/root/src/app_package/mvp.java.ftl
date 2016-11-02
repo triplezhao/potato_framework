@@ -28,17 +28,7 @@ interface ${mvpClass} {
      * 1.视图接口，定义ui层的一些方法，比如刷新列表等。presenter中会调用这些方法
      * 2.activity会实现这个接口
      */
-    interface V extends BaseView {
-
-        void onRefreshSucc(Object entity);
-
-        void onRefreshFail(String err);
-
-        void onLoadMoreSucc(Object entity);
-
-        void onLoadMoreFail(String err);
-
-        void onCacheLoaded(Object entity);
+    interface V extends BaseListView {
 
 
     }
@@ -48,12 +38,11 @@ interface ${mvpClass} {
      * 2.需要单独写类实现这个接口。
      */
     interface P extends BasePresenter {
-	
-        void reqRefresh();
 
-        void reqLoadMore(int page);
+        void reqRefresh(String id, String page, String pageSize);
+
+        void reqLoadMore(String id, String page, String pageSize);
     }
-
     /**
      * 1.dragger的module类，是dragger组件里需要注入的实例的提供者。
      * 2.component会依赖module进行其他类的实例化
