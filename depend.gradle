@@ -19,7 +19,7 @@ ext {
     gsonVersion = '2.5'
     supportLibraryVersion = '24.1.0'
     okHttpVersion = '3.2.0'
-    roundedimageviewVersion = '2.2.0'
+    roundedimageviewVersion = '2.2.1'
     eventsbus = '3.0.0'
 
     //删除到jecenter时候，修改这个版本号
