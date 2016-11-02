@@ -19,37 +19,26 @@ package potato.demo.mvp.jiongtu;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.view.NormalEmptyView;
-import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
-import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import potato.demo.R;
-import potato.demo.chips.base.BaseFragment;
+import potato.demo.chips.base.BaseDefaultListFragment;
 import potato.demo.chips.common.PageCtrl;
 import potato.demo.chips.util.ImageLoaderUtil;
 import potato.demo.data.bean.JiongtuAlbum;
-import potato.demo.data.result.JiongtuAlbumListEntity;
 
-public class JiongListFragment extends BaseFragment implements JiongList.V {
+public class JiongListFragment extends BaseDefaultListFragment implements JiongList.V {
     private static final String TAG = "ListFragmentJiongtu";
     /**
      * extrars
@@ -58,23 +47,7 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
     public long mSectionId;
     public String mTitle;
-    public int mTotal = 0;
-    public int mPage = 0;
-    public ArrayList<JiongtuAlbum> mList = new ArrayList<JiongtuAlbum>();
-    public PotatoBaseRecyclerViewAdapter mAdapter;
-    public JiongtuAlbumListEntity mEntity;
-
-    @Bind(R.id.swipe_container)
-    PotatoRecyclerSwipeLayout mSwipeContainer;
-    @Bind(R.id.list)
-    RecyclerView listview;
-    @Bind(R.id.empty_view)
-    NormalEmptyView mNormalEmptyView;
-    @Bind(R.id.include_a)
-    LinearLayout include_a;
-
-    @Inject
-    JiongListPresenter presenter;
+    @Inject JiongListPresenter presenter;
 
     @Nullable
     @Override
@@ -86,131 +59,28 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
 
         ButterKnife.bind(this, view);
         DaggerJiongList_C.builder().module(new JiongList.Module(this)).build().inject(this);
-        mAdapter = new JiongTuListAdapter(mContext);
-        mEntity = new JiongtuAlbumListEntity();
 
         initListView();
-
-        mSwipeContainer.showProgress();
-        presenter.reqRefresh();
+        reqRefresh();
 
         return view;
     }
 
-    public void initListView() {
-
-        mSwipeContainer.setRecyclerView(listview, mAdapter);
-        mSwipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
-       /*
-       瀑布流
-       * //setLayoutManager
-        ExStaggeredGridLayoutManager manager = new ExStaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mSwipeContainer.setLayoutManager(manager);
-
-       网格
-        //setLayoutManager
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mRecyclerView.setLayoutManager(manager);
-       * */
-        mSwipeContainer.addLoadMoreView(listview, com.potato.library.R.layout.potato_listview_footer);
-
-        mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
-            @Override
-            public void pause() {
-                ImageLoader.getInstance().pause();
-            }
-
-            @Override
-            public void resume() {
-                ImageLoader.getInstance().resume();
-            }
-        });
-        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.reqRefresh();
-            }
-        });
-        mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
-            @Override
-            public void onLoad() {
-                presenter.reqLoadMore(mEntity.maxPublicDate);
-            }
-        });
-
-        mSwipeContainer.setEmptyView(mNormalEmptyView);
-        mNormalEmptyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSwipeContainer.showProgress();
-                presenter.reqRefresh();
-            }
-        });
-
-        GridLayoutManager manager = new GridLayoutManager(mContext, 2);
-        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup(mSwipeContainer.getHFAdapter(), manager.getSpanCount()) {
-            @Override
-            public int getSpanSize(int position) {
-                boolean isHeaderOrFooter = adapter.isHeader(position) || adapter.isFooter(position);
-                if (isHeaderOrFooter) {
-                    return mSpanSize;
-                } else if (position % 3 == 0) {
-                    return mSpanSize;
-                } else {
-                    return 1;
-                }
-            }
-        });
-        mSwipeContainer.setLayoutManager(manager);
-
-    }
-
-
     @Override
-    public void onRefreshSucc(JiongtuAlbumListEntity entity) {
-        mEntity = entity;
-        mSwipeContainer.showSucc();
-        mList = entity.list;
-        mAdapter.setDataList(mList);
-        mAdapter.notifyDataSetChanged();
-        mSwipeContainer.setRefreshing(false);
-        if (mList != null && mList.size() != 0) {
-            mSwipeContainer.setLoadEnable(true);
-        }
-
+    public PotatoBaseRecyclerViewAdapter getAdapter() {
+        return mAdapter = new AAdapter(mContext);
     }
 
     @Override
-    public void onRefreshFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
-        mSwipeContainer.setRefreshing(false);
+    public void reqRefresh() {
+        mSwipeContainer.showProgress();
+        mPage = 1;
+        presenter.reqRefresh();
     }
 
     @Override
-    public void onLoadMoreSucc(JiongtuAlbumListEntity entity) {
-        mEntity = entity;
-        mSwipeContainer.showLoadMoreView(false);
-        ArrayList<JiongtuAlbum> moreData = entity.list;
-        if (moreData == null || moreData.size() == 0) {
-            mSwipeContainer.setLoadEnable(false);
-            return;
-        }
-        mList.addAll(moreData);
-        mAdapter.setDataList(mList);
-        mAdapter.notifyItemInserted(mList.size() - 1);
-    }
-
-    @Override
-    public void onLoadMoreFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
-        mSwipeContainer.setRefreshing(false);
-    }
-
-    @Override
-    public void onCacheLoaded(JiongtuAlbumListEntity entity) {
-
+    public void reqLoadMore() {
+        presenter.reqLoadMore(0);
     }
 
     @Override
@@ -224,9 +94,9 @@ public class JiongListFragment extends BaseFragment implements JiongList.V {
 
     }
 
-    public static class JiongTuListAdapter extends PotatoBaseRecyclerViewAdapter<JiongTuListAdapter.VH> {
+    public static class AAdapter extends PotatoBaseRecyclerViewAdapter<AAdapter.VH> {
 
-        public JiongTuListAdapter(Context context) {
+        public AAdapter(Context context) {
             super(context);
         }
 

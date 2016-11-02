@@ -57,7 +57,6 @@ final class JiongListPresenter implements JiongList.P {
     public void start() {
 
     }
-
     @Override
     public void reqRefresh() {
         JiongtuApi.getAlbumListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, mJiongListView.getSectionId(), 0, new JiongtuCallback<JiongtuAlbumListEntity>() {

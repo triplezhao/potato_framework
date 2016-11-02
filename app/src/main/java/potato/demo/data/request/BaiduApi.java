@@ -14,15 +14,15 @@ public class BaiduApi implements ApiUrls {
     /**
      * http://image.baidu.com/data/imgs?col=%E7%BE%8E%E5%A5%B3&tag=%E5%85%A8%E9%83%A8&pn=1&rn=20&from=1
      */
-    public static void imageList(CacheMode cacheMode, String col, String startIndex, String pageSize, BaiduCallback<BaiduImageListByCategoryEntity> callback) {
+    public static void imageList(CacheMode cacheMode, String id, String page, String pageSize, BaiduCallback<BaiduImageListByCategoryEntity> callback) {
         callback.setEntity(new BaiduImageListByCategoryEntity());
         OkHttpUtils.get(imageList)//
                 .tag("imageList")//
-                .cacheKey(imageList + col + startIndex + pageSize)//
+                .cacheKey(imageList + id + page + pageSize)//
                 .cacheMode(cacheMode)//
-                .params("col", col)
+                .params("col", id)
                 .params("tag", "全部")
-                .params("pn", startIndex)
+                .params("pn", page)
                 .params("rn", pageSize)
                 .params("from", "1")
                 .execute(callback);

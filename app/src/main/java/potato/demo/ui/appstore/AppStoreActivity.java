@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 
@@ -20,7 +19,6 @@ import java.util.Random;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import potato.demo.R;
-import potato.demo.chips.api.BaseResultEntity;
 import potato.demo.chips.base.BaseDefaultListActivity;
 import potato.demo.chips.common.AppPool;
 import potato.demo.data.bean.AppBean;
@@ -28,30 +26,18 @@ import potato.demo.data.bean.DataSource;
 
 public class AppStoreActivity extends BaseDefaultListActivity {
 
-    private AppListAdapter mAdapter;
 
     private BroadcastReceiver mReceiver;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.include_a)
-    LinearLayout include_a;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.include_a) LinearLayout include_a;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_store);
         ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
-        mAdapter = new AppListAdapter(mContext);
-        initListView(include_a);
-
-        mSwipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
-        mSwipeContainer.showProgress();
-        reqRefresh();
-
         startDownloadService();
-
         mReceiver = new BroadcastReceiver() {
 
             @Override
@@ -59,9 +45,13 @@ public class AppStoreActivity extends BaseDefaultListActivity {
                 showDownloadList();
             }
         };
-
         registerReceiver(mReceiver, new IntentFilter(
                 DownloadManager.ACTION_NOTIFICATION_CLICKED));
+
+        initListView();
+        reqRefresh();
+
+
     }
 
     private void startDownloadService() {
@@ -84,9 +74,8 @@ public class AppStoreActivity extends BaseDefaultListActivity {
 
     @Override
     public PotatoBaseRecyclerViewAdapter getAdapter() {
-        return mAdapter;
+        return new AppListAdapter(mContext);
     }
-
 
     @Override
     public void reqRefresh() {
@@ -113,33 +102,6 @@ public class AppStoreActivity extends BaseDefaultListActivity {
 
     }
 
-    @Override
-    public void onRefreshSucc(BaseResultEntity entity) {
-        mList = getRandomSublist(5);
-        mTotal = 1000;
-        mSwipeContainer.showSucc();
-        getAdapter().setDataList(mList);
-        getAdapter().notifyDataSetChanged();
-        if (mList != null && mList.size() != 0 && mList.size() < mTotal) {
-            mSwipeContainer.setLoadEnable(true);
-        } else {
-            mSwipeContainer.setLoadEnable(false);
-        }
-    }
-
-    @Override
-    public void onLoadMoreSucc(BaseResultEntity entity) {
-        mTotal = 1000;
-        int lastPosition = mList.size();
-        mList.addAll(getRandomSublist(5));
-        if (mList != null && mList.size() != 0 && mList.size() < mTotal) {
-            mSwipeContainer.setLoadEnable(true);
-        } else {
-            mSwipeContainer.setLoadEnable(false);
-        }
-        getAdapter().setDataList(mList);
-        getAdapter().notifyItemInserted(lastPosition);
-    }
 
     @Override
     public void reqLoadMore() {

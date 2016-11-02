@@ -36,8 +36,8 @@ final class QIImageListPresenter implements QIImageList.P {
 
 
     @Override
-    public void reqRefresh() {
-        QIApi.getImages(CacheMode.REQUEST_FAILED_READ_CACHE,view.getCid()+"","1","20" ,new QICallback<QIImageEntity>() {
+    public void reqRefresh(String id, String page, String pageSize) {
+        QIApi.getImages(CacheMode.REQUEST_FAILED_READ_CACHE, id, page, pageSize, new QICallback<QIImageEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)
@@ -52,9 +52,9 @@ final class QIImageListPresenter implements QIImageList.P {
     }
 
     @Override
-    public void reqLoadMore(int page) {
+    public void reqLoadMore(String id, String page, String pageSize) {
 
-        QIApi.getImages(CacheMode.REQUEST_FAILED_READ_CACHE,view.getCid()+"",page+"","20" ,new QICallback<QIImageEntity>() {
+        QIApi.getImages(CacheMode.REQUEST_FAILED_READ_CACHE, id, page, pageSize, new QICallback<QIImageEntity>() {
             @Override
             public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
                 if (e != null)

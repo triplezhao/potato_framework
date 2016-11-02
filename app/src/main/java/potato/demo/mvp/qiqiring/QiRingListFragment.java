@@ -4,40 +4,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.view.NormalEmptyView;
-import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
-import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import potato.demo.R;
-import potato.demo.chips.base.BaseFragment;
+import potato.demo.chips.base.BaseDefaultListFragment;
 import potato.demo.chips.event.MusicEvent;
 import potato.demo.data.bean.QIRingBean;
-import potato.demo.data.result.QIRingEntity;
 
-public class QiRingListFragment extends BaseFragment implements QiRingList.V {
+public class QiRingListFragment extends BaseDefaultListFragment implements QiRingList.V {
 
     public static final String TAG = QiRingListFragment.class.getSimpleName();
 
@@ -45,20 +34,6 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
     public String mSectionId;
     public String mTitle;
-    public int mTotal = 0;
-    public int mPage = 0;
-    public ArrayList<QIRingEntity> mList = new ArrayList<QIRingEntity>();
-    public PotatoBaseRecyclerViewAdapter mAdapter;
-    public QIRingEntity mEntity;
-
-    @Bind(R.id.swipe_container)
-    PotatoRecyclerSwipeLayout mSwipeContainer;
-    @Bind(R.id.list)
-    RecyclerView listview;
-    @Bind(R.id.empty_view)
-    NormalEmptyView mNormalEmptyView;
-    @Bind(R.id.include_a)
-    LinearLayout include_a;
     @Inject QiRingListPresenter presenter;
 
 
@@ -94,133 +69,28 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
         mSectionId = getArguments() == null ? "" : getArguments().getString(EXTRARS_SECTION_ID);
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
 
-        mAdapter = new QiRingListAdapter(mContext);
-        mEntity = new QIRingEntity();
-
         initListView();
 
-        mSwipeContainer.showProgress();
-        presenter.reqRefresh();
+        reqRefresh();
 
         return view;
     }
 
-    public void initListView() {
-
-        mSwipeContainer.setRecyclerView(listview, mAdapter);
-        mSwipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
-       /*
-       瀑布流
-       * //setLayoutManager
-        ExStaggeredGridLayoutManager manager = new ExStaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mSwipeContainer.setLayoutManager(manager);
-
-       网格
-        //setLayoutManager
-        GridLayoutManager manager = new GridLayoutManager(this, 2);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mRecyclerView.setLayoutManager(manager);
-       * */
-
-        mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
-            @Override
-            public void pause() {
-                ImageLoader.getInstance().pause();
-            }
-
-            @Override
-            public void resume() {
-                ImageLoader.getInstance().resume();
-            }
-        });
-        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.reqRefresh();
-            }
-        });
-        mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
-            @Override
-            public void onLoad() {
-                presenter.reqLoadMore(mEntity.nowpage + 1);
-            }
-        });
-
-        mSwipeContainer.setEmptyView(mNormalEmptyView);
-        mNormalEmptyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSwipeContainer.showProgress();
-                presenter.reqRefresh();
-            }
-        });
-
-        GridLayoutManager manager = new GridLayoutManager(mContext, 1);
-        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup(mSwipeContainer.getHFAdapter(), manager.getSpanCount()) {
-            @Override
-            public int getSpanSize(int position) {
-                boolean isHeaderOrFooter = adapter.isHeader(position) || adapter.isFooter(position);
-                if (isHeaderOrFooter) {
-                    return mSpanSize;
-                } else if (position % 3 == 0) {
-                    return mSpanSize;
-                } else {
-                    return 1;
-                }
-            }
-        });
-        mSwipeContainer.setLayoutManager(manager);
-
-    }
-
-
     @Override
-    public void onRefreshSucc(final QIRingEntity entity) {
-        mSwipeContainer.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mEntity = entity;
-                mSwipeContainer.showSucc();
-                mList = entity.list;
-                mAdapter.setDataList(mList);
-                mAdapter.notifyDataSetChanged();
-                mSwipeContainer.autoShowByTotal(mEntity.total);
-            }
-        }, 2000);
+    public PotatoBaseRecyclerViewAdapter getAdapter() {
+        return mAdapter = new AAdapter(mContext);
     }
 
     @Override
-    public void onRefreshFail(String err) {
-        mSwipeContainer.showEmptyViewFail();
+    public void reqRefresh() {
+        mSwipeContainer.showProgress();
+        mPage = 1;
+        presenter.reqRefresh(mSectionId, "1", pageSize);
     }
 
     @Override
-    public void onLoadMoreSucc(final QIRingEntity entity) {
-        mSwipeContainer.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mEntity = entity;
-                ArrayList<QIRingEntity> moreData = entity.list;
-                mList.addAll(moreData);
-                mAdapter.setDataList(mList);
-                mAdapter.notifyDataSetChanged();
-                mSwipeContainer.autoShowByTotal(mEntity.total);
-
-            }
-        }, 2000);
-
-    }
-
-    @Override
-    public void onLoadMoreFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
-        mSwipeContainer.setRefreshing(false);
-    }
-
-    @Override
-    public void onCacheLoaded(QIRingEntity entity) {
-
+    public void reqLoadMore() {
+        presenter.reqLoadMore(mSectionId, mPage + 1 + "", pageSize);
     }
 
     @Override
@@ -239,9 +109,9 @@ public class QiRingListFragment extends BaseFragment implements QiRingList.V {
         mAdapter.notifyDataSetChanged();
     }
 
-    public static class QiRingListAdapter extends PotatoBaseRecyclerViewAdapter<QiRingListAdapter.VH> {
+    public static class AAdapter extends PotatoBaseRecyclerViewAdapter<AAdapter.VH> {
 
-        public QiRingListAdapter(Context context) {
+        public AAdapter(Context context) {
             super(context);
         }
 

@@ -7,9 +7,8 @@ package potato.demo.mvp.qiqiimage;
 
 import dagger.Component;
 import dagger.Provides;
-import potato.demo.data.result.QIImageEntity;
+import potato.demo.mvp.util.BaseListView;
 import potato.demo.mvp.util.BasePresenter;
-import potato.demo.mvp.util.BaseView;
 import potato.demo.mvp.util.FragmentScoped;
 
 interface QIImageList {
@@ -31,17 +30,8 @@ interface QIImageList {
      * 1.视图接口，定义ui层的一些方法，比如刷新列表等。presenter中会调用这些方法
      * 2.activity会实现这个接口
      */
-    interface V extends BaseView {
+    interface V extends BaseListView {
 
-        void onRefreshSucc(QIImageEntity entity);
-
-        void onRefreshFail(String err);
-
-        void onLoadMoreSucc(QIImageEntity entity);
-
-        void onLoadMoreFail(String err);
-
-        void onCacheLoaded(QIImageEntity entity);
 
         String getCid();
     }
@@ -52,9 +42,10 @@ interface QIImageList {
      * 2.需要单独写类实现这个接口。
      */
     interface P extends BasePresenter {
-        void reqRefresh();
 
-        void reqLoadMore(int page);
+        void reqRefresh(String id, String page, String pageSize);
+
+        void reqLoadMore(String id, String page, String pageSize);
     }
 
     /**

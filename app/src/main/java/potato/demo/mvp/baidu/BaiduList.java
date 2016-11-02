@@ -7,9 +7,8 @@ package potato.demo.mvp.baidu;
 
 import dagger.Component;
 import dagger.Provides;
-import potato.demo.data.result.BaiduImageListByCategoryEntity;
+import potato.demo.mvp.util.BaseListView;
 import potato.demo.mvp.util.BasePresenter;
-import potato.demo.mvp.util.BaseView;
 import potato.demo.mvp.util.FragmentScoped;
 
 interface BaiduList {
@@ -31,17 +30,7 @@ interface BaiduList {
      * 1.视图接口，定义ui层的一些方法，比如刷新列表等。presenter中会调用这些方法
      * 2.activity会实现这个接口
      */
-    interface V extends BaseView {
-
-        void onRefreshSucc(BaiduImageListByCategoryEntity entity);
-
-        void onRefreshFail(String err);
-
-        void onLoadMoreSucc(BaiduImageListByCategoryEntity entity);
-
-        void onLoadMoreFail(String err);
-
-        void onCacheLoaded(BaiduImageListByCategoryEntity entity);
+    interface V extends BaseListView {
 
 
     }
@@ -53,9 +42,9 @@ interface BaiduList {
      */
     interface P extends BasePresenter {
 
-        void reqRefresh(String col, String startIndex, String pageSize);
+        void reqRefresh(String id, String page, String pageSize);
 
-        void reqLoadMore(String col, String startIndex, String pageSize);
+        void reqLoadMore(String id, String page, String pageSize);
     }
 
     /**

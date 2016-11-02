@@ -3,56 +3,31 @@ package potato.demo.mvp.baidu;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.potato.library.adapter.PotatoBaseRecyclerViewAdapter;
-import com.potato.library.view.NormalEmptyView;
-import com.potato.library.view.hfrecyclerview.HFGridlayoutSpanSizeLookup;
-import com.potato.library.view.hfrecyclerview.HFRecyclerViewAdapter;
-import com.potato.library.view.refresh.PotatoRecyclerSwipeLayout;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import potato.demo.R;
-import potato.demo.chips.base.BaseFragment;
+import potato.demo.chips.base.BaseDefaultListFragment;
 import potato.demo.chips.util.ImageLoaderUtil;
 import potato.demo.data.bean.BaiduImageBean;
-import potato.demo.data.result.BaiduImageListByCategoryEntity;
 
-public class BaiduListFragment extends BaseFragment implements BaiduList.V {
+public class BaiduListFragment extends BaseDefaultListFragment implements BaiduList.V {
 
     public static final String TAG = BaiduListFragment.class.getSimpleName();
 
     public static final String EXTRARS_SECTION_ID = "EXTRARS_SECTION_ID";
     public static final String EXTRARS_TITLE = "EXTRARS_TITLE";
-    public String mId;
     public String mTitle;
-    public ArrayList<BaiduImageBean> mList = new ArrayList<BaiduImageBean>();
-    public PotatoBaseRecyclerViewAdapter mAdapter;
-    public BaiduImageListByCategoryEntity mEntity;
-
-    @Bind(R.id.swipe_container)
-    PotatoRecyclerSwipeLayout mSwipeContainer;
-    @Bind(R.id.list)
-    RecyclerView listview;
-    @Bind(R.id.empty_view)
-    NormalEmptyView mNormalEmptyView;
-    @Bind(R.id.include_a)
-    LinearLayout include_a;
     @Inject BaiduListPresenter presenter;
 
 
@@ -77,136 +52,41 @@ public class BaiduListFragment extends BaseFragment implements BaiduList.V {
         mId = getArguments() == null ? "" : getArguments().getString(EXTRARS_SECTION_ID);
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
 
-        mAdapter = new BaiduListAdapter(mContext);
-        mEntity = new BaiduImageListByCategoryEntity();
-
         initListView();
-
-        mSwipeContainer.showProgress();
-        presenter.reqRefresh(mId, "1", "1");
+        reqRefresh();
 
         return view;
     }
 
-    public void initListView() {
-
-        mSwipeContainer.setRecyclerView(listview, mAdapter);
-        mSwipeContainer.setLayoutManager(new LinearLayoutManager(mContext));
-       /*
-       瀑布流
-       * //setLayoutManager
-        ExStaggeredGridLayoutManager manager = new ExStaggeredGridLayoutManager (2, StaggeredGridLayoutManager.VERTICAL);
-        manager.setSpanSizeLookup(new HeaderSpanSizeLookup((HeaderAndFooterRecyclerViewAdapter) mRecyclerView.getAdapter(), manager.getSpanCount()));
-        mSwipeContainer.setLayoutManager(manager);
-
-       网格 * */
-        //setLayoutManager
-        GridLayoutManager manager = new GridLayoutManager(mContext, 2);
-        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup((HFRecyclerViewAdapter) mSwipeContainer.getHFAdapter(), manager.getSpanCount()));
-        mSwipeContainer.setLayoutManager(manager);
-
-       /* mSwipeContainer.addLoadMoreView(listview, com.potato.library.R.layout.potato_listview_footer);
-        mSwipeContainer.addEndView(listview, com.potato.library.R.layout.potato_listview_footer_end);
-        mSwipeContainer.addTipsView(listview, com.potato.library.R.layout.potato_listview_footer_tips);*/
-
-        mSwipeContainer.setScrollStateLisener(new PotatoRecyclerSwipeLayout.ScrollStateLisener() {
-            @Override
-            public void pause() {
-                ImageLoader.getInstance().pause();
-            }
-
-            @Override
-            public void resume() {
-                ImageLoader.getInstance().resume();
-            }
-        });
-        mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.reqRefresh(mId, "1", "1");
-            }
-        });
-        mSwipeContainer.setOnLoadListener(new PotatoRecyclerSwipeLayout.OnLoadListener() {
-            @Override
-            public void onLoad() {
-                presenter.reqLoadMore(mId, mEntity.startIndex + mEntity.returnNumber + "", "1");
-            }
-        });
-
-        mSwipeContainer.setEmptyView(mNormalEmptyView);
-        mNormalEmptyView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSwipeContainer.showProgress();
-                presenter.reqRefresh(mId, "1", "1");
-            }
-        });
-
-        /*GridLayoutManager manager = new GridLayoutManager(mContext, 2);
-        manager.setSpanSizeLookup(new HFGridlayoutSpanSizeLookup(mSwipeContainer.getHFAdapter(), manager.getSpanCount()) {
-            @Override
-            public int getSpanSize(int position) {
-                boolean isHeaderOrFooter = adapter.isHeader(position) || adapter.isFooter(position);
-                if (isHeaderOrFooter) {
-                    return mSpanSize;
-                } else if (position % 3 == 0) {
-                    return mSpanSize;
-                } else {
-                    return 1;
-                }
-            }
-        });*/
-//        mSwipeContainer.setLayoutManager(manager);
-
-    }
-
-
     @Override
-    public void onRefreshSucc(BaiduImageListByCategoryEntity entity) {
-        entity.list.remove(entity.list.size() - 1);
-        mSwipeContainer.showSucc();
-        mEntity = entity;
-        mList = entity.list;
-        mAdapter.setDataList(mList);
-        mAdapter.notifyDataSetChanged();
-        mSwipeContainer.autoShowByTotal(mEntity.total);
+    public PotatoBaseRecyclerViewAdapter getAdapter() {
+        return mAdapter = new AAdapter(mContext);
     }
 
     @Override
-    public void onRefreshFail(String err) {
-        mSwipeContainer.showEmptyViewFail();
+    public void reqRefresh() {
+        mSwipeContainer.showProgress();
+        mPage = 1;
+        presenter.reqRefresh("", "1", pageSize);
     }
 
     @Override
-    public void onLoadMoreSucc(BaiduImageListByCategoryEntity entity) {
-        entity.list.remove(entity.list.size() - 1);
-        mEntity = entity;
-        ArrayList<BaiduImageBean> moreData = entity.list;
-        mList.addAll(moreData);
-        mAdapter.setDataList(mList);
-        mAdapter.notifyDataSetChanged();
-        mSwipeContainer.autoShowByTotal(mEntity.total);
+    public void reqLoadMore() {
+        presenter.reqLoadMore("", mPage + 1 + "", pageSize);
     }
 
-    @Override
-    public void onLoadMoreFail(String err) {
-        mSwipeContainer.setLoadEnable(false);
-        mSwipeContainer.setRefreshing(false);
-    }
 
-    @Override
-    public void onCacheLoaded(BaiduImageListByCategoryEntity entity) {
 
-    }
+
 
     @Override
     public void onClick(View v) {
 
     }
 
-    public static class BaiduListAdapter extends PotatoBaseRecyclerViewAdapter<BaiduListAdapter.VH> {
+    public static class AAdapter extends PotatoBaseRecyclerViewAdapter<AAdapter.VH> {
 
-        public BaiduListAdapter(Context context) {
+        public AAdapter(Context context) {
             super(context);
         }
 

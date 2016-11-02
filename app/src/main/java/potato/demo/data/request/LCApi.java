@@ -28,7 +28,6 @@ public class LCApi implements ApiUrls {
                 .execute(callback);
 
 
-
     }
 
 }

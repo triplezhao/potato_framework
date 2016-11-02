@@ -2,9 +2,8 @@ package potato.demo.mvp.jiongtu;
 
 import dagger.Component;
 import dagger.Provides;
-import potato.demo.data.result.JiongtuAlbumListEntity;
+import potato.demo.mvp.util.BaseListView;
 import potato.demo.mvp.util.BasePresenter;
-import potato.demo.mvp.util.BaseView;
 import potato.demo.mvp.util.FragmentScoped;
 
 /**
@@ -36,17 +35,7 @@ interface JiongList {
      * 1.视图接口，定义ui层的一些方法，比如刷新列表等。presenter中会调用这些方法
      * 2.activity会实现这个接口
      */
-    interface V extends BaseView {
-
-        void onRefreshSucc(JiongtuAlbumListEntity entity);
-
-        void onRefreshFail(String err);
-
-        void onLoadMoreSucc(JiongtuAlbumListEntity entity);
-
-        void onLoadMoreFail(String err);
-
-        void onCacheLoaded(JiongtuAlbumListEntity entity);
+    interface V extends BaseListView {
 
         long getSectionId();
 
