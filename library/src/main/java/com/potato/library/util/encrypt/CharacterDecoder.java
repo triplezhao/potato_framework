@@ -68,7 +68,7 @@ import java.nio.ByteBuffer;
  * * CEFormatException. The syntax of the detail string is 73 *
  * <p/>
  * <pre>
- *    74    *      DecoderClassName: Error message.
+ *    74    *      DecoderClassName: Err message.
  *    75    *
  * </pre>
  * <p/>

@@ -11,6 +11,7 @@ import com.lzy.okhttputils.https.HttpsUtils;
 import com.lzy.okhttputils.model.HttpHeaders;
 import com.lzy.okhttputils.model.HttpParams;
 import com.lzy.okhttputils.utils.HeaderParser;
+import com.lzy.okhttputils.utils.NetUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -213,7 +214,9 @@ public abstract class BaseRequest<R extends BaseRequest> {
         return headers;
     }
 
-    /** 将传递进来的参数拼接成 url */
+    /**
+     * 将传递进来的参数拼接成 url
+     */
     protected String createUrlFromParams(String url, Map<String, String> params) {
         try {
             StringBuilder sb = new StringBuilder();
@@ -232,7 +235,9 @@ public abstract class BaseRequest<R extends BaseRequest> {
         return url;
     }
 
-    /** 通用的拼接请求头 */
+    /**
+     * 通用的拼接请求头
+     */
     protected Request.Builder appendHeaders(Request.Builder requestBuilder) {
         Headers.Builder headerBuilder = new Headers.Builder();
         ConcurrentHashMap<String, String> headerMap = headers.headersMap;
@@ -244,10 +249,14 @@ public abstract class BaseRequest<R extends BaseRequest> {
         return requestBuilder;
     }
 
-    /** 根据不同的请求方式和参数，生成不同的RequestBody */
+    /**
+     * 根据不同的请求方式和参数，生成不同的RequestBody
+     */
     protected abstract RequestBody generateRequestBody();
 
-    /** 生成类是表单的请求体 */
+    /**
+     * 生成类是表单的请求体
+     */
     protected RequestBody generateMultipartRequestBody() {
         if (params.fileParamsMap.isEmpty()) {
             //表单提交，没有文件
@@ -274,7 +283,9 @@ public abstract class BaseRequest<R extends BaseRequest> {
         }
     }
 
-    /** 对请求body进行包装，用于回调上传进度 */
+    /**
+     * 对请求body进行包装，用于回调上传进度
+     */
     protected RequestBody wrapRequestBody(RequestBody requestBody) {
         ProgressRequestBody progressRequestBody = new ProgressRequestBody(requestBody);
         progressRequestBody.setListener(new ProgressRequestBody.Listener() {
@@ -292,18 +303,24 @@ public abstract class BaseRequest<R extends BaseRequest> {
         return progressRequestBody;
     }
 
-    /** 根据不同的请求方式，将RequestBody转换成Request对象 */
+    /**
+     * 根据不同的请求方式，将RequestBody转换成Request对象
+     */
     protected abstract Request generateRequest(RequestBody requestBody);
 
-    /** 根据当前的请求参数，生成对应的 Call 任务 */
+    /**
+     * 根据当前的请求参数，生成对应的 Call 任务
+     */
     protected Call generateCall(Request request) {
         if (readTimeOut <= 0 && writeTimeOut <= 0 && connectTimeout <= 0 && certificates == null) {
             return OkHttpUtils.getInstance().getOkHttpClient().newCall(request);
         } else {
             OkHttpClient.Builder newClientBuilder = OkHttpUtils.getInstance().getOkHttpClient().newBuilder();
             if (readTimeOut > 0) newClientBuilder.readTimeout(readTimeOut, TimeUnit.MILLISECONDS);
-            if (writeTimeOut > 0) newClientBuilder.writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
-            if (connectTimeout > 0) newClientBuilder.connectTimeout(connectTimeout, TimeUnit.MILLISECONDS);
+            if (writeTimeOut > 0)
+                newClientBuilder.writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
+            if (connectTimeout > 0)
+                newClientBuilder.connectTimeout(connectTimeout, TimeUnit.MILLISECONDS);
             if (hostnameVerifier != null) newClientBuilder.hostnameVerifier(hostnameVerifier);
             if (certificates != null) {
                 newClientBuilder.sslSocketFactory(HttpsUtils.getSslSocketFactory(certificates, null, null));
@@ -317,7 +334,9 @@ public abstract class BaseRequest<R extends BaseRequest> {
         }
     }
 
-    /** 阻塞方法，同步请求执行 */
+    /**
+     * 阻塞方法，同步请求执行
+     */
     public Response execute() throws IOException {
         //添加缓存头和其他的公共头，同步请求不做缓存，缓存为空
         HeaderParser.addDefaultHeaders(this, null, null);
@@ -329,7 +348,9 @@ public abstract class BaseRequest<R extends BaseRequest> {
         return call.execute();
     }
 
-    /** 非阻塞方法，异步请求，但是回调在子线程中执行 */
+    /**
+     * 非阻塞方法，异步请求，但是回调在子线程中执行
+     */
     @SuppressWarnings("unchecked")
     public <T> void execute(AbsCallback<T> callback) {
         mCallback = callback;
@@ -354,28 +375,37 @@ public abstract class BaseRequest<R extends BaseRequest> {
                 sendSuccessResultCallback(true, data, call, null, mCallback);
                 return;//返回即不请求网络
             } else {
-                sendFailResultCallback(true, call, null, new IllegalStateException("没有获取到缓存！"), mCallback);
+                //CACHE_NO
+                sendFailResultCallback(true, call, null, mCallback.getCacheFail(), mCallback);
             }
-        } else if (cacheMode == CacheMode.FIRST_CACHE_THEN_REQUEST||cacheMode == CacheMode.CACHE_ONLY) {
+        } else if (cacheMode == CacheMode.FIRST_CACHE_THEN_REQUEST || cacheMode == CacheMode.CACHE_ONLY) {
             //先使用缓存，不管是否存在，仍然请求网络
             if (cacheEntity != null) {
                 T data = cacheEntity.getData();
                 sendSuccessResultCallback(true, data, call, null, mCallback);
             } else {
-                sendFailResultCallback(true, call, null, new IllegalStateException("没有获取到缓存！"), mCallback);
+                //CACHE_NO
+                sendFailResultCallback(true, call, null, mCallback.getCacheFail(), mCallback);
             }
-            if(cacheMode == CacheMode.CACHE_ONLY){
+            if (cacheMode == CacheMode.CACHE_ONLY) {
                 return;//只用cache不请求网络
             }
-        }else if(cacheMode == CacheMode.NET_ONLY){
-           //只用网络不用缓存
+        } else if (cacheMode == CacheMode.NET_ONLY) {
+            //只用网络不用缓存
         }
 
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                //请求失败，一般为url地址错误，网络错误等
-                sendFailResultCallback(false, call, null, e, mCallback);
+                //请求失败，一般为url地址错误，网络错误等.没连网页会走这里
+//                sendFailResultCallback(false, call, null, e, mCallback);
+                if (!NetUtil.isNetworkAvailable(OkHttpUtils.getContext())) {
+                    //NO_NET
+                    sendFailResultCallback(false, call, null, mCallback.getNetConnectFail(), mCallback);
+                } else {
+                    //NET_FAIL
+                    sendFailResultCallback(false, call, null, mCallback.getNetFail(), mCallback);
+                }
             }
 
             @Override
@@ -384,7 +414,9 @@ public abstract class BaseRequest<R extends BaseRequest> {
                 //304缓存数据
                 if (responseCode == 304 && cacheMode == CacheMode.DEFAULT) {
                     if (cacheEntity == null) {
-                        sendFailResultCallback(true, call, response, new IllegalStateException("服务器响应码304，但是客户端没有缓存！"), mCallback);
+                        //SERVER_FAIL
+//                        sendFailResultCallback(true, call, response, new IllegalStateException("服务器响应码304，但是客户端没有缓存！"), mCallback);
+                        sendFailResultCallback(true, call, response, mCallback.getNetFail(), mCallback);
                     } else {
                         T data = cacheEntity.getData();
                         sendSuccessResultCallback(true, data, call, response, mCallback);
@@ -393,7 +425,10 @@ public abstract class BaseRequest<R extends BaseRequest> {
                 }
                 //响应失败，一般为服务器内部错误，或者找不到页面等
                 if (responseCode >= 400 && responseCode <= 599) {
-                    sendFailResultCallback(false, call, response, new Exception("code:"+response.code()+"msg:"+response.message()), mCallback);
+//                    sendFailResultCallback(false, call, response, new Exception("code:"+response.code()+"msg:"+response.message()), mCallback);
+                    //SERVER_FAIL
+//                    sendFailResultCallback(false, call, response, new Exception("网络请求失败"), mCallback);
+                    sendFailResultCallback(true, call, response, mCallback.getServerFail(), mCallback);
                     return;
                 }
 
@@ -404,7 +439,11 @@ public abstract class BaseRequest<R extends BaseRequest> {
                     handleCache(response.headers(), data);
                 } catch (Exception e) {
                     //一般为服务器响应成功，但是数据解析错误
-                    sendFailResultCallback(false, call, response, e, mCallback);
+                    //这里是callbaak返回来的exception,使用者抛出的，一般是api接口返回的code不是成功状态。
+                    //APIFAIL
+                    sendFailResultCallback(true, call, response, mCallback.getApiFail(e.getMessage()), mCallback);
+//                    sendFailResultCallback(false, call, response, e, mCallback);
+
                 }
             }
         });
@@ -430,7 +469,9 @@ public abstract class BaseRequest<R extends BaseRequest> {
         }
     }
 
-    /** 失败回调，发送到主线程 */
+    /**
+     * 失败回调，发送到主线程
+     */
     @SuppressWarnings("unchecked")
     private <T> void sendFailResultCallback(final boolean isFromCache, final Call call,//
                                             final Response response, final Exception e, final AbsCallback<T> callback) {
@@ -450,12 +491,15 @@ public abstract class BaseRequest<R extends BaseRequest> {
                 T data = cacheEntity.getData();
                 sendSuccessResultCallback(true, data, call, response, callback);
             } else {
-                sendFailResultCallback(true, call, response, new IllegalStateException("请求网络失败后，无法读取缓存或者缓存不存在！"), callback);
+//                sendFailResultCallback(true, call, response, new IllegalStateException("请求网络失败后，无法读取缓存或者缓存不存在！"), callback);
+                sendFailResultCallback(true, call, response, callback.getCacheFail(), callback);
             }
         }
     }
 
-    /** 成功回调，发送到主线程 */
+    /**
+     * 成功回调，发送到主线程
+     */
     private <T> void sendSuccessResultCallback(final boolean isFromCache, final T t, //
                                                final Call call, final Response response, final AbsCallback<T> callback) {
         OkHttpUtils.getInstance().getDelivery().post(new Runnable() {

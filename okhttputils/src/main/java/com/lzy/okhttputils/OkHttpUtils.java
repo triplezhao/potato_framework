@@ -49,7 +49,7 @@ public class OkHttpUtils {
     private HttpParams mCommonParams;                     //全局公共请求参数
     private HttpHeaders mCommonHeaders;                   //全局公共请求头
     private CacheMode mCacheMode;                         //全局缓存模式
-    private static Application context;                   //全局上下文
+    public static Application context;                   //全局上下文
 
     private OkHttpUtils() {
         okHttpClientBuilder = new OkHttpClient.Builder();

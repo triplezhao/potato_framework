@@ -71,6 +71,8 @@ public class QiRingListFragment extends BaseDefaultListFragment implements QiRin
 
         initListView();
 
+        mSwipeContainer.setmLoadMoreNever(true);
+
         reqRefresh();
 
         return view;

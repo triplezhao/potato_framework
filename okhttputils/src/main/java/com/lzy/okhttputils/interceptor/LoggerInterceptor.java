@@ -45,64 +45,74 @@ public class LoggerInterceptor implements Interceptor {
             String url = request.url().toString();
             Headers headers = request.headers();
 
-            Log.e(tag, "---------------------request log start---------------------");
-            Log.e(tag, "method : " + request.method());
-            Log.e(tag, "url : " + url);
-            if (headers != null && headers.size() > 0) {
-                Log.e(tag, "headers : \n");
-                Log.e(tag, headers.toString());
-            }
+            Log.d(tag, "---------------------request log start---------------------");
+            Log.d(tag, "method : " + request.method());
+            Log.d(tag, "url : " + url);
+
             RequestBody requestBody = request.body();
             if (requestBody != null) {
                 MediaType mediaType = requestBody.contentType();
                 if (mediaType != null) {
-                    Log.e(tag, "contentType : " + mediaType.toString());
                     if (isText(mediaType)) {
-                        Log.e(tag, "content : " + bodyToString(request));
+                        Log.d(tag, "params : " + bodyToString(request));
                     } else {
-                        Log.e(tag, "content : " + " maybe [file part] , too large too print , ignored!");
+                        Log.d(tag, "params : " + " maybe [file part] , too large too print , ignored!");
                     }
+                    Log.d(tag, "contentType : " + mediaType.toString());
                 }
+            }
+            if (headers != null && headers.size() > 0) {
+                Log.d(tag, "headers : \n");
+                Log.d(tag, headers.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            Log.e(tag, "---------------------request log end-----------------------");
+            Log.d(tag, "---------------------request log end-----------------------");
         }
     }
 
     private Response logForResponse(Response response) {
         try {
-            Log.e(tag, "---------------------response log start---------------------");
+            Log.d(tag, "---------------------response log start---------------------");
             Response.Builder builder = response.newBuilder();
             Response clone = builder.build();
+            Log.d(tag, "url : " + clone.request().url());
+            RequestBody requestBody = clone.request().body();
+            if (requestBody != null) {
+                MediaType mediaType = requestBody.contentType();
+                if (mediaType != null) {
+                    if (isText(mediaType)) {
+                        Log.d(tag, "params : " + bodyToString(clone.request()));
+                    } else {
+                        Log.d(tag, "params : " + " maybe [file part] , too large too print , ignored!");
+                    }
+                }
+            }
+            Log.d(tag, "code : " + clone.code() + "，protocol : " + clone.protocol() + "，message : " + clone.message());
 
             if (showResponse) {
                 ResponseBody body = clone.body();
                 if (body != null) {
                     MediaType mediaType = body.contentType();
                     if (mediaType != null) {
-                        Log.e(tag, "contentType : " + mediaType.toString());
+                        Log.d(tag, "contentType : " + mediaType.toString());
                         if (isText(mediaType)) {
                             String resp = body.string();
-                            Log.e(tag, "content : " + resp);
+                            Log.d(tag, "content : " + resp);
                             body = ResponseBody.create(mediaType, resp);
                             return response.newBuilder().body(body).build();
                         } else {
-                            Log.e(tag, "content : " + " maybe [file part] , too large too print , ignored!");
+                            Log.d(tag, "content : " + " maybe [file part] , too large too print , ignored!");
                         }
                     }
                 }
             }
-            Log.e(tag, "url : " + clone.request().url());
-            Log.e(tag, "code : " + clone.code());
-            Log.e(tag, "protocol : " + clone.protocol());
-            if (!TextUtils.isEmpty(clone.message())) Log.e(tag, "message : " + clone.message());
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            Log.e(tag, "---------------------response log end-----------------------");
+            Log.d(tag, "---------------------response log end-----------------------");
         }
 
         return response;

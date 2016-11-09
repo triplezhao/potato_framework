@@ -19,22 +19,53 @@ import okhttp3.Response;
  */
 public abstract class AbsCallback<T> {
 
-    /** 请求网络开始前，UI线程 */
+
+    public Exception getNetConnectFail() {
+        return new Exception("网络未连接");
+    }
+
+    public Exception getNetFail() {
+        return new Exception("网络请求失败");
+    }
+
+    public Exception getServerFail() {
+        return new Exception("服务器请求失败");
+    }
+
+    public Exception getApiFail(String msg) {
+        return new Exception("数据请求失败:" + msg);
+    }
+
+    public Exception getCacheFail() {
+        return new Exception("缓存不存在");
+    }
+
+    /**
+     * 请求网络开始前，UI线程
+     */
     public void onBefore(BaseRequest request) {
     }
 
-    /** 拿到响应后，将数据转换成需要的格式，子线程中执行，可以是耗时操作 */
+    /**
+     * 拿到响应后，将数据转换成需要的格式，子线程中执行，可以是耗时操作
+     */
     public abstract T parseNetworkResponse(Response response) throws Exception;
 
-    /** 对返回数据进行操作的回调， UI线程 */
+    /**
+     * 对返回数据进行操作的回调， UI线程
+     */
     public abstract void onResponse(boolean isFromCache, T t, Request request, @Nullable Response response);
 
-    /** 请求失败，响应错误，数据解析错误等，都会回调该方法， UI线程 */
+    /**
+     * 请求失败，响应错误，数据解析错误等，都会回调该方法， UI线程
+     */
     public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
         if (e != null) e.printStackTrace();
     }
 
-    /** 请求网络结束后，UI线程 */
+    /**
+     * 请求网络结束后，UI线程
+     */
     public void onAfter(boolean isFromCache, @Nullable T t, Call call, @Nullable Response response, @Nullable Exception e) {
     }
 

@@ -25,7 +25,7 @@ public class ApiManager {
         OkHttpUtils.init(context);
         //以下都不是必须的，根据需要自行选择
         OkHttpUtils.getInstance()//
-                .debug("OkHttpUtils")                                              //是否打开调试
+                .debug("OkHttpUtils")                                              //是否打开调试,不调用这个方法就是关闭
                 .setConnectTimeout(OkHttpUtils.DEFAULT_MILLISECONDS)               //全局的连接超时时间
                 .setReadTimeOut(OkHttpUtils.DEFAULT_MILLISECONDS)                  //全局的读取超时时间
                 .setWriteTimeOut(OkHttpUtils.DEFAULT_MILLISECONDS)                 //全局的写入超时时间
