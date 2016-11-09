@@ -416,10 +416,10 @@ public abstract class BaseRequest<R extends BaseRequest> {
                     if (cacheEntity == null) {
                         //SERVER_FAIL
 //                        sendFailResultCallback(true, call, response, new IllegalStateException("服务器响应码304，但是客户端没有缓存！"), mCallback);
-                        sendFailResultCallback(true, call, response, mCallback.getNetFail(), mCallback);
+                        sendFailResultCallback(false, call, response, mCallback.getNetFail(), mCallback);
                     } else {
                         T data = cacheEntity.getData();
-                        sendSuccessResultCallback(true, data, call, response, mCallback);
+                        sendSuccessResultCallback(false, data, call, response, mCallback);
                     }
                     return;
                 }
@@ -428,7 +428,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
 //                    sendFailResultCallback(false, call, response, new Exception("code:"+response.code()+"msg:"+response.message()), mCallback);
                     //SERVER_FAIL
 //                    sendFailResultCallback(false, call, response, new Exception("网络请求失败"), mCallback);
-                    sendFailResultCallback(true, call, response, mCallback.getServerFail(), mCallback);
+                    sendFailResultCallback(false, call, response, mCallback.getServerFail(), mCallback);
                     return;
                 }
 
@@ -441,7 +441,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
                     //一般为服务器响应成功，但是数据解析错误
                     //这里是callbaak返回来的exception,使用者抛出的，一般是api接口返回的code不是成功状态。
                     //APIFAIL
-                    sendFailResultCallback(true, call, response, mCallback.getApiFail(e.getMessage()), mCallback);
+                    sendFailResultCallback(false, call, response, mCallback.getApiFail(e.getMessage()), mCallback);
 //                    sendFailResultCallback(false, call, response, e, mCallback);
 
                 }
