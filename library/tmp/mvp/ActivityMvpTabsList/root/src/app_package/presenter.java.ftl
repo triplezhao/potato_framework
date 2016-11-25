@@ -29,12 +29,12 @@ final class ${presenterClass} implements ${mvpClass}.P {
 
        JiongtuApi.getSectionListRequest(CacheMode.REQUEST_FAILED_READ_CACHE, new JiongtuCallback<JiongtuSectionListEntity>() {
             @Override
-            public void onResponse(boolean isFromCache, JiongtuSectionListEntity entity, Request request, @Nullable Response response) {
+            public void send(boolean isFromCache, JiongtuSectionListEntity entity, Request request, @Nullable Response response) {
                 view.render(entity);
             }
 
             @Override
-            public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+            public void onError(boolean isFromCache, Call send, @Nullable Response response, @Nullable Exception e) {
 
             }
         });

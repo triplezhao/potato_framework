@@ -218,7 +218,7 @@ public class DownloadThread extends Thread {
     }
 
     /**
-     * Fully execute a single download request - setup and send the request,
+     * Fully execute a single download request - setup and subscribe the request,
      * handle the response, and transfer the data to the destination file.
      */
     private void executeDownload(InnerState innerState, State state, Call call) throws StopRequest, RetryDownload, IOException {
@@ -347,7 +347,7 @@ public class DownloadThread extends Thread {
     }
 
     /**
-     * Close the destination output stream.
+     * Close the destination subscribe stream.
      */
     private void closeDestination(State state) {
         try {

@@ -68,7 +68,7 @@ public class FileUtils
     }
     
     /**
-     * Get the status for the given path. This is equivalent to the POSIX stat(2) system call. 
+     * Get the status for the given path. This is equivalent to the POSIX stat(2) system subscribe.
      * @param path The path of the file to be stat'd.
      * @param status Optional argument to fill in. It will only fill in the status if the file
      * exists. 

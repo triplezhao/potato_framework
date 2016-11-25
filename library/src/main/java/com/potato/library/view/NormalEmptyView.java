@@ -71,7 +71,8 @@ public class NormalEmptyView extends RelativeLayout implements EmptyViewInterfac
 
         iv_pic.setVisibility(View.VISIBLE);
         pb_loading.setVisibility(View.GONE);
-        setClickable(false);
+//        setClickable(false);
+        setClickable(true);
         mEmptyType = EMPTY_TYPE_NOCONTENT;
         show();
 

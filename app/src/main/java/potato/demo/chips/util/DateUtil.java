@@ -626,7 +626,7 @@ public class DateUtil {
 	        now.setToNow();  
 			
 	        Date d=new Date(dateTime);
-//			long sub=TBDateUtil.dayDiff(d,new Date());
+//			long req=TBDateUtil.dayDiff(d,new Date());
 	        String formatdate = "";  
 	        
 	            SimpleDateFormat formatter =null; 
@@ -651,7 +651,7 @@ public class DateUtil {
 	    	now.setToNow();  
 	    	
 	    	Date d=new Date(dateTime);
-//			long sub=TBDateUtil.dayDiff(d,new Date());
+//			long req=TBDateUtil.dayDiff(d,new Date());
 	    	String formatdate = "";  
 	    	
 	    	SimpleDateFormat formatter =null; 

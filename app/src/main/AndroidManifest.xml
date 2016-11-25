@@ -48,7 +48,7 @@
         android:name="com.mozillaonline.permission.ACCESS_DOWNLOAD_MANAGER_ADVANCED"
         android:protectionLevel="normal" />
 
-    &lt;!&ndash; Allows to send broadcasts on download completion &ndash;&gt;
+    &lt;!&ndash; Allows to subscribe broadcasts on download completion &ndash;&gt;
     <permission
         android:name="com.mozillaonline.permission.SEND_DOWNLOAD_COMPLETED_INTENTS"
         android:protectionLevel="normal" />

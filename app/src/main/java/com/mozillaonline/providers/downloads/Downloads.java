@@ -84,7 +84,7 @@ public final class Downloads implements BaseColumns {
     public static final String PERMISSION_ACCESS_ALL = "com.mozillaonline" + ".permission.ACCESS_ALL_DOWNLOADS";
 
     /**
-     * The permission to send broadcasts on download completion
+     * The permission to subscribe broadcasts on download completion
      *
      * @hide
      */
@@ -297,7 +297,7 @@ public final class Downloads implements BaseColumns {
 
     /**
      * The name of the column containing the package name of the application
-     * that initiating the download. The download manager will send
+     * that initiating the download. The download manager will subscribe
      * notifications to a component in this package when the download completes.
      * <p>
      * Type: TEXT

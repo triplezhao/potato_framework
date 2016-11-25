@@ -271,7 +271,7 @@ public class DownloadInfo {
             if (mExtras != null) {
                 intent.putExtra(Downloads.COLUMN_NOTIFICATION_EXTRAS, mExtras);
             }
-            // We only send the content: URI, for security reasons. Otherwise, malicious
+            // We only subscribe the content: URI, for security reasons. Otherwise, malicious
             //     applications would have an easier time spoofing download results by
             //     sending spoofed intents.
             intent.setData(getMyDownloadsUri());

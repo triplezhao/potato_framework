@@ -28,14 +28,14 @@ final class ${fragmentPresenterClass} implements ${fragmentMvpClass}.P {
        public void reqRefresh(String id, String page, String pageSize) {
            BaiduApi.imageList(CacheMode.REQUEST_FAILED_READ_CACHE, id, page, pageSize, new BaiduCallback<BaiduImageListByCategoryEntity>() {
                @Override
-               public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+               public void onError(boolean isFromCache, Call send, @Nullable Response response, @Nullable Exception e) {
 
                    if (e != null)
                        view.onRefreshFail(e.getMessage());
                }
 
                @Override
-               public void onResponse(boolean isFromCache, BaiduImageListByCategoryEntity entity, Request request, @Nullable Response response) {
+               public void send(boolean isFromCache, BaiduImageListByCategoryEntity entity, Request request, @Nullable Response response) {
                    view.onRefreshSucc(entity);
                }
            });
@@ -45,13 +45,13 @@ final class ${fragmentPresenterClass} implements ${fragmentMvpClass}.P {
        public void reqLoadMore(String id, String page, String pageSize) {
            BaiduApi.imageList(CacheMode.REQUEST_FAILED_READ_CACHE, id, page, pageSize, new BaiduCallback<BaiduImageListByCategoryEntity>() {
                @Override
-               public void onError(boolean isFromCache, Call call, @Nullable Response response, @Nullable Exception e) {
+               public void onError(boolean isFromCache, Call send, @Nullable Response response, @Nullable Exception e) {
                    if (e != null)
                        view.onLoadMoreFail(e.getMessage());
                }
 
                @Override
-               public void onResponse(boolean isFromCache, BaiduImageListByCategoryEntity entity, Request request, @Nullable Response response) {
+               public void send(boolean isFromCache, BaiduImageListByCategoryEntity entity, Request request, @Nullable Response response) {
                    view.onLoadMoreSucc(entity);
 
                }
