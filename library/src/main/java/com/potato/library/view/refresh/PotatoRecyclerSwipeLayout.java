@@ -281,7 +281,7 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
                 int totalItemCount = layoutManager.getItemCount();
 //                int totalItemCount = layoutManager.getItemCount() - getHFAdapter().getHeaderViewsCount()-getHFAdapter().getFooterViewsCount();
 
-                L.i(TAG, "visibleItemCount=" + visibleItemCount + "totalItemCount" + totalItemCount);
+//                L.i(TAG, "visibleItemCount=" + visibleItemCount + "totalItemCount" + totalItemCount);
                 if ((visibleItemCount > 0 && currentScrollState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItemPosition) >= totalItemCount - 1)) {
                     if (adapter.getItemCount() > 0) {
                         loadMoreData();

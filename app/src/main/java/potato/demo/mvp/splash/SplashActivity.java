@@ -43,7 +43,8 @@ public class SplashActivity extends BaseActivity implements Splash.V {
         ButterKnife.bind(this);
         context = this;
         DaggerSplash_C.builder().module(new Splash.Module(this)).build().inject(this);
-        init();
+        PageCtrl.start2MainActivity(mContext);
+//        init();
     }
 
 

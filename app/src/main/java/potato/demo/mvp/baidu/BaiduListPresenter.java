@@ -1,5 +1,6 @@
 package potato.demo.mvp.baidu;
 
+import android.os.Handler;
 import android.support.annotation.Nullable;
 
 import com.lzy.okhttputils.cache.CacheMode;
@@ -46,8 +47,16 @@ final class BaiduListPresenter implements BaiduList.P {
             }
 
             @Override
-            public void onResponse(boolean isFromCache, BaiduImageListByCategoryEntity entity, Request request, @Nullable Response response) {
-                view.onRefreshSucc(entity);
+            public void onResponse(boolean isFromCache, final BaiduImageListByCategoryEntity entity, Request request, @Nullable Response response) {
+
+                new Handler().postDelayed(new Runnable() {
+
+                    public void run() {
+                        view.onRefreshSucc(entity);
+                        //execute the task
+                    }
+
+                }, 3000);
             }
         });
     }
@@ -62,8 +71,8 @@ final class BaiduListPresenter implements BaiduList.P {
             }
 
             @Override
-            public void onResponse(boolean isFromCache, BaiduImageListByCategoryEntity entity, Request request, @Nullable Response response) {
-                view.onLoadMoreSucc(entity);
+            public void onResponse(boolean isFromCache, final BaiduImageListByCategoryEntity entity, Request request, @Nullable Response response) {
+                        view.onLoadMoreSucc(entity);
 
             }
         });

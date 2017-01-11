@@ -55,6 +55,7 @@ public class QIImageListFragment extends BaseDefaultListFragment implements QIIm
 
         initListView();
 
+
         reqRefresh();
 
         return view;

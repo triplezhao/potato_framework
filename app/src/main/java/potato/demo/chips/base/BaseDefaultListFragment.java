@@ -127,6 +127,7 @@ public abstract class BaseDefaultListFragment extends BaseFragment implements Vi
 
     @Override
     public void onLoadMoreSucc(BaseResultEntity entity) {
+
         if (!entity.isSucc()) {
             mSwipeContainer.autoShowByTotal(mEntity.total);
             return;

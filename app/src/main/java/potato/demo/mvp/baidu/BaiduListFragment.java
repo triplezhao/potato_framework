@@ -53,8 +53,25 @@ public class BaiduListFragment extends BaseDefaultListFragment implements BaiduL
         mTitle = getArguments() == null ? "" : getArguments().getString(EXTRARS_TITLE);
 
         initListView();
-        reqRefresh();
 
+        if(mId.equals("美女")){
+            mSwipeContainer.setRefreshEnable(false);
+            mSwipeContainer.showProgressOffset(0,80);
+        }else
+        if(mId.equals("动漫")){
+            mSwipeContainer.setRefreshEnable(false);
+//            mSwipeContainer.showProgressOffset(10000,-10000);
+//            mSwipeContainer.setDistanceToTriggerSync(-1);
+        }else
+        if(mId.equals("明星")){
+//            mSwipeContainer.setRefreshEnable(false);
+//            mSwipeContainer.showProgressOffset(-30000,-50000);
+//            mSwipeContainer.setDistanceToTriggerSync(-1);
+        }
+
+        mSwipeContainer.showEmptyviewProgress();
+        mPage = 1;
+        presenter.reqRefresh(mId, "1", pageSize);
         return view;
     }
 
@@ -67,12 +84,12 @@ public class BaiduListFragment extends BaseDefaultListFragment implements BaiduL
     public void reqRefresh() {
         mSwipeContainer.showProgress();
         mPage = 1;
-        presenter.reqRefresh("", "1", pageSize);
+        presenter.reqRefresh(mId, "1", pageSize);
     }
 
     @Override
     public void reqLoadMore() {
-        presenter.reqLoadMore("", mPage + 1 + "", pageSize);
+        presenter.reqLoadMore(mId, mPage + 1 + "", pageSize);
     }
 
 
