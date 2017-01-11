@@ -50,6 +50,7 @@ public class OkHttpUtils {
     private HttpHeaders mCommonHeaders;                   //全局公共请求头
     private CacheMode mCacheMode;                         //全局缓存模式
     public static Application context;                   //全局上下文
+    public static boolean isDebug=false;
 
     private OkHttpUtils() {
         okHttpClientBuilder = new OkHttpClient.Builder();
@@ -121,6 +122,7 @@ public class OkHttpUtils {
 
     /** 调试模式 */
     public OkHttpUtils debug(String tag) {
+        isDebug = true;
         okHttpClientBuilder.addInterceptor(new LoggerInterceptor(tag, true));
         return this;
     }

@@ -1,6 +1,7 @@
 package com.lzy.okhttputils.request;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.cache.CacheEntity;
@@ -37,6 +38,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import static com.lzy.okhttputils.OkHttpUtils.isDebug;
 
 /**
  * ================================================
@@ -370,7 +373,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
 
         if (cacheMode == CacheMode.IF_NONE_CACHE_REQUEST) {
             //如果没有缓存，就请求网络，否者直接使用缓存
-            if (cacheEntity != null) {
+            if (cacheEntity != null && cacheEntity.getData() != null) {
                 T data = cacheEntity.getData();
                 sendSuccessResultCallback(true, data, call, null, mCallback);
                 return;//返回即不请求网络
@@ -380,7 +383,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
             }
         } else if (cacheMode == CacheMode.FIRST_CACHE_THEN_REQUEST || cacheMode == CacheMode.CACHE_ONLY) {
             //先使用缓存，不管是否存在，仍然请求网络
-            if (cacheEntity != null) {
+            if (cacheEntity != null && cacheEntity.getData() != null) {
                 T data = cacheEntity.getData();
                 sendSuccessResultCallback(true, data, call, null, mCallback);
             } else {
@@ -475,7 +478,13 @@ public abstract class BaseRequest<R extends BaseRequest> {
     @SuppressWarnings("unchecked")
     private <T> void sendFailResultCallback(final boolean isFromCache, final Call call,//
                                             final Response response, final Exception e, final AbsCallback<T> callback) {
-
+        if(isDebug){
+            if(isFromCache){
+                Log.i("OkHttpUtils","sendFail from cache ="+e);
+            }else{
+                Log.i("OkHttpUtils","sendFail from net ="+e);
+            }
+        }
         OkHttpUtils.getInstance().getDelivery().post(new Runnable() {
             @Override
             public void run() {
@@ -487,7 +496,7 @@ public abstract class BaseRequest<R extends BaseRequest> {
         //不同的缓存模式，可能会导致该失败进入两次，一次缓存失败，一次网络请求失败
         if (!isFromCache && cacheMode == CacheMode.REQUEST_FAILED_READ_CACHE) {
             CacheEntity<T> cacheEntity = (CacheEntity<T>) cacheManager.get(cacheKey);
-            if (cacheEntity != null) {
+            if (cacheEntity != null && cacheEntity.getData() != null) {
                 T data = cacheEntity.getData();
                 sendSuccessResultCallback(true, data, call, response, callback);
             } else {
@@ -502,6 +511,13 @@ public abstract class BaseRequest<R extends BaseRequest> {
      */
     private <T> void sendSuccessResultCallback(final boolean isFromCache, final T t, //
                                                final Call call, final Response response, final AbsCallback<T> callback) {
+        if(isDebug){
+            if(isFromCache){
+                Log.i("OkHttpUtils","sendSuccess from cache ="+t);
+            }else{
+                Log.i("OkHttpUtils","sendSuccess from net ="+t);
+            }
+        }
         OkHttpUtils.getInstance().getDelivery().post(new Runnable() {
             @Override
             public void run() {
