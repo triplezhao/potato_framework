@@ -69,7 +69,8 @@ public class BaiduListFragment extends BaseDefaultListFragment implements BaiduL
 //            mSwipeContainer.setDistanceToTriggerSync(-1);
         }
 
-        mSwipeContainer.showEmptyviewProgress();
+//        mSwipeContainer.showEmptyViewProgress();
+        mSwipeContainer.showProgress();
         mPage = 1;
         presenter.reqRefresh(mId, "1", pageSize);
         return view;

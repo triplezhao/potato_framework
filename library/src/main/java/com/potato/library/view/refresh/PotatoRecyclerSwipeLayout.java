@@ -250,7 +250,7 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                L.i(TAG, "onScrollStateChanged");
+//                L.i(TAG, "onScrollStateChanged");
                 if (ScrollStateLisener != null) {
                     switch (newState) {
 
@@ -293,7 +293,7 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                L.i(TAG, "onScrolled");
+//                L.i(TAG, "onScrolled");
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
 
                 if (layoutManagerType == null) {

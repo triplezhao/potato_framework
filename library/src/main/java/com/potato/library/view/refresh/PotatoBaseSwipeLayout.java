@@ -68,9 +68,9 @@ public class PotatoBaseSwipeLayout extends SwipeRefreshLayout {
     public void setRefreshEnable(boolean isEnable){
         mRefreshEnable=isEnable;
         if(!mRefreshEnable){
-            setStartOffset(10000);
-            setEnd(-10000);
-            setDistanceToTriggerSync(5000);
+            setStartOffset(-30000);
+            setEnd(-50000);
+            setDistanceToTriggerSync(20000);
             setProgressViewOffset(false, mStart, mEnd);
         }else {
             setStartOffset(0);
