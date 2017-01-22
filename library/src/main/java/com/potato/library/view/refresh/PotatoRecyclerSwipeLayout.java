@@ -540,6 +540,7 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
     public void autoShowByTotal(int total) {
         //如果设置了不支持下拉刷新，则直接全部隐藏
         if (mLoadMoreNever) {
+            //底部什么都不显示
             mEnableLoad = false;
             showEndView(false);
             showLoadMoreView(false);
@@ -548,17 +549,32 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
             RecyclerView.Adapter outerAdapter = mRecyclerView.getAdapter();
 
             if (outerAdapter == null || !(outerAdapter instanceof HFRecyclerViewAdapter)) {
-                setLoadEnable(false);
+//                setLoadEnable(false);
+                //底部什么都不显示
+                mEnableLoad = false;
+                showEndView(false);
+                showLoadMoreView(false);
+                showTipsView(false);
                 return;
             }
             RecyclerView.Adapter innerAdapter = ((HFRecyclerViewAdapter) outerAdapter).getInnerAdapter();
             if (innerAdapter == null) {
-                setLoadEnable(false);
+                //底部什么都不显示
+                mEnableLoad = false;
+                showEndView(false);
+                showLoadMoreView(false);
+                showTipsView(false);
                 return;
             }
             if (innerAdapter.getItemCount() > 0 && innerAdapter.getItemCount() < total) {
                 setLoadEnable(true);
-            } else {
+            } else if (innerAdapter.getItemCount() == 0) {
+                //底部什么都不显示
+                mEnableLoad = false;
+                showEndView(false);
+                showLoadMoreView(false);
+                showTipsView(false);
+            } else if (innerAdapter.getItemCount() >= total) {
                 setLoadEnable(false);
             }
         }
