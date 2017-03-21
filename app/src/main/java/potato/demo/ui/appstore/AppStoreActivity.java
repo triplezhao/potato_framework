@@ -92,7 +92,8 @@ public class AppStoreActivity extends BaseDefaultListActivity {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        onRefreshSucc(null);
+//                        onRefreshSucc(null);
+
                     }
                 });
 

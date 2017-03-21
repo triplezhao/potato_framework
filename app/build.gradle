@@ -9,6 +9,7 @@ android {
     buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "potato.demo"
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
@@ -19,6 +20,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    android {
+        lintOptions {
+            abortOnError false
         }
     }
 }
@@ -33,4 +39,5 @@ dependencies {
     compile 'com.github.paolorotolo:appintro:4.0.0'
     compile 'org.lzh.nonview.updateplugin:UpdatePlugin:0.7.1'
     compile project(':potato_lib')
+    compile 'com.android.support:multidex:1.0.1'
 }

@@ -1,7 +1,8 @@
 package potato.demo.chips.app;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 
 import com.mozillaonline.providers.DownloadManager;
@@ -16,7 +17,7 @@ import potato.demo.chips.util.PhoneUtils;
 /**
  * Created by zhaobingfeng on 14-12-22.
  */
-public class MainApplication extends Application {
+public class MainApplication extends MultiDexApplication {
     /**
      * 获取屏幕的宽和高
      */
@@ -96,6 +97,11 @@ public class MainApplication extends Application {
         displayMetrices = PhoneUtils.getAppWidthAndHeight(this);
         screenHight = displayMetrices.heightPixels;
         screenWidth = displayMetrices.widthPixels;
+    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
 }
