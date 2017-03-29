@@ -33,4 +33,17 @@ public interface LoadMoreInterface {
 
     void showTipsView(boolean isshow);
 
+
+    void setTipsTxt(String sp);
+
+    void setEndTxt(String sp);
+
+    void setTipsSize(int sp);
+
+    void setTipsColor(int color);
+
+    void setEndViewSize(int sp);
+
+    void setEndViewColor(int color);
+
 }

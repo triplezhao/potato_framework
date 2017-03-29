@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import com.potato.library.R;
 import com.potato.library.util.L;
@@ -25,9 +26,9 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
     private boolean mLoadMoreNever = false;
 
     private static final int CIRCLE_DIAMETER_LARGE = 56;
-    private View mListViewFooter;
-    private View mListViewEnder;
-    private View mListViewTips;
+    public View mListViewFooter;
+    public View mListViewEnder;
+    public View mListViewTips;
     private View mListViewHeader;
 
     public ScrollStateLisener ScrollStateLisener;
@@ -508,6 +509,70 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
                 mListViewEnder.setLayoutParams(mListViewEnder.getLayoutParams());
             }*/
             mListViewEnder.findViewById(R.id.rl_footer).setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setTipsTxt(String sp) {
+        try {
+            TextView tv_more = (TextView) mListViewTips.findViewById(R.id.tv_more);
+            tv_more.setText(sp);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+
+    @Override
+    public void setTipsSize(int sp) {
+        try {
+            TextView tv_more = (TextView) mListViewTips.findViewById(R.id.tv_more);
+            tv_more.setTextSize(sp);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    @Override
+    public void setTipsColor(int color) {
+        try {
+            TextView tv_more = (TextView) mListViewTips.findViewById(R.id.tv_more);
+            tv_more.setTextColor(color);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void setEndTxt(String sp) {
+        try {
+            TextView tv_nomore = (TextView) mListViewEnder.findViewById(R.id.tv_nomore);
+            tv_nomore.setText(sp);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    @Override
+    public void setEndViewSize(int sp) {
+        try {
+            TextView tv_nomore = (TextView) mListViewEnder.findViewById(R.id.tv_nomore);
+            tv_nomore.setTextSize(sp);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void setEndViewColor(int color) {
+        try {
+            TextView tv_nomore = (TextView) mListViewEnder.findViewById(R.id.tv_nomore);
+            tv_nomore.setTextColor(color);
+        } catch (Exception e) {
+
         }
     }
 

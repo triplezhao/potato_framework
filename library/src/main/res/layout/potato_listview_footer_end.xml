@@ -16,10 +16,13 @@
         >
 
         <TextView
+            android:id="@+id/tv_nomore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="没有更多了"/>
+            android:text="已全部加载完毕"
+            android:textColor="@color/potato__gray_txt_ccc"
+            android:textSize="12sp"/>
 
         <ProgressBar
             style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Inverse"
