@@ -32,7 +32,7 @@ public class MainApplication extends MultiDexApplication {
     /**
      * 获取全局的上下文
      */
-    public static Context context;
+    public static Context         context;
     public static DownloadManager mDownloadManager;
 
     @Override
@@ -51,7 +51,7 @@ public class MainApplication extends MultiDexApplication {
 
 //        ShareSDK.initSDK(context);
         //获取imei
-        PhoneUtils.getIMEI(context);
+//        PhoneUtils.getIMEI(context);
         //请求缓存管理
         ApiManager.init(this);
         //请求初始化
@@ -62,19 +62,25 @@ public class MainApplication extends MultiDexApplication {
         initDownloadManager();
 
     }
+
     private void initLog() {
         if (GlobleConstant.isDebug) {
 //            Stetho.initializeWithDefaults(this);  // 开启 Stetho 调试模式
             L.openLog();
-            Logger.init("=aiyouyun=").logLevel(LogLevel.FULL).methodOffset(1);
+            Logger
+                    .init("=aiyouyun=")
+                    .logLevel(LogLevel.FULL)
+                    .methodOffset(1);
         } else {
             L.closeLog();
-            Logger.init().logLevel(LogLevel.NONE);
+            Logger
+                    .init()
+                    .logLevel(LogLevel.NONE);
         }
     }
+
     private void initDownloadManager() {
-        mDownloadManager = new DownloadManager(getContentResolver(),
-                getPackageName());
+        mDownloadManager = new DownloadManager(getContentResolver(), getPackageName());
     }
 
 
@@ -98,6 +104,7 @@ public class MainApplication extends MultiDexApplication {
         screenHight = displayMetrices.heightPixels;
         screenWidth = displayMetrices.widthPixels;
     }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
