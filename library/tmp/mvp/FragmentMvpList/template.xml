@@ -2,10 +2,10 @@
 <template
     format="3"
     revision="1"
-    name="mvp + Activity+list"
+    name="mvp + Fragment+list"
     minApi="7"
     minBuildApi="17"
-    description="Creates a new Activity and mvp interface">
+    description="Creates a new Fragment and mvp interface">
 
     <category value="mvp" />
 
@@ -27,22 +27,22 @@
         help="The name of the presenter class to create" />
 	
     <parameter
-        id="activityClass"
-        name="Activity Name"
+        id="fragmentClass"
+        name="Fragment Name"
         type="string"
         constraints="class|unique|nonempty"
-        suggest="${mvpClass}Activity"
-        default="MvpActivity"
-        help="The name of the activity class to create" />
+        suggest="${mvpClass}Fragment"
+        default="MvpFragment"
+        help="The name of the fragment class to create" />
 
     <parameter
-        id="layoutActivityName"
+        id="layoutFragmentName"
         name="Layout Name"
         type="string"
         constraints="layout|unique|nonempty"
-        suggest="${activityToLayout(activityClass)}"
-        default="activity_layout"
-        help="The name of the layout to create for the activity" />
+        suggest="fragment_${classToResource(fragmentClass)}"
+        default="fragment_layout"
+        help="The name of the layout to create for the fragment" />
     <parameter
             id="itemlayout"
             name="item Layout Name"
@@ -50,14 +50,8 @@
             constraints="layout|unique|nonempty"
             suggest="item_${classToResource(mvpClass)}"
             default="item_layout"
-            help="The name of the layout to create for the activity" />
+            help="The name of the layout to create for the fragment" />
     
-    <parameter
-        id="isLauncher"
-        name="Launcher Activity"
-        type="boolean"
-        default="false"
-        help="If true, this activity will have a CATEGORY_LAUNCHER intent filter, making it visible in the launcher" />
 
     <parameter
         id="packageName"

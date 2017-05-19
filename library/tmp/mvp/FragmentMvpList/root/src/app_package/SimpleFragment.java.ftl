@@ -6,27 +6,38 @@ import android.support.v7.widget.Toolbar;
 <#if applicationPackage??>import ${applicationPackage}.R;</#if>
 import javax.inject.Inject;
 
-public class ${mvpClass}Activity extends BaseDefaultListActivity implements ${mvpClass}.V {
+public class ${mvpClass}Fragment extends BaseDefaultListFragment implements ${mvpClass}.V {
 
-    public static final String TAG = ${mvpClass}Activity.class.getSimpleName();
+    public static final String TAG = ${mvpClass}Fragment.class.getSimpleName();
     public static final String EXTRA_ID = "EXTRA_ID";
 
     @Inject ${mvpClass}Presenter presenter;
-	
+
+    public static ${mvpClass}Fragment instance(Context context, String cusid) {
+        Bundle args = new Bundle();
+        args.putString(EXTRA_ID, cusid);
+        ${mvpClass}Fragment pageFragement = (${mvpClass}Fragment) Fragment.instantiate(context, ${mvpClass}Fragment.class.getName(), args);
+        return pageFragement;
+    }
+
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.${layoutActivityName});
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view  = inflater.inflate(R.layout.${layoutFragmentName}, container, false);
+
+        ButterKnife.bind(this, view);
 
         Dagger${mvpClass}_C.builder().module(new ${mvpClass}.Module(this)).build().inject(this);
-        mId = getIntent() == null ? "" : getIntent().getStringExtra(EXTRA_ID);
-
+        mId = getArguments() == null ? "" : getArguments().getString(EXTRA_ID);
         initListView();
 
         reqRefresh();
-        
+
+        return view;
     }
+
+
     @Override
     public PotatoBaseRecyclerViewAdapter getAdapter() {
         return mAdapter = new AAdapter(mContext);
@@ -44,15 +55,7 @@ public class ${mvpClass}Activity extends BaseDefaultListActivity implements ${mv
         presenter.reqLoadMore("", mPage + 1 + "", pageSize);
     }
 
-    @OnClick(R.id.iv_back)
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.iv_back:
-                finish();
-            break;
-        }
-    }
-	
+
 	public static class AAdapter extends PotatoBaseRecyclerViewAdapter<AAdapter.VH> {
 
         public AAdapter(Context context) {
@@ -78,7 +81,7 @@ public class ${mvpClass}Activity extends BaseDefaultListActivity implements ${mv
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    PageCtrl.start2${mvpClass}DetailActivity(context, bean);
+                    PageCtrl.start${mvpClass}DetailFragment(context, bean);
                 }
             });
             ImageLoaderUtil.displayImage(bean.getBigCover(), vh.iv_pic, R.drawable.def_gray_big);

@@ -6,7 +6,7 @@
     <global id="Support" value="${(minApiLevel lt 14)?string('Support','')}" />
     <global id="srcOut" value="${srcDir}/${slashedPackageName(packageName)}" />
     <global id="resOut" value="${resDir}" />
-    <global id="menuName" value="${classToResource(activityClass)}" />
+    <global id="menuName" value="${classToResource(fragmentClass)}" />
     <global id="app_name" value="Aiyouyun" />
 
 </globals>
