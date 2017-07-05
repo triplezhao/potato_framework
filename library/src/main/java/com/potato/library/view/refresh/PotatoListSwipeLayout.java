@@ -24,7 +24,7 @@ public class PotatoListSwipeLayout extends PotatoBaseSwipeLayout implements AbsL
     public ScrollLisener scrollLisener;
 
     public PotatoListSwipeLayout(Context context) {
-        this(context, null);
+        super(context);
     }
 
     public PotatoListSwipeLayout(Context context, AttributeSet attrs) {

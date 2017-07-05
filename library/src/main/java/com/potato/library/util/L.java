@@ -16,19 +16,19 @@ import java.io.FileWriter;
 
 public final class L {
 
-    public static final int VERBOSE = 2;
-    public static final int DEBUG = 3;
-    public static final int INFO = 4;
-    public static final int WARN = 5;
-    public static final int ERROR = 6;
-    public static final int ASSERT = 7;
-    private static int RECORD_LEVEL = 5;
+    public static final int VERBOSE      = 2;
+    public static final int DEBUG        = 3;
+    public static final int INFO         = 4;
+    public static final int WARN         = 5;
+    public static final int ERROR        = 6;
+    public static final int ASSERT       = 7;
+    private static      int RECORD_LEVEL = 5;
     private static Context mContext;
-    private static String LOG_DIR_PATH = "/potato/logs";
-    public static boolean isOpen = PotatoConfig.IS_DEBUG;
+    private static String  LOG_DIR_PATH = "/potato/logs";
+    public static  boolean isOpen       = PotatoConfig.IS_DEBUG;
     ;
     public static boolean isWrite = false;
-    public static String TAG = "LOG";
+    public static String  TAG     = "LOG";
     private static String logPath;
 
     public static void openLog() {
@@ -74,7 +74,7 @@ public final class L {
             name = getFunctionName();
         }
         if (isOpen) {
-            Logger.i(name +","+ log);
+            Logger.i(name + "," + log);
         }
         if (isWrite && RECORD_LEVEL <= 4) {
             record(name + " - " + log);
@@ -91,7 +91,7 @@ public final class L {
             name = getFunctionName();
         }
         if (isOpen) {
-            Logger.d(name +","+ log);
+            Logger.d(name + "," + log);
         }
         if (isWrite && RECORD_LEVEL <= 3) {
             record(name + " - " + log);
@@ -109,7 +109,7 @@ public final class L {
             name = getFunctionName();
         }
         if (isOpen) {
-            Logger.w(name +","+ log);
+            Logger.w(name + "," + log);
         }
 
         if (isWrite && RECORD_LEVEL <= 5) {
@@ -128,7 +128,7 @@ public final class L {
             name = getFunctionName();
         }
         if (isOpen) {
-            Logger.e(name +","+ log);
+            Logger.e(name + "," + log);
         }
 
         if (isWrite && RECORD_LEVEL <= 6) {
@@ -138,7 +138,9 @@ public final class L {
     }
 
     private static String getFunctionName() {
-        StackTraceElement[] sts = Thread.currentThread().getStackTrace();
+        StackTraceElement[] sts = Thread
+                .currentThread()
+                .getStackTrace();
         if (sts == null) {
             return "";
         } else {
@@ -147,7 +149,11 @@ public final class L {
 
             for (int var2 = 0; var2 < var3; ++var2) {
                 StackTraceElement st = var4[var2];
-                if (!st.isNativeMethod() && !st.getClassName().equals(Thread.class.getName()) && !st.getClassName().equals(L.class.getName())) {
+                if (!st.isNativeMethod() && !st
+                        .getClassName()
+                        .equals(Thread.class.getName()) && !st
+                        .getClassName()
+                        .equals(L.class.getName())) {
                     return st.getMethodName() + "()丨" + st.getFileName() + "丨line " + st.getLineNumber();
                 }
             }
@@ -175,13 +181,21 @@ public final class L {
     }
 
     private static String getStorePath(Context context) {
-        String dirPath = context.getFilesDir().getAbsolutePath();
+        String dirPath = context
+                .getFilesDir()
+                .getAbsolutePath();
         if ("mounted".equals(Environment.getExternalStorageState())) {
-            if (Environment.getExternalStorageDirectory().canWrite()) {
-                dirPath = Environment.getExternalStorageDirectory().getPath() + LOG_DIR_PATH;
+            if (Environment
+                    .getExternalStorageDirectory()
+                    .canWrite()) {
+                dirPath = Environment
+                        .getExternalStorageDirectory()
+                        .getPath() + LOG_DIR_PATH;
             }
         } else {
-            dirPath = context.getFilesDir().getAbsolutePath() + LOG_DIR_PATH;
+            dirPath = context
+                    .getFilesDir()
+                    .getAbsolutePath() + LOG_DIR_PATH;
         }
 
         File file = new File(dirPath);

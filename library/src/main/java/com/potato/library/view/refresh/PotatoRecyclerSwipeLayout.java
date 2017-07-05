@@ -34,7 +34,7 @@ public class PotatoRecyclerSwipeLayout extends PotatoBaseSwipeLayout implements 
     public ScrollStateLisener ScrollStateLisener;
 
     public PotatoRecyclerSwipeLayout(Context context) {
-        this(context, null);
+        super(context);
         init(context);
     }
 

@@ -40,4 +40,5 @@ dependencies {
     compile 'org.lzh.nonview.updateplugin:UpdatePlugin:0.7.1'
     compile project(':potato_lib')
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.github.orhanobut:logger:1.12'
 }

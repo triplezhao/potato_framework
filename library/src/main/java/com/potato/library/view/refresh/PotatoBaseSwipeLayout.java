@@ -32,7 +32,6 @@ public class PotatoBaseSwipeLayout extends SwipeRefreshLayout {
         if(mEnd==0){
             mEnd = (int) (24 * metrics.density);
         }
-        L.i("BaseSwipeLayout","mEnd="+mEnd);
         this.setColorSchemeResources(com.potato.library.R.color.google_blue,
                 com.potato.library.R.color.google_green,
                 com.potato.library.R.color.google_red,
