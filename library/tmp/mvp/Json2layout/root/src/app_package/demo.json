@@ -1,0 +1,45 @@
+[
+  {
+    "title": "姓名",
+    "type": "0",
+    "vid": "",
+    "hint": "",
+    "value": ""
+  },
+  {
+    "vid": "realname",
+    "type": "1",
+    "title": "姓名",
+    "hint": "请输入姓名",
+    "value": "张三"
+  },
+  {
+    "vid": "realname1",
+    "type": "2",
+    "title": "姓名",
+    "hint": "请输入姓名",
+    "value": "张三"
+  },
+  {
+    "vid": "phone",
+    "type": "2",
+    "title": "手机号",
+    "hint": "请输入手机号",
+    "value": "13488658611"
+  },
+  {
+    "vid": "zxsname",
+    "type": "3",
+    "title": "咨询师",
+    "hint": "请输入手机号",
+    "value": ""
+  }
+]
+
+type：
+0 为分割线
+1 文本框
+2 输入框
+3 选择框
+4 Radio选择
+5 开关

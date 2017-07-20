@@ -54,7 +54,21 @@ public class ${pageName} extends ${baseName} implements ${mvpClass}.V {
 </#if>
       @Override
        public void render(${mvpClass}Bean bean) {
-
+                tvRealname.setText(bean.getClass());
+                tvMobile.setText(bean.getClass());
+                tvBingliCode.setText(bean.getClass());
+                tvZxs.setText(bean.getClass());
+                tvKeshi.setText(bean.getClass());
+                tvProject.setText(bean.getClass());
+                tvFenzhenClerk.setText(bean.getClass());
+                //2是需要专车
+                if (!TextUtils.isEmpty(bean.getIscar()) && bean
+                .getIscar()
+                .equals("2")) {
+                tvJiuzhenStatus.setText("是");
+                } else {
+                tvJiuzhenStatus.setText("否");
+                }
        }
 
        @Override
