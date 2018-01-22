@@ -2,28 +2,34 @@
 <template
     format="3"
     revision="1"
-    name="json2cde"
+    name="ListPage"
     minApi="7"
     minBuildApi="17"
-    description="Creates 3file  detaillayout,editlayout,and act and fm de findviewbyId,and renderOld func,and copyFrom DetailBean func">
+    description="Creates a new Activity or fm">
 
     <category value="mvp" />
 
+    <parameter
+            id="isFragment"
+            name="isFragment"
+            type="boolean"
+            default="false"
+            help="if true ,create fm file" />
+
 	 <parameter
-        id="objName"
-        name="objName"
+        id="pageName"
+        name="pageName"
         type="string"
         constraints="class|unique|nonempty"
-        default="user"
-        help="The name of the bean class to create" />
-	
-   
+        default="xxx"
+        help="The name of the page class to create" />
+
     <parameter
-        id="json"
-        name="json string"
+        id="packageName"
+        name="Package name"
         type="string"
-        default="{}"
-        help="json string to create bean" />
+        constraints="package"		
+        default="com.mycompany.myapp" />
 
    
     <!-- 128x128 thumbnails relative to template.xml -->

@@ -22,7 +22,7 @@
         id="json"
         name="json string"
         type="string"
-        default="json string"
+        default="{}"
         help="json string to create bean" />
 
    

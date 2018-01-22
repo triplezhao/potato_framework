@@ -46,7 +46,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="1px"
                             android:background="@color/ifsee_divider"/>
-                <#elseif item.type == "1">
+                    <#elseif item.type == "1">
                         <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/item_h"
@@ -64,7 +64,7 @@
                             />
 
                             <TextView
-                                    android:id="@+id/$tv_{item.vid}"
+                                    android:id="@+id/tv_${item.vid}"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
@@ -82,7 +82,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1px"
                                 android:background="@color/ifsee_divider"/>
-                <#else>
+                        <#else>
                 </#if>
             </#list>
             <!--分割线-->
